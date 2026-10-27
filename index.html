@@ -1,18 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Math Foundations for Machine Learning</title>
-<meta name="description" content="A plain-language book on the linear algebra, calculus, probability and statistics you actually need for machine learning — intuition first, then the formula, then a worked example.">
+<title>أساسيات الرياضيات لتعلُّم الآلة</title>
+<meta name="description" content="كتاب عربي مبسّط في الجبر الخطي والتفاضل والاحتمالات والإحصاء اللي محتاجها فعلاً في تعلُّم الآلة — الحدس الأول، بعدين الصيغة، بعدين مثال محلول.">
 <meta name="color-scheme" content="light dark">
-<meta property="og:title" content="Math Foundations for Machine Learning — Made Easy">
-<meta property="og:description" content="Linear algebra, calculus, probability and statistics for machine learning. Intuition first, then the formula, then a worked example.">
+<meta property="og:title" content="أساسيات الرياضيات لتعلُّم الآلة — ببساطة">
+<meta property="og:description" content="الجبر الخطي والتفاضل والاحتمالات والإحصاء لتعلُّم الآلة، بالعربي ومن الصفر.">
 <meta property="og:type" content="book">
+<meta property="og:locale" content="ar_EG">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>∑</text></svg>">
+<link rel="alternate" hreflang="en" href="english.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Naskh+Arabic:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Cairo:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 <style>
 :root {
@@ -23,39 +25,36 @@
   --muted: #6b6459;
   --rule: #e2dbcd;
   --accent: #a8431a;
-  --accent-soft: #f6e7dd;
+  --accent-soft: #f7e9e0;
+  --warn: #9a6b06;
+  --warn-soft: #faf0d8;
+  --info: #1f6a6a;
+  --info-soft: #e2f1f0;
   --mono-bg: #f4f1ea;
   --shadow: 0 1px 2px rgba(28, 26, 23, .06), 0 8px 24px -16px rgba(28, 26, 23, .25);
-  --serif: "Source Serif 4", Iowan Old Style, Georgia, serif;
-  --ui: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ar: "Noto Naskh Arabic", "Geeza Pro", "Times New Roman", serif;
+  --ui: Cairo, "Noto Naskh Arabic", -apple-system, BlinkMacSystemFont, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --arabic: "Noto Naskh Arabic", "Geeza Pro", serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #16171a;
-    --bg-sunk: #1d1f23;
-    --panel: #1d1f23;
-    --text: #e9e6e1;
-    --muted: #9b958c;
-    --rule: #2e3137;
-    --accent: #e9a06a;
-    --accent-soft: #2a2420;
+    --bg: #16171a; --bg-sunk: #1d1f23; --panel: #1d1f23;
+    --text: #e9e6e1; --muted: #9b958c; --rule: #2e3137;
+    --accent: #e9a06a; --accent-soft: #2b2420;
+    --warn: #e0b457; --warn-soft: #2a2619;
+    --info: #68c3bd; --info-soft: #1b2727;
     --mono-bg: #22252a;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
   }
 }
 :root[data-theme="dark"] {
-  --bg: #16171a;
-  --bg-sunk: #1d1f23;
-  --panel: #1d1f23;
-  --text: #e9e6e1;
-  --muted: #9b958c;
-  --rule: #2e3137;
-  --accent: #e9a06a;
-  --accent-soft: #2a2420;
+  --bg: #16171a; --bg-sunk: #1d1f23; --panel: #1d1f23;
+  --text: #e9e6e1; --muted: #9b958c; --rule: #2e3137;
+  --accent: #e9a06a; --accent-soft: #2b2420;
+  --warn: #e0b457; --warn-soft: #2a2619;
+  --info: #68c3bd; --info-soft: #1b2727;
   --mono-bg: #22252a;
-  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -63,143 +62,124 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: var(--serif);
-  font-size: 1.0625rem;
-  line-height: 1.7;
+  font-family: var(--ar);
+  font-size: 1.125rem;
+  line-height: 1.95;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
 }
-#progress {
-  position: fixed; inset: 0 auto auto 0; height: 2px; width: 0;
-  background: var(--accent); z-index: 60; transition: width .1s linear;
-}
-.shell { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 0; }
+#progress { position: fixed; inset: 0 0 auto auto; height: 2px; width: 0; background: var(--accent); z-index: 60; transition: width .1s linear; }
+.shell { display: grid; grid-template-columns: 285px minmax(0, 1fr); }
 /* ---------- sidebar ---------- */
 #sidebar {
   position: sticky; top: 0; height: 100vh; overflow-y: auto;
-  padding: 2.25rem 1.25rem 3rem 2rem;
-  border-right: 1px solid var(--rule);
+  padding: 2.25rem 2rem 3rem 1.25rem;
+  border-inline-end: 1px solid var(--rule);
   background: var(--bg-sunk);
-  font-family: var(--ui); font-size: .8125rem; line-height: 1.5;
+  font-family: var(--ui); font-size: .8125rem; line-height: 1.7;
 }
-#sidebar .brand {
-  font-family: var(--serif); font-weight: 700; font-size: 1.0625rem; line-height: 1.3;
-  margin: 0 0 .35rem;
-}
+#sidebar .brand { font-weight: 700; font-size: 1.0625rem; line-height: 1.5; margin: 0 0 .25rem; }
 #sidebar .brand-sub { color: var(--muted); font-size: .75rem; margin: 0 0 1.5rem; }
 #toc { list-style: none; margin: 0; padding: 0; }
-#toc li { margin: 0; }
 #toc a {
-  display: block; padding: .3rem .5rem .3rem .65rem; margin-left: -.65rem;
-  color: var(--muted); text-decoration: none; border-left: 2px solid transparent;
-  border-radius: 0 4px 4px 0;
+  display: block; padding: .3rem .65rem; margin-inline-start: -.65rem;
+  color: var(--muted); text-decoration: none;
+  border-inline-start: 2px solid transparent; border-radius: 4px;
 }
 #toc a:hover { color: var(--text); background: var(--accent-soft); }
-#toc a.lvl-2 { font-weight: 600; color: var(--text); margin-top: .9rem; }
-#toc a.lvl-3 { padding-left: 1.5rem; font-size: .78125rem; }
-#toc a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-soft); }
+#toc a.lvl-2 { font-weight: 700; color: var(--text); margin-top: .9rem; }
+#toc a.lvl-3 { padding-inline-start: 1.5rem; font-size: .78125rem; }
+#toc a.active { color: var(--accent); border-inline-start-color: var(--accent); background: var(--accent-soft); }
 /* ---------- main ---------- */
 main { padding: 0 2rem 8rem; }
-.page { max-width: 44rem; margin: 0 auto; }
+.page { max-width: 46rem; margin: 0 auto; }
 header.title { padding: 5rem 0 2.5rem; border-bottom: 1px solid var(--rule); margin-bottom: 2.5rem; }
-header.title .eyebrow {
-  font-family: var(--ui); font-size: .6875rem; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--accent); font-weight: 600; margin: 0 0 1rem;
-}
-header.title h1 {
-  font-size: clamp(2.1rem, 5.2vw, 3.1rem); line-height: 1.1; letter-spacing: -.02em;
-  margin: 0 0 1rem; font-weight: 700;
-}
-header.title p.lede { font-size: 1.1875rem; color: var(--muted); margin: 0 0 1.5rem; max-width: 34rem; }
+header.title .eyebrow { font-family: var(--ui); font-size: .75rem; letter-spacing: .06em; color: var(--accent); font-weight: 700; margin: 0 0 1rem; }
+header.title h1 { font-family: var(--ui); font-size: clamp(2rem, 5vw, 3rem); line-height: 1.35; margin: 0 0 1rem; font-weight: 700; }
+header.title p.lede { font-size: 1.1875rem; color: var(--muted); margin: 0 0 1.5rem; max-width: 36rem; }
 header.title .byline { font-family: var(--ui); font-size: .8125rem; color: var(--muted); }
-h2 {
-  font-size: 1.75rem; line-height: 1.2; letter-spacing: -.015em; font-weight: 700;
-  margin: 4rem 0 1.25rem; padding-top: 2rem; border-top: 1px solid var(--rule);
-  scroll-margin-top: 1.5rem;
-}
-h3 {
-  font-size: 1.1875rem; font-weight: 600; letter-spacing: -.005em;
-  margin: 2.5rem 0 .75rem; scroll-margin-top: 1.5rem;
-}
+h2 { font-family: var(--ui); font-size: 1.75rem; line-height: 1.5; font-weight: 700; margin: 4rem 0 1.25rem; padding-top: 2rem; border-top: 1px solid var(--rule); scroll-margin-top: 1.5rem; }
+h3 { font-family: var(--ui); font-size: 1.1875rem; font-weight: 600; margin: 2.5rem 0 .75rem; scroll-margin-top: 1.5rem; }
 p { margin: 0 0 1.15rem; }
-a { color: var(--accent); text-underline-offset: 2px; }
-strong { font-weight: 600; }
-ul, ol { margin: 0 0 1.25rem; padding-left: 1.4rem; }
-li { margin: .35rem 0; }
-li > ul, li > ol { margin-bottom: .35rem; }
-hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+a { color: var(--accent); text-underline-offset: 3px; }
+strong { font-weight: 700; }
+ul, ol { margin: 0 0 1.25rem; padding-inline-start: 1.5rem; padding-inline-end: 0; }
+li { margin: .4rem 0; }
+li > ul, li > ol { margin-bottom: .4rem; }
 /* ---------- tables ---------- */
 .table-wrap { overflow-x: auto; margin: 0 0 1.5rem; border: 1px solid var(--rule); border-radius: 10px; background: var(--panel); }
-table { border-collapse: collapse; width: 100%; font-family: var(--ui); font-size: .875rem; }
-th, td { text-align: left; padding: .6rem .85rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
-thead th { font-weight: 600; font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); background: var(--bg-sunk); }
+table { border-collapse: collapse; width: 100%; font-family: var(--ui); font-size: .875rem; line-height: 1.7; }
+th, td { text-align: start; padding: .6rem .85rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+thead th { font-weight: 700; font-size: .78125rem; color: var(--muted); background: var(--bg-sunk); }
 tbody tr:last-child td { border-bottom: 0; }
 tbody tr:hover { background: var(--accent-soft); }
-/* ---------- code & math ---------- */
+/* ---------- code & math (always LTR) ---------- */
 code {
-  font-family: var(--mono); font-size: .875em; background: var(--mono-bg);
-  padding: .12em .35em; border-radius: 4px;
+  font-family: var(--mono); font-size: .8125em; background: var(--mono-bg);
+  padding: .14em .4em; border-radius: 4px;
+  direction: ltr; unicode-bidi: isolate; white-space: nowrap;
 }
 pre {
   margin: 0 0 1.5rem; padding: 1rem 1.15rem; overflow-x: auto;
   background: var(--mono-bg); border: 1px solid var(--rule); border-radius: 10px;
+  direction: ltr; text-align: left;
 }
-pre code { background: none; padding: 0; font-size: .8125rem; line-height: 1.65; }
+pre code { background: none; padding: 0; font-size: .8125rem; line-height: 1.7; white-space: pre; }
 .math-block {
   margin: 0 0 1.5rem; padding: 1.15rem 1rem; overflow-x: auto; overflow-y: hidden;
   background: var(--panel); border: 1px solid var(--rule); border-radius: 10px;
-  box-shadow: var(--shadow); text-align: center;
+  box-shadow: var(--shadow); direction: ltr; text-align: center;
 }
 .math-block .katex { font-size: 1.1em; }
 .math-block.failed { font-family: var(--mono); font-size: .8125rem; text-align: left; white-space: pre-wrap; color: var(--muted); }
-/* ---------- quotes / Arabic notes ---------- */
+/* ---------- callouts ---------- */
 blockquote {
-  margin: 1.75rem 0; padding: 1.1rem 1.25rem;
+  margin: 1.75rem 0; padding: 1rem 1.25rem;
   background: var(--accent-soft); border-radius: 10px;
-  border-left: 3px solid var(--accent);
+  border-inline-start: 3px solid var(--accent);
 }
 blockquote p { margin: 0; }
-blockquote.ar {
-  direction: rtl; text-align: right; font-family: var(--arabic);
-  font-size: 1.0625rem; line-height: 2;
-  border-left: 0; border-right: 3px solid var(--accent);
-}
-blockquote.ar strong { font-family: var(--arabic); }
 blockquote > p:not(:last-child) { margin-bottom: .6rem; }
 blockquote ul, blockquote ol { margin: .5rem 0 0; }
-blockquote li { margin: .3rem 0; }
 blockquote li:last-child { margin-bottom: 0; }
-blockquote.ar ul, blockquote.ar ol { padding-left: 0; padding-right: 1.35rem; }
+blockquote.warn { background: var(--warn-soft); border-inline-start-color: var(--warn); }
+blockquote.warn strong:first-child { color: var(--warn); }
+blockquote.info { background: var(--info-soft); border-inline-start-color: var(--info); }
+blockquote.info strong:first-child { color: var(--info); }
+blockquote strong:first-child { color: var(--accent); }
+p.why {
+  background: var(--accent-soft); border-inline-start: 3px solid var(--accent);
+  border-radius: 10px; padding: 1rem 1.25rem; margin: 1.75rem 0;
+}
+p.why strong:first-child { color: var(--accent); }
 /* ---------- controls ---------- */
-.controls { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: flex; gap: .5rem; }
+.controls { position: fixed; top: 1rem; left: 1rem; z-index: 50; display: flex; gap: .5rem; }
 .btn {
-  font-family: var(--ui); font-size: .75rem; font-weight: 500;
+  font-family: var(--ui); font-size: .75rem; font-weight: 600;
   display: inline-flex; align-items: center; gap: .4rem;
   padding: .45rem .7rem; border: 1px solid var(--rule); border-radius: 8px;
-  background: var(--panel); color: var(--text); cursor: pointer; box-shadow: var(--shadow);
+  background: var(--panel); color: var(--text); cursor: pointer;
+  box-shadow: var(--shadow); text-decoration: none;
 }
 .btn:hover { border-color: var(--accent); color: var(--accent); }
 #menu-btn { display: none; }
-footer.colophon {
-  margin-top: 5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule);
-  font-family: var(--ui); font-size: .8125rem; color: var(--muted);
-}
+footer.colophon { margin-top: 5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-family: var(--ui); font-size: .8125rem; color: var(--muted); }
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
   .shell { grid-template-columns: minmax(0, 1fr); }
   #sidebar {
-    position: fixed; inset: 0 auto 0 0; width: min(85vw, 320px); z-index: 70;
-    transform: translateX(-102%); transition: transform .22s ease; box-shadow: var(--shadow);
+    position: fixed; inset: 0 0 0 auto; width: min(85vw, 320px); z-index: 70;
+    transform: translateX(102%); transition: transform .22s ease; box-shadow: var(--shadow);
   }
   #sidebar.open { transform: none; }
   #menu-btn { display: inline-flex; }
   main { padding: 0 1rem 6rem; }
-  header.title { padding-top: 4rem; }
+  header.title { padding-top: 4.5rem; }
+  body { font-size: 1.0625rem; }
 }
 @media print {
   .controls, #sidebar, #progress { display: none !important; }
   .shell { display: block; }
-  body { background: #fff; color: #000; font-size: 10.5pt; }
+  body { background: #fff; color: #000; font-size: 11pt; }
   h2 { page-break-before: always; }
   .math-block, pre, .table-wrap { box-shadow: none; }
 }
@@ -208,252 +188,241 @@ footer.colophon {
 <body>
 <div id="progress"></div>
 <div class="controls">
-  <button class="btn" id="menu-btn" aria-label="Table of contents">☰ Contents</button>
-  <button class="btn" id="theme-btn" aria-label="Switch theme">◐ Theme</button>
+  <button class="btn" id="menu-btn" aria-label="المحتويات">☰ المحتويات</button>
+  <button class="btn" id="theme-btn" aria-label="تغيير المظهر">◐ المظهر</button>
+  <a class="btn" href="english.html" hreflang="en">English</a>
 </div>
 
 <div class="shell">
-  <nav id="sidebar" aria-label="Table of contents">
-    <p class="brand">Math Foundations<br>for Machine Learning</p>
-    <p class="brand-sub">Made Easy</p>
+  <nav id="sidebar" aria-label="المحتويات">
+    <p class="brand">أساسيات الرياضيات<br>لتعلُّم الآلة</p>
+    <p class="brand-sub">ببساطة</p>
     <ul id="toc"></ul>
   </nav>
 
   <main>
     <div class="page">
       <header class="title">
-        <p class="eyebrow">A short, practical book</p>
-        <h1>Math Foundations for Machine Learning</h1>
-        <p class="lede">The linear algebra, calculus, probability and statistics you actually need — intuition first, then the formula, then a worked example you can do by hand.</p>
-        <p class="byline">Oct 27, 2026 · Omar · with Arabic (Egyptian) notes throughout</p>
+        <p class="eyebrow">كتاب قصير وعملي</p>
+        <h1>أساسيات الرياضيات لتعلُّم الآلة</h1>
+        <p class="lede">الجبر الخطي والتفاضل والاحتمالات والإحصاء اللي محتاجها فعلاً — الحدس الأول، بعدين الصيغة، بعدين مثال محلول تقدر تعمله بإيدك.</p>
+        <p class="byline">27 أكتوبر 2026 · عمر · 7 فصول ومفتاح إجابات وخطة مذاكرة 10 أسابيع</p>
       </header>
       <article id="book"></article>
       <footer class="colophon">
-        Source: <a href="book.md">book.md</a> · Rendered with marked + KaTeX · Answers to every practice set are in the answer key.
+        المصدر: <a href="book-ar.md">book-ar.md</a> · النسخة الإنجليزية: <a href="english.html" hreflang="en">English edition</a> · المعادلات مرسومة بـ KaTeX
       </footer>
     </div>
   </main>
 </div>
 
-<script id="book-source" type="text/markdown"># Math Foundations for Machine Learning — Made Easy
+<script id="book-source" type="text/markdown"># أساسيات الرياضيات لتعلُّم الآلة — ببساطة
 
-## How to use this book
+## إزاي تستخدم الكتاب ده
 
-You need only three areas of math for machine learning: linear algebra, calculus, and probability & statistics. This book teaches each one with everyday intuition first, then the formula, then a small worked example, then the link to ML.
+إنت محتاج تلات مجالات بس من الرياضة عشان تشتغل في تعلُّم الآلة: **الجبر الخطي**، و**التفاضل**، و**الاحتمالات والإحصاء**. الكتاب ده بيشرح كل واحد فيهم بالحدس الأول، بعدين الصيغة، بعدين مثال محلول بأرقام حقيقية، وأخيرًا الربط بـ ML.
 
-**Who it's for:** anyone heading toward a junior ML engineer role who finished high-school math (or forgot most of it). No proofs, no heavy theory.
+**الكتاب ده لمين:** أي حد ماشي في طريقه لوظيفة junior ML engineer وخلّص رياضة ثانوية (أو نسي أغلبها). مفيش براهين، ومفيش نظريات تقيلة.
 
-**How each chapter works:**
+**كل قسم ماشي بنفس الترتيب:**
 
-1. **Intuition** — what the idea means in plain words.
-2. **The math** — the formula, kept as short as possible.
-3. **Worked example** — real numbers, every step shown.
-4. **Why ML cares** — where you will meet it in real models.
-5. **Practice** — a few problems, with answers at the end of the book.
+1. **الحدس** — الفكرة بالكلام العادي.
+2. **الرياضة** — الصيغة، وبأقصر شكل ممكن.
+3. **مثال محلول** — أرقام حقيقية وكل خطوة مكتوبة.
+4. **ليه ML محتاجة ده** — هتقابلها فين بالظبط في الموديلات.
+5. **تمارين** — كام مسألة، وحلولها في آخر الكتاب.
 
-**Study tips:**
+**نصايح للمذاكرة:**
 
-- Study 30–60 minutes a day. Short and steady beats long and rare.
-- Work every example with pen and paper before reading the solution.
-- Check your answers in Python with NumPy. Each chapter shows the one-line version.
-- Stuck for more than 20 minutes? Move on and come back tomorrow.
-- Don't aim for perfect. Aim for "I can explain this to a friend."
+- ذاكر 30–60 دقيقة في اليوم. الاستمرار أهم من الطول بكتير.
+- حل كل مثال بالقلم والورقة قبل ما تبصّ على الحل.
+- اتأكد من إجاباتك في بايثون بـ NumPy. كل قسم فيه السطر المختصر.
+- زنقت أكتر من 20 دقيقة؟ سيبها وارجعلها بكره.
+- الهدف مش الكمال. الهدف إنك تقول: "أنا أقدر أشرح دي لصاحبي."
 
-> **بالعربي:** إنت محتاج تلات مجالات بس: الجبر الخطي، التفاضل، والاحتمالات والإحصاء. وكل موضوع في الكتاب ماشي بنفس الترتيب: الفكرة بالكلام العادي ← الصيغة ← مثال بأرقام ← ليه ML محتاجها ← تمارين وحلولها في آخر الكتاب. ونصايح سريعة: ذاكر 30–60 دقيقة في اليوم، حل بالقلم والورقة قبل ما تبصّ على الحل، اتأكد من إجابتك بـ NumPy، ولو زنقت أكتر من 20 دقيقة سيبها وارجعلها بكره. الهدف مش الكمال — الهدف إنك تقدر تشرح الفكرة لصاحبك.
+> **خد بالك:** المصطلحات الإنجليزية مكتوبة جنب العربي بين قوسين عن قصد، لأنك هتقابلها كده بالظبط في الكود والـ papers والشغل. اتعوّد عليها من دلوقتي.
 
-## Chapter 1: Math warm-up
+## الفصل الأول: تسخين رياضي
 
-This chapter refreshes the five small tools every later chapter uses: notation, functions, exponents, logarithms, and summation.
+الفصل ده بيراجع الخمس أدوات الصغيرة اللي كل فصل بعد كده هيستخدمها: الرموز، الدوال، الأسس، اللوغاريتمات، والمجموع.
 
-> **بالعربي:** الشابتر ده بيسخّن معاك على الخمس أدوات الصغيرة اللي كل الشابترات اللي بعده مبنية عليها: الرموز، الدوال، الأسس، اللوغاريتمات، والمجموع (Σ). لو فاكرهم من المدرسة خده كمراجعة سريعة.
+### 1.1 إزاي تقرا الرموز
 
-### 1.1 Reading math notation
+الرموز الرياضية مجرد اختصارات. اتعلمها مرة واحدة والـ papers هتبطّل تبقى مرعبة.
 
-Math symbols are just shorthand. Learn them once and papers stop looking scary.
-
-| Symbol | Read it as | Example |
+| الرمز | بيتقري إزاي | مثال |
 | --- | --- | --- |
-| x, y | a number (a scalar) | x = 3 |
-| **x** (bold) | a vector (a list of numbers) | **x** = \[2, 5, 1\] |
-| **X** (bold capital) | a matrix (a grid of numbers) | a 3 × 2 table |
-| Σ | "add them all up" | Σ xᵢ |
-| ∂ | "partial derivative" | ∂f/∂x |
-| ∇ | "gradient" | ∇f |
-| ∈ | "belongs to" | x ∈ ℝ (x is a real number) |
-| ŷ | "y-hat", a prediction | ŷ = 4.2 |
-| P(A) | probability of A | P(rain) = 0.3 |
+| x, y | رقم واحد (scalar) | `x = 3` |
+| **x** (بولد) | متجه: ليستة أرقام (vector) | `x = [2, 5, 1]` |
+| **X** (كابيتال بولد) | مصفوفة: جدول أرقام (matrix) | جدول 3 × 2 |
+| Σ | "اجمعهم كلهم" | `Σ xᵢ` |
+| ∂ | مشتقة جزئية (partial derivative) | `∂f/∂x` |
+| ∇ | التدرج (gradient) | `∇f` |
+| ∈ | "ينتمي لـ" | `x ∈ ℝ` يعني x رقم حقيقي |
+| ŷ | "واي-هات"، توقُّع الموديل | `ŷ = 4.2` |
+| P(A) | احتمال وقوع A | `P(مطر) = 0.3` |
+| ∩ | "و" — الحدثين مع بعض | `P(A ∩ B)` |
+| α | معدل التعلُّم (learning rate) | `α = 0.01` |
 
-> **بالعربي:** الرموز دي مش أكتر من اختصارات، اتعلمها مرة واحدة وأي paper بعد كده هتقراه عادي:
->
-> - **x, y** رقم عادي (scalar).
-> - **x** بالبولد يعني ليستة أرقام (vector)، و **X** بالكابيتال يعني جدول أرقام (matrix).
-> - **Σ** معناها "اجمع كله"، و **∂** مشتقة جزئية (غيّر متغير واحد بس)، و **∇** الـ gradient (المشتقات الجزئية كلها مع بعض).
-> - **∈** يعني "ينتمي لـ"، و **ŷ** معناها توقّع الموديل، و **P(A)** احتمال حصول A.
+### 1.2 الدوال
 
-### 1.2 Functions
-
-**Intuition:** a function is a machine. You put a number in, you get a number out.
+**الحدس:** الدالة (function) زي الماكينة. بتدخّلها رقم، بتطلّعلك رقم.
 
 ```latex
 f(x) = 2x + 1
 ```
 
-Put in x = 3 and you get f(3) = 2 × 3 + 1 = 7.
+دخّل `x = 3` هيطلعلك `f(3) = 2 × 3 + 1 = 7`.
 
-**Why ML cares:** a trained model *is* a function. It takes features (house size, rooms) and returns a prediction (price).
+**ليه ML محتاجة ده:** أي موديل مدرَّب هو في النهاية دالة. بياخد البيانات (مساحة البيت، عدد الأوض) ويرجّع توقُّع (السعر).
 
-> **بالعربي:** الدالة (function) زي الماكينة: تدخّلها رقم، تطلّعلك رقم. f(x) = 2x + 1 معناها "اضرب في 2 وزوّد 1"، فلو دخّلت 3 يطلعلك 7. وأي موديل مدرَّب هو في الآخر دالة: بتدخّله بيانات البيت (المساحة، عدد الأوض) ويطلّعلك السعر.
+### 1.3 الأسس
 
-### 1.3 Exponents
+**الحدس:** الأس بيقولك تضرب الرقم في نفسه كام مرة.
 
-**Intuition:** an exponent says how many times to multiply a number by itself.
+- `2³ = 2 × 2 × 2 = 8`
+- `x⁰ = 1` لأي x مش صفر
+- `x⁻¹ = 1/x` — الأس السالب معناه مقلوب
+- `xᵃ × xᵇ = xᵃ⁺ᵇ` — نفس الأساس؟ اجمع الأسس
 
-- 2³ = 2 × 2 × 2 = 8
-- x⁰ = 1 for any non-zero x
-- x⁻¹ = 1/x
-- xᵃ × xᵇ = xᵃ⁺ᵇ
-
-> **بالعربي:** الأس بيقولك تضرب الرقم في نفسه كام مرة:
->
-> - 2³ = 2 × 2 × 2 = 8.
-> - أي رقم (مش صفر) أس صفر = 1.
-> - الأس السالب معناه مقلوب: x⁻¹ = 1/x.
-> - ولو بتضرب نفس الأساس، اجمع الأسس: xᵃ × xᵇ = xᵃ⁺ᵇ.
-
-
-The special number **e ≈ 2.718** shows up everywhere in ML. The sigmoid function, used in logistic regression, is built from it:
+الرقم الخاص **e ≈ 2.718** بيظهر في كل حتة في ML. دالة السيجمويد (sigmoid)، اللي بتستخدمها في الانحدار اللوجستي، مبنية عليه:
 
 ```latex
 \sigma(x) = \frac{1}{1 + e^{-x}}
 ```
 
-It squashes any number into the range 0 to 1, so it can act like a probability.
+بتاخد أي رقم — كبير أوي أو سالب أوي — وبتحطّه ما بين 0 و 1، فتقدر تتعامل معاه كأنه احتمال. تخيّلها مقياس بيقولك "أنا متأكد أد إيه": 0 يعني مش متأكد خالص، و 1 يعني متأكد جدًا.
 
-> **بالعربي:** دالة السيجمويد بتاخد أي رقم (سواء كبير أوي أو سالب أوي) وبتحوّله لرقم ما بين 0 و 1. تخيّلها زي مقياس بيقولك "أد إيه أنا متأكد" — 0 يعني مش متأكد خالص، و 1 يعني متأكد جدًا. عشان كده بنستخدمها في التصنيف.
+### 1.4 اللوغاريتمات
 
-### 1.4 Logarithms
+**الحدس:** اللوغاريتم عكس الأس. بيسأل: "محتاج أرفع الأساس لأنهي قوة؟"
 
-**Intuition:** a log is the reverse of an exponent. It asks: "what power do I need?"
+- `log₂(8) = 3` لأن `2³ = 8`
+- `log₁₀(100) = 2` لأن `10² = 100`
+- `ln(x)` معناها لوغاريتم للأساس e
 
-- log₂(8) = 3, because 2³ = 8
-- log₁₀(100) = 2, because 10² = 100
-- ln(x) means log base e
+قواعد هتحتاجها:
 
-Useful rules:
+- `log(a × b) = log(a) + log(b)` — بيحوّل الضرب لجمع
+- `log(1) = 0` دايمًا
+- لوغاريتم أي رقم ما بين 0 و 1 بيطلع **سالب**
 
-- log(a × b) = log(a) + log(b) — turns multiplication into addition
-- log(1) = 0
-- log of a number between 0 and 1 is negative
+**ليه ML محتاجة ده:** لما تضرب احتمالات صغيرة كتير في بعض، النتيجة بتبقى رقم صغير جدًا الكمبيوتر بيتوه فيه (underflow). اللوغاريتم بيحوّل الضرب لجمع فتختفي المشكلة. عشان كده دالة الخطأ في التصنيف اسمها **log loss** (أو cross-entropy).
 
-> **بالعربي:** اللوغاريتم هو عكس الأس، بيسأل: "محتاج أرفع الأساس لأنهي قوة؟" يعني log₂(8) = 3 لأن 2³ = 8، و ln معناها لوغاريتم للأساس e. والقواعد المفيدة:
->
-> - log(a × b) = log(a) + log(b) — بيحوّل الضرب لجمع.
-> - log(1) = 0 دايمًا.
-> - لوغاريتم أي رقم ما بين 0 و 1 بيطلع سالب.
+### 1.5 المجموع (Σ)
 
-
-**Why ML cares:** multiplying many small probabilities gives tiny numbers computers struggle with. Taking logs turns them into sums. This is why the classification loss is called *log loss* (cross-entropy).
-
-> **بالعربي:** لما بنضرب احتمالات صغيرة في بعض، النتيجة بتبقى رقم صغير جدًا الكمبيوتر مش بيعرف يتعامل معاه. اللوغاريتم بيحوّل الضرب لجمع، والأرقام الصغيرة لأرقام سالبة عادية. ده السبب إن اسم دالة الخطأ في التصنيف "log loss".
-
-### 1.5 Summation (Σ)
-
-**Intuition:** Σ is a for-loop written in math.
+**الحدس:** الـ Σ مش أكتر من for-loop مكتوبة بالرياضة.
 
 ```latex
 \sum_{i=1}^{4} x_i = x_1 + x_2 + x_3 + x_4
 ```
 
-If **x** = \[3, 1, 4, 2\], the sum is 3 + 1 + 4 + 2 = 10.
+لو `x = [3, 1, 4, 2]` يبقى المجموع `3 + 1 + 4 + 2 = 10`.
 
-In Python: `sum(x)` or `np.sum(x)`.
+في بايثون: `sum(x)` أو `np.sum(x)`.
 
-> **بالعربي:** الـ Σ مش حاجة مخيفة — هي for-loop مكتوبة بالرياضة. Σ من i=1 لـ 4 معناها "لفّ على العناصر من الأول للرابع واجمعهم". ولو **x** = \[3, 1, 4, 2\] يبقى المجموع 10. في بايثون سطر واحد: `sum(x)`.
+> **في الكود:** أغلب الصيغ اللي هتشوفها في الكتاب ده بتتحوّل لسطر واحد في NumPy. لما تشوف Σ في معادلة، فكّر على طول في `np.sum`.
 
-### Practice — Chapter 1
+### تمارين — الفصل الأول
 
-1. If f(x) = 3x − 2, what is f(4)?
-2. Simplify 2⁴ × 2².
-3. What is log₂(32)?
-4. Compute Σ i² for i = 1 to 3.
-5. What is σ(0) for the sigmoid function?
+1. لو `f(x) = 3x − 2`، احسب `f(4)`.
+2. بسّط `2⁴ × 2²`.
+3. احسب `log₂(32)`.
+4. احسب `Σ i²` من `i = 1` لـ `3`.
+5. احسب `σ(0)` لدالة السيجمويد.
+6. ليه بنفضّل نجمع لوغاريتمات الاحتمالات بدل ما نضرب الاحتمالات نفسها؟
 
-## Chapter 2: Linear algebra
+## الفصل الثاني: الجبر الخطي
 
-Linear algebra is the language of data: every dataset is a matrix, every data point is a vector, and almost every model is matrix multiplication.
+الجبر الخطي هو لغة البيانات: أي داتاسِت هو مصفوفة، وأي نقطة بيانات هي متجه، وأغلب الموديلات في الآخر مجرد ضرب مصفوفات.
 
-> **بالعربي:** الجبر الخطي هو لغة البيانات: أي داتاسِت هو مصفوفة، وأي نقطة بيانات هي vector، وأغلب الموديلات في الآخر مجرد ضرب مصفوفات. لو فهمت الشابتر ده، فهمت نص الـ ML.
+### 2.1 المتجهات (vectors)
 
-### 2.1 Vectors
+**الحدس:** المتجه ليستة أرقام بتوصف حاجة واحدة. البيت ممكن يكون `x = [120, 3, 2]`، يعني 120 م²، 3 أوض، 2 حمام.
 
-**Intuition:** a vector is a list of numbers that describes one thing. A house might be **x** = \[120, 3, 2\], meaning 120 m², 3 rooms, 2 bathrooms.
+هندسيًا، المتجه سهم بيبدأ من نقطة الأصل. `[3, 4]` معناها 3 خطوات يمين و 4 خطوات فوق.
 
-Geometrically, a vector is an arrow from the origin. \[3, 4\] points 3 steps right and 4 steps up.
+**الجمع:** بتجمع كل خانة مع اللي قصادها.
 
-**Adding vectors:** add position by position.
+- `[1, 2] + [3, 5] = [4, 7]`
 
-- \[1, 2\] + \[3, 5\] = \[4, 7\]
+**الضرب في رقم (scaling):** بتضرب كل خانة في الرقم. السهم بيطول أو يقصر وهو في نفس الاتجاه.
 
-**Scaling a vector:** multiply every entry.
+- `3 × [1, 2] = [3, 6]`
 
-- 3 × \[1, 2\] = \[3, 6\]
-
-**Length (norm):** how long the arrow is, by Pythagoras.
+**الطول (norm):** فيثاغورس بس في أبعاد أكتر.
 
 ```latex
 \|\mathbf{x}\| = \sqrt{x_1^2 + x_2^2 + \dots + x_n^2}
 ```
 
-Example: the length of \[3, 4\] is √(9 + 16) = √25 = 5.
+مثال: طول `[3, 4]` هو `√(9 + 16) = √25 = 5`.
 
-> **بالعربي:**
->
-> - **الـ vector** ليستة أرقام بتوصف حاجة واحدة: البيت = \[120, 3, 2\] يعني 120 متر، 3 أوض، 2 حمام. وهندسيًا هو سهم بيبدأ من نقطة الأصل.
-> - **الجمع:** بتجمع كل خانة مع الخانة اللي قصادها بالظبط، مش كله في كله.
-> - **الضرب في رقم (scaling):** بتضرب كل خانة في الرقم — السهم يطول أو يقصر وهو ثابت في نفس الاتجاه.
-> - **الطول (norm):** فيثاغورس بس في أبعاد أكتر: ربّع كل خانة، اجمع، خُد الجذر. طول \[3, 4\] = 5.
+### 2.2 الضرب النقطي (dot product)
 
-### 2.2 The dot product
-
-**Intuition:** the dot product measures how much two vectors point the same way. Multiply matching entries, then add.
+**الحدس:** الضرب النقطي بيقيس الاتنين بيوصّوا في نفس الاتجاه أد إيه. اضرب الخانات المتقابلة، بعدين اجمع.
 
 ```latex
 \mathbf{a} \cdot \mathbf{b} = a_1 b_1 + a_2 b_2 + \dots + a_n b_n
 ```
 
-Worked example: \[1, 2, 3\] · \[4, 5, 6\] = 1×4 + 2×5 + 3×6 = 4 + 10 + 18 = **32**.
+**مثال محلول:** `[1, 2, 3] · [4, 5, 6] = 1×4 + 2×5 + 3×6 = 4 + 10 + 18 =` **32**.
 
-What the sign tells you:
+الإشارة بتقولك إيه:
 
-- Positive → the vectors point roughly the same way.
-- Zero → they are at a right angle (unrelated).
-- Negative → they point roughly opposite ways.
+- **موجبة** → المتجهين بيوصّوا في نفس الاتجاه تقريبًا.
+- **صفر** → بينهم زاوية قائمة، يعني مالهمش علاقة ببعض.
+- **سالبة** → بيوصّوا في اتجاهين متعاكسين تقريبًا.
 
-**Why ML cares:** a linear model's prediction is one dot product: weights · features + bias. Recommendation systems and search rank items by dot products of embeddings (cosine similarity).
+**ليه ML محتاجة ده:** توقُّع أي موديل خطي هو ضرب نقطي واحد: الأوزان · البيانات + الإزاحة. وأنظمة التوصية والبحث بترتّب النتايج بالضرب النقطي للـ embeddings.
 
-> **بالعربي:** حاصل الضرب النقطي (dot product) ببساطة بيقيس "أد إيه الحاجتين دول متشابهين في الاتجاه". لو النتيجة كبيرة وموجبة يبقى متشابهين، لو صفر يبقى مالهمش علاقة ببعض، ولو سالبة يبقى عكس بعض. الموديل بيتعلم عن طريق ضرب الأوزان (weights) في البيانات (features) — وده حرفيًا dot product واحد.
+### 2.3 التشابه الجيبي والمسافات
 
-### 2.3 Matrices
+**الحدس:** الضرب النقطي بيكبر لو المتجهات نفسها كبيرة، حتى لو اتجاههم مش متشابه قوي. عشان كده بنقسم على الأطوال ونشيل تأثير الحجم خالص — والناتج ده اسمه **التشابه الجيبي (cosine similarity)**.
 
-**Intuition:** a matrix is a table of numbers. In ML, each row is one example and each column is one feature.
+```latex
+\cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \, \|\mathbf{b}\|}
+```
 
-|  | Size (m²) | Rooms | Age (years) |
+النتيجة دايمًا ما بين −1 و 1: الـ 1 يعني نفس الاتجاه بالظبط، الـ 0 يعني زاوية قائمة، والـ −1 يعني اتجاه معاكس.
+
+**مثال محلول:** `a = [1, 0]` و `b = [1, 1]`.
+
+- الضرب النقطي = `1×1 + 0×1 = 1`
+- الأطوال = `1` و `√2 ≈ 1.414`
+- التشابه = `1 / 1.414 ≈` **0.71** (زاوية 45 درجة)
+
+وفيه كذا طريقة تقيس بيها "البُعد" بين نقطتين:
+
+| المقياس | الصيغة | بيقيس إيه |
+| --- | --- | --- |
+| المسافة الإقليدية (L2) | `√(Σ (aᵢ − bᵢ)²)` | الخط المستقيم بين النقطتين |
+| مسافة مانهاتن (L1) | `Σ \|aᵢ − bᵢ\|` | المشي في شوارع متعامدة |
+| التشابه الجيبي | `a·b / (‖a‖‖b‖)` | الاتجاه بس، من غير الحجم |
+
+**ليه ML محتاجة ده:** الـ embeddings (تمثيل الكلمات أو الصور كأرقام) بتتقارن بالتشابه الجيبي، لأن اللي يهمنا المعنى مش طول المتجه. والـ KNN و K-means بيعتمدوا على المسافة الإقليدية. والـ L1 و L2 هما نفسهم اللي هتشوفهم في التنظيم (regularization) في الفصل الخامس.
+
+> **خد بالك:** المسافة الإقليدية بتتأثر جدًا بمقياس الأرقام. لو عندك فيتشر بالملّيمتر وفيتشر بالكيلومتر، الأول هيسيطر على الحساب. وحّد المقاييس (standardization) الأول — في القسم 5.2.
+
+### 2.4 المصفوفات (matrices)
+
+**الحدس:** المصفوفة جدول أرقام. في ML، كل **صف** مثال واحد وكل **عمود** خصيصة واحدة (feature).
+
+|  | المساحة (م²) | الأوض | العمر (سنة) |
 | --- | --- | --- | --- |
-| House 1 | 120 | 3 | 10 |
-| House 2 | 85 | 2 | 25 |
-| House 3 | 200 | 5 | 2 |
+| بيت 1 | 120 | 3 | 10 |
+| بيت 2 | 85 | 2 | 25 |
+| بيت 3 | 200 | 5 | 2 |
 
-This is a 3 × 3 matrix: 3 rows × 3 columns. The shape is always written rows × columns.
+دي مصفوفة 3 × 3: تلات صفوف × تلات أعمدة. والشكل (shape) بيتكتب دايمًا **صفوف × أعمدة**.
 
-> **بالعربي:** الـ matrix جدول أرقام. وفي ML، كل **صف** مثال واحد (بيت، عميل، صورة) وكل **عمود** خصيصة واحدة (feature). والشكل (shape) بيتكتب دايمًا صفوف × أعمدة، والترتيب ده هو اللي بيحدّد الضرب هيمشي ولا لأ.
+### 2.5 ضرب المصفوفات
 
-### 2.4 Matrix multiplication
+**القاعدة الوحيدة اللي تحفظها:** كل خانة في الناتج هي ضرب نقطي بين **صف** من المصفوفة الأولى و**عمود** من التانية.
 
-**The one rule to remember:** each entry of the result is a dot product of a **row** from the first matrix with a **column** from the second.
+الأشكال لازم تتطابق: `(m × n)` في `(n × p)` بتدّي `(m × p)`. الرقمين الجوّانيين لازم يكونوا واحد.
 
-Shapes must line up: (m × **n**) times (**n** × p) gives (m × p). The inner numbers must match.
-
-Worked example:
+**مثال محلول:**
 
 ```latex
 \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}
@@ -464,417 +433,416 @@ Worked example:
 \begin{bmatrix} 19 & 22 \\ 43 & 50 \end{bmatrix}
 ```
 
-Watch out: order matters. A × B is usually **not** equal to B × A.
+> **خد بالك:** الترتيب مهم. `A × B` غالبًا **مش** هيساوي `B × A`، وساعات واحد منهم يكون مستحيل أصلاً لأن الأشكال مش متطابقة.
 
-> **بالعربي:** ضرب المصفوفات مش زي ضرب الأرقام العادية. A × B مش هيطلع زي B × A. القاعدة: كل خانة في النتيجة هي dot product بين صف من المصفوفة الأولى وعمود من التانية. ولازم الرقم الجوّاني يتطابق: (صفوف × **أعمدة**) ضرب (**صفوف** × أعمدة) — لو مش متطابقين، الضرب مش ممكن.
+**ليه ML محتاجة ده:** التوقُّع لداتاسِت كامل بيتم في عملية ضرب واحدة: `X × w`. وأي طبقة في شبكة عصبية هي ضرب مصفوفات + دالة تنشيط. الـ GPU اتعملت أصلاً عشان تعمل ده بسرعة.
 
-**Why ML cares:** predicting for a whole dataset at once is one multiplication, **X** × **w**. A neural network layer is a matrix multiplication followed by an activation function. GPUs exist to do this fast.
+في بايثون: `A @ B` أو `np.dot(A, B)`.
 
-In Python: `A @ B` or `np.dot(A, B)`.
+### 2.6 المنقول (transpose)
 
-### 2.5 Transpose
-
-**Intuition:** flip the matrix so rows become columns.
+**الحدس:** بتقلب المصفوفة: الصفوف تبقى أعمدة والأعمدة تبقى صفوف.
 
 ```latex
 \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix}^T = \begin{bmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{bmatrix}
 ```
 
-A 2 × 3 matrix becomes 3 × 2. In Python: `A.T`.
+مصفوفة 2 × 3 بتبقى 3 × 2. في بايثون: `A.T`.
 
-**Why ML cares:** you transpose constantly to make shapes line up for multiplication.
+**ليه ML محتاجة ده:** هتستخدمه كل شوية عشان تخلّي الأشكال تتطابق قبل الضرب.
 
-> **بالعربي:** الـ transpose يعني تقلب المصفوفة: الصفوف تبقى أعمدة والأعمدة تبقى صفوف، فـ 2 × 3 تبقى 3 × 2. هتعمله كل شوية عشان تخلّي الأشكال (shapes) تتطابق قبل الضرب. في بايثون سطر واحد: `A.T`.
+### 2.7 مصفوفة الوحدة والمعكوس
 
-### 2.6 Identity and inverse
+**مصفوفة الوحدة (I):** واحدات على القطر وأصفار في الباقي. هي نسخة الرقم 1 في عالم المصفوفات: `A × I = A`.
 
-**Identity matrix (I):** 1s on the diagonal, 0s elsewhere. It is the matrix version of the number 1: A × I = A.
+**المعكوس (A⁻¹):** نسخة القسمة. `A × A⁻¹ = I`. ومش كل مصفوفة ليها معكوس، زي ما إنت مش بتقدر تقسم على صفر.
 
-**Inverse (A⁻¹):** the matrix version of division. A × A⁻¹ = I. Not every matrix has one, just as you can't divide by 0.
-
-For a 2 × 2 matrix:
+لمصفوفة 2 × 2:
 
 ```latex
 \begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \frac{1}{ad - bc}\begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
 ```
 
-The number ad − bc is the **determinant**. If it is 0, there is no inverse.
+الرقم `ad − bc` اسمه **المحدِّد (determinant)**. لو طلع صفر، يبقى مفيش معكوس.
 
-**Why ML cares:** linear regression has an exact solution (the normal equation) that uses an inverse. In practice, libraries avoid computing inverses directly because it is slow and unstable.
+**ليه ML محتاجة ده:** الانحدار الخطي ليه حل مظبوط بالظبط (المعادلة الطبيعية) بيستخدم المعكوس. بس عمليًا المكتبات بتتجنّب حسابه لأنه بطيء وغير مستقر عدديًا.
 
-> **بالعربي:**
->
-> - **مصفوفة الوحدة (I):** واحدات على القطر وأصفار في الباقي. هي زي الرقم 1 بالظبط: A × I = A.
-> - **المعكوس (A⁻¹):** نسخة القسمة في عالم المصفوفات: A × A⁻¹ = I. ومش كل مصفوفة ليها معكوس، زي ما إنت مش بتقدر تقسم على صفر.
-> - **المحدِّد (determinant) = ad − bc:** لو طلع صفر يبقى مفيش معكوس خالص.
->
-> ملاحظة عملية: المكتبات بتتجنّب حساب المعكوس على المباشر لأنه بطيء وغير مستقر، وبتستخدم طرق تانية بتوصل لنفس النتيجة.
+### 2.8 المتجهات الذاتية والقيم الذاتية (الحدس بس)
 
-### 2.7 Eigenvectors and eigenvalues (intuition only)
-
-**Intuition:** most vectors change direction when multiplied by a matrix. An **eigenvector** is a special direction that only gets stretched or shrunk, never turned. The **eigenvalue** is how much it gets stretched.
+**الحدس:** أغلب المتجهات بتغيّر اتجاهها لما تتضرب في مصفوفة. الـ **eigenvector** اتجاه خاص بيتمدّ أو يتقلّص بس — عمره ما بيلفّ. والـ **eigenvalue** بيقولك اتمدّ أد إيه.
 
 ```latex
 A\mathbf{v} = \lambda \mathbf{v}
 ```
 
-Example: for A = \[\[2, 0\], \[0, 3\]\], the vector \[1, 0\] becomes \[2, 0\]. Same direction, twice as long. So \[1, 0\] is an eigenvector with eigenvalue 2.
+مثال: لو `A = [[2, 0], [0, 3]]`، المتجه `[1, 0]` بيبقى `[2, 0]`. نفس الاتجاه وضعف الطول. يبقى `[1, 0]` متجه ذاتي بقيمة ذاتية 2.
 
-**Why ML cares:** PCA (dimensionality reduction) finds the eigenvectors of the data's covariance matrix. These are the directions where the data spreads out most, so you can keep the important ones and drop the rest.
+**ليه ML محتاجة ده:** الـ PCA (تقليل الأبعاد) بيلاقي المتجهات الذاتية لمصفوفة التغاير بتاعة البيانات. دي الاتجاهات اللي البيانات متفرقعة فيها أكتر حاجة، فتقدر تمسك المهم وترمي الباقي.
 
-> **بالعربي:** تخيّل إن عندك سحابة نقاط في الفضاء. الـ eigenvector هو الاتجاه اللي النقاط ممتدة فيه أكتر حاجة — زي محور السحابة الرئيسي. الـ eigenvalue بيقولك قد إيه النقاط ممتدة في الاتجاه ده. الـ PCA بيستخدم ده عشان يلاقي أهم الاتجاهات ويشيل الباقي، فتقلل حجم البيانات من غير ما تخسر المعلومات المهمة.
-
-### 2.8 Linear algebra in one ML line
+### 2.9 الجبر الخطي في سطر واحد
 
 ```latex
 \hat{\mathbf{y}} = X\mathbf{w} + b
 ```
 
-- X — the data matrix (examples × features)
-- **w** — the weights the model learns
-- b — the bias
-- ŷ — predictions for every example at once
+- `X` — مصفوفة البيانات (أمثلة × فيتشرز)
+- `w` — الأوزان اللي الموديل بيتعلّمها
+- `b` — الإزاحة (bias)
+- `ŷ` — التوقُّعات لكل الأمثلة مرة واحدة
 
-That single line is linear regression, and the first step of every neural network layer.
+السطر ده بعينه هو الانحدار الخطي، وهو كمان أول خطوة في أي طبقة من أي شبكة عصبية.
 
-> **بالعربي:** السطر ŷ = Xw + b هو الجبر الخطي كله في جملة واحدة: X البيانات (أمثلة × فيتشرز)، و w الأوزان اللي الموديل بيتعلّمها، و b الإزاحة (bias)، و ŷ التوقّعات لكل الأمثلة مرة واحدة. السطر ده بعينه هو الـ linear regression، وهو كمان أول خطوة في أي طبقة من أي شبكة عصبية.
+### تمارين — الفصل الثاني
 
-### Practice — Chapter 2
+1. احسب `[2, −1, 3] + [1, 4, 0]`.
+2. هات طول `[6, 8]`.
+3. احسب الضرب النقطي `[1, 0, 2] · [3, 5, 4]`.
+4. هل `[1, 2]` و `[−2, 1]` بينهم زاوية قائمة؟ ليه؟
+5. احسب التشابه الجيبي بين `[2, 0]` و `[0, 5]`. النتيجة دي معناها إيه؟
+6. `A` شكلها 4 × 3 و `B` شكلها 3 × 2. إيه شكل `A × B`؟ وتقدر تحسب `B × A`؟
+7. اضرب `[[1, 0], [2, 1]]` في `[[3, 1], [0, 2]]`.
+8. هات محدِّد `[[4, 2], [3, 1]]`. هل ليها معكوس؟
 
-1. Compute \[2, −1, 3\] + \[1, 4, 0\].
-2. Find the length of \[6, 8\].
-3. Compute the dot product \[1, 0, 2\] · \[3, 5, 4\].
-4. Are \[1, 2\] and \[−2, 1\] at a right angle? Why?
-5. A is 4 × 3 and B is 3 × 2. What is the shape of A × B? Can you compute B × A?
-6. Multiply \[\[1, 0\], \[2, 1\]\] by \[\[3, 1\], \[0, 2\]\].
-7. Find the determinant of \[\[4, 2\], \[3, 1\]\]. Does it have an inverse?
+## الفصل الثالث: التفاضل
 
-## Chapter 3: Calculus
+في ML، التفاضل بيعمل شغلانة واحدة بس: بيقول للموديل يظبّط أوزانه في أنهي اتجاه عشان الخطأ يقل. ومش محتاج منه أكتر من كده.
 
-In ML, calculus does one job: it tells the model which way to adjust its weights so the error goes down. That's all you need from it.
+### 3.1 المشتقة
 
-> **بالعربي:** التفاضل في ML بيعمل حاجة واحدة بس: بيقول للموديل يظبّط أوزانه في أنهي اتجاه عشان الخطأ يقل. ومش محتاج منه أكتر من كده خالص.
+**الحدس:** المشتقة هي الميل، يعني الحاجة بتتغير بأي سرعة. لو بتسوق وموقعك بيتغير 60 كم كل ساعة، مشتقة الموقع = 60 كم/س.
 
-### 3.1 The derivative
+على الرسم، المشتقة عند نقطة هي انحدار المنحنى عندها بالظبط:
 
-**Intuition:** the derivative is the slope, or how fast something changes. If you drive and your position changes 60 km every hour, the derivative of position is 60 km/h.
-
-On a graph, the derivative at a point is the steepness of the curve right there:
-
-- Positive → the curve goes up as x grows.
-- Negative → the curve goes down.
-- Zero → a flat spot: a bottom, a top, or a plateau.
+- **موجبة** → المنحنى طالع مع زيادة x.
+- **سالبة** → المنحنى نازل.
+- **صفر** → نقطة مستوية: قاع، أو قمة، أو سطح مستوي.
 
 ```latex
-f'(x) = \frac{df}{dx} \approx \frac{f(x + h) - f(x)}{h} \text{ for a tiny } h
+f'(x) = \frac{df}{dx} \approx \frac{f(x + h) - f(x)}{h}
 ```
 
-Worked example: for f(x) = x², try x = 3 and h = 0.001. Then (3.001² − 3²) / 0.001 = (9.006001 − 9) / 0.001 ≈ **6**. The exact answer is 2 × 3 = 6.
+الـ `h` هنا رقم صغير جدًا: كل ما يصغّر، التقدير يقرب أكتر من الميل الحقيقي.
 
-> **بالعربي:** المشتقة (derivative) هي الميل: "الحاجة بتتغير بأي سرعة؟" لو بتسوق وموقعك بيتغير 60 كم كل ساعة، يبقى مشتقة الموقع 60 كم/س. وعلى الرسم:
->
-> - **موجبة** → المنحنى طالع مع زيادة x.
-> - **سالبة** → المنحنى نازل.
-> - **صفر** → نقطة مستوية: قمة أو قاع أو سطح مستوي.
->
-> وده بالظبط اللي الموديل محتاجه: يعرف الخطأ طالع ولا نازل عشان يعرف يمشي في أنهي اتجاه.
+**مثال محلول:** لـ `f(x) = x²`، جرّب `x = 3` و `h = 0.001`. يبقى `(3.001² − 3²) / 0.001 = (9.006001 − 9) / 0.001 ≈` **6**. والإجابة المظبوطة `2 × 3 = 6`.
 
-### 3.2 The rules you actually need
+### 3.2 القواعد اللي هتحتاجها فعلاً
 
-You don't compute slopes by hand. You use these rules:
+مش هتحسب الميل بإيدك. هتستعمل القواعد دي:
 
-| Function | Derivative | Example |
+| الدالة | المشتقة | مثال |
 | --- | --- | --- |
-| constant c | 0 | (5)' = 0 |
-| xⁿ (power rule) | n·xⁿ⁻¹ | (x³)' = 3x² |
-| c·f(x) | c·f'(x) | (4x²)' = 8x |
-| f(x) + g(x) | f'(x) + g'(x) | (x² + 3x)' = 2x + 3 |
-| eˣ | eˣ | — |
-| ln(x) | 1/x | — |
-| f(x)·g(x) (product rule) | f'g + fg' | (x·eˣ)' = eˣ + x·eˣ |
+| ثابت c | 0 | `(5)' = 0` |
+| `xⁿ` (قاعدة القوة) | `n·xⁿ⁻¹` | `(x³)' = 3x²` |
+| `c·f(x)` | `c·f'(x)` | `(4x²)' = 8x` |
+| `f(x) + g(x)` | `f'(x) + g'(x)` | `(x² + 3x)' = 2x + 3` |
+| `eˣ` | `eˣ` | مشتقته نفسه |
+| `ln(x)` | `1/x` | — |
+| `f(x)·g(x)` (قاعدة الضرب) | `f'g + fg'` | `(x·eˣ)' = eˣ + x·eˣ` |
 
-Worked example: f(x) = 3x⁴ − 2x² + 7x − 5.
+**مثال محلول:** `f(x) = 3x⁴ − 2x² + 7x − 5`.
 
-- 3x⁴ → 12x³
-- −2x² → −4x
-- 7x → 7
-- −5 → 0
+- `3x⁴ → 12x³`
+- `−2x² → −4x`
+- `7x → 7`
+- `−5 → 0`
 
-So f'(x) = 12x³ − 4x + 7.
+يبقى `f'(x) = 12x³ − 4x + 7`.
 
-> **بالعربي:** مش هتحسب الميل بإيدك، هتستعمل القواعد دي وخلاص:
->
-> - **الثابت** مشتقته صفر — الرقم الثابت مابيتغيرش.
-> - **قاعدة القوة (power rule):** نزّل الأس قدّام واطرح منه واحد: (x³)' = 3x².
-> - **رقم × دالة:** الرقم بيقعد زي ما هو: (4x²)' = 8x.
-> - **جمع دوال:** اشتق كل واحدة لوحدها واجمع.
-> - **eˣ** مشتقته نفسه (الحالة الوحيدة اللي بتعمل كده)، و **ln(x)** مشتقته 1/x.
-> - **قاعدة الضرب (product rule):** f'g + fg'.
+### 3.3 المشتقات الجزئية
 
-### 3.3 Partial derivatives
+**الحدس:** الموديل عنده أوزان كتير، يعني الخطأ بيعتمد على متغيرات كتير. المشتقة الجزئية بتسأل: "لو حرّكت *الوزن ده بس* وثبّت الباقي، المخرج هيتغير أد إيه؟"
 
-**Intuition:** a model has many weights, so the error depends on many variables. A partial derivative asks: "if I nudge only *this one* weight and freeze the rest, how does the output change?"
+القاعدة: اعتبر كل المتغيرات التانية أرقام ثابتة، وبعدين اشتق عادي.
 
-Rule: treat every other variable as a constant, then differentiate as usual.
+**مثال محلول:** `f(x, y) = x²y + 3y`.
 
-Worked example: f(x, y) = x²y + 3y.
+- `∂f/∂x = 2xy` (الـ y اتعامل معاها كثابت)
+- `∂f/∂y = x² + 3` (الـ x اتعامل معاها كثابت)
 
-- ∂f/∂x = 2xy (y is treated as a constant)
-- ∂f/∂y = x² + 3 (x is treated as a constant)
+### 3.4 التدرج (gradient)
 
-> **بالعربي:** المشتقة الجزئية (partial derivative) ببساطة بتقولك: "لو غيّرت متغير واحد بس وثبّت كل حاجة تانية، الناتج هيتغير أد إيه؟" في الموديل، عندك أوزان كتير. المشتقة الجزئية بتقولك كل وزن لوحده مأثّر على الخطأ أد إيه. ودي اللي بنسمّيه الـ gradient — مجموعة المشتقات الجزئية كلها مع بعض.
-
-### 3.4 The gradient
-
-**Intuition:** the gradient collects all the partial derivatives into one vector. It points in the direction of steepest **uphill**.
+**الحدس:** التدرج بيجمع كل المشتقات الجزئية في متجه واحد، وبيشاور على اتجاه **الطلوع** الأسرع.
 
 ```latex
 \nabla f = \left[ \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y} \right]
 ```
 
-From the example above, at the point (1, 2): ∇f = \[2·1·2, 1² + 3\] = \[4, 4\].
+من المثال اللي فات، عند النقطة `(1, 2)`: `∇f = [2·1·2, 1² + 3] = [4, 4]`.
 
-To go **downhill** (reduce error), walk in the opposite direction: −∇f.
+وعشان تنزل (تقلّل الخطأ)، امشي في الاتجاه المعاكس تمامًا: `−∇f`.
 
-> **بالعربي:** الـ gradient (∇f) هو المشتقات الجزئية كلها محطوطة في vector واحد، وهو بيشاور على اتجاه **الطلوع** الأسرع. وإحنا عايزين ننزل (نقلّل الخطأ)، فبنمشي في الاتجاه المعاكس تمامًا: −∇f. الجملة دي هي كل حكاية "تدريب الموديل".
+### 3.5 قاعدة السلسلة (chain rule)
 
-### 3.5 The chain rule
-
-**Intuition:** when functions are stacked inside each other, multiply their slopes. If y changes 3 times as fast as u, and u changes 2 times as fast as x, then y changes 3 × 2 = 6 times as fast as x.
+**الحدس:** لما الدوال تبقى جوّا بعض، اضرب ميولها. لو y بتتغير 3 أضعاف سرعة u، و u بتتغير ضعفين سرعة x، يبقى y بتتغير `3 × 2 = 6` أضعاف سرعة x.
 
 ```latex
 \frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}
 ```
 
-Worked example: y = (3x + 1)².
+**مثال محلول:** `y = (3x + 1)²`.
 
-1. Let u = 3x + 1, so y = u².
-2. dy/du = 2u and du/dx = 3.
-3. dy/dx = 2u × 3 = 6(3x + 1).
+1. خلي `u = 3x + 1`، يبقى `y = u²`.
+2. `dy/du = 2u` و `du/dx = 3`.
+3. `dy/dx = 2u × 3 = 6(3x + 1)`.
 
-**Why ML cares:** a neural network is many functions stacked in layers. **Backpropagation** is just the chain rule applied layer by layer, from the output back to the input. PyTorch and TensorFlow do it for you automatically, but now you know what they're doing.
+**ليه ML محتاجة ده:** الشبكة العصبية دوال كتير مرصوصة في طبقات. والـ **backpropagation** هو حرفيًا قاعدة السلسلة متطبّقة طبقة ورا طبقة، من المخرج لحد المدخل. PyTorch و TensorFlow بيعملوها لوحدهم، بس دلوقتي إنت عارف بيعملوا إيه.
 
-> **بالعربي:** قاعدة السلسلة (chain rule) بتقول: لو عندك دوال جوّا بعض (زي طبقات الشبكة العصبية)، اضرب ميول كل طبقة في بعض عشان تعرف تأثير المدخل على المخرج النهائي. الـ backpropagation اللي بتسمع عنه هو حرفيًا تطبيق القاعدة دي من آخر طبقة لأول طبقة.
+### 3.6 النزول التدرجي (gradient descent)
 
-### 3.6 Gradient descent — calculus at work
+**الحدس:** إنت واقف على تل والدنيا ضباب وعايز توصل الوادي. مش شايف بعيد، بس حاسس بالميل تحت رجلك. فبتاخد خطوة صغيرة في اتجاه النزول، تحسّ تاني، وتكرّر.
 
-**Intuition:** you're on a foggy hill and want to reach the valley. You can't see far, but you can feel the slope under your feet. So you take a small step downhill, feel again, and repeat.
-
-The update rule:
+قاعدة التحديث:
 
 ```latex
 w_{\text{new}} = w_{\text{old}} - \alpha \cdot \frac{\partial L}{\partial w}
 ```
 
-- L — the loss (how wrong the model is)
-- α — the **learning rate** (step size)
+- `L` — الخسارة (الموديل غلطان أد إيه)
+- `α` — **معدل التعلُّم** (حجم الخطوة)
 
-Worked example: minimize L(w) = (w − 4)². The best answer is w = 4. The derivative is L'(w) = 2(w − 4). Start at w = 0 with α = 0.25.
+**مثال محلول:** صغّر `L(w) = (w − 4)²`. الإجابة المثالية `w = 4`. المشتقة `L'(w) = 2(w − 4)`. ابدأ من `w = 0` بـ `α = 0.25`.
 
-| Step | w | L'(w) | New w = w − 0.25 × L'(w) |
+| الخطوة | w | `L'(w)` | `w` الجديدة = `w − 0.25 × L'(w)` |
 | --- | --- | --- | --- |
 | 1 | 0 | −8 | 2 |
 | 2 | 2 | −4 | 3 |
 | 3 | 3 | −2 | 3.5 |
 | 4 | 3.5 | −1 | 3.75 |
 
-Each step halves the distance to 4. The model is learning.
+كل خطوة بتقطع نص المسافة الباقية لـ 4. الموديل بيتعلّم.
 
-Picking the learning rate:
+اختيار معدل التعلُّم:
 
-- Too small → learning is painfully slow.
-- Too large → you overshoot the valley and may never settle.
+- **صغير أوي** → التعلُّم بطيء بشكل مؤلم.
+- **كبير أوي** → بتتقفّز فوق الوادي وممكن عمرك ما تستقر.
 
-> **بالعربي:** الـ gradient descent زي إنك واقف على تل في الضباب ومش شايف الوادي. بتحسّ الأرض تحت رجلك، وبتمشي خطوة صغيرة في اتجاه النزول. الخطوة (learning rate) لو كبيرة أوي هتتقفّز فوق الوادي ومش هتنزل، ولو صغيرة أوي هتمشي ببطء شديد. الموديل بيكرر الخطوة دي آلاف المرات لحد ما الخطأ يقل.
+### 3.7 أنواع النزول التدرجي وحاجات عملية
 
-### Practice — Chapter 3
+الصيغة واحدة، بس السؤال: بتحسب التدرج على كام مثال في المرة؟
 
-1. Find the derivative of f(x) = 5x³ + 2x − 9.
-2. Find the derivative of f(x) = 4eˣ + ln(x).
-3. For f(x, y) = 3x² + xy + y², find ∂f/∂x and ∂f/∂y.
-4. Compute the gradient of that same f at the point (1, 1).
-5. Use the chain rule: find dy/dx for y = (2x − 5)³.
-6. Minimize L(w) = (w − 10)² starting at w = 0 with α = 0.1. What is w after two steps?
+| النوع | بيحسب التدرج على | المميزات والعيوب |
+| --- | --- | --- |
+| Batch GD | الداتاسِت كله | دقيق ومستقر، بس بطيء جدًا على بيانات كبيرة |
+| Stochastic GD (SGD) | مثال واحد | سريع جدًا، بس الطريق بيتهزّ كتير |
+| Mini-batch GD | دفعة صغيرة (32 أو 64 مثال) | التوازن المثالي — وده اللي بيتستخدم فعلاً |
 
-## Chapter 4: Probability
+وكمان حاجات هتقابلها:
 
-Probability is the math of uncertainty. ML models rarely say "this is a cat"; they say "I'm 92% sure this is a cat", and that's a probability.
+- **Epoch** — لفّة كاملة على الداتاسِت كله. التدريب بيبقى كذا epoch.
+- **جدولة معدل التعلُّم (learning rate schedule)** — تبدأ بخطوة كبيرة وتصغّرها مع الوقت: تقرّب بسرعة الأول وتظبّط بدقة في الآخر.
+- **Momentum و Adam** — تحسينات بتخلّي الخطوة تاخد في اعتبارها الاتجاه اللي كنت ماشي فيه، فتعدّي الأماكن المسطّحة وتهتزّ أقل. Adam هو الاختيار الافتراضي في أغلب الشغل.
+- **القيعان المحلية (local minima)** — فيه دوال ليها أكتر من قاع. الدالة **المحدّبة (convex)** زي `(w − 4)²` ليها قاع واحد بس، فمضمون توصله. شبكات التعلُّم العميق مش محدّبة، بس عمليًا الحلول اللي بتوصلها كويسة كفاية.
 
-> **بالعربي:** الاحتمالات هي رياضة عدم اليقين. الموديل نادرًا بيقول "ده قطة" — هو بيقول "أنا متأكد 92% إن ده قطة"، والرقم ده احتمال.
+> **خد بالك:** لو الخسارة بتطلع لفوق أو بتطلّع `NaN` أثناء التدريب، أول حاجة تشك فيها هي معدل التعلُّم إنه كبير أوي. صغّره لـ عُشر قيمته وجرّب تاني.
 
-### 4.1 The basics
+### تمارين — الفصل الثالث
 
-**Intuition:** probability is a number from 0 (impossible) to 1 (certain).
+1. هات مشتقة `f(x) = 5x³ + 2x − 9`.
+2. هات مشتقة `f(x) = 4eˣ + ln(x)`.
+3. لـ `f(x, y) = 3x² + xy + y²`، هات `∂f/∂x` و `∂f/∂y`.
+4. احسب التدرج لنفس الدالة دي عند النقطة `(1, 1)`.
+5. استخدم قاعدة السلسلة: هات `dy/dx` لـ `y = (2x − 5)³`.
+6. صغّر `L(w) = (w − 10)²` من `w = 0` بـ `α = 0.1`. `w` بتساوي كام بعد خطوتين؟
+7. عندك مليون صف بيانات. تختار batch ولا mini-batch ولا stochastic؟ وليه؟
+
+## الفصل الرابع: الاحتمالات
+
+الاحتمالات هي رياضة عدم اليقين. الموديل نادرًا بيقول "ده قطة"؛ هو بيقول "أنا متأكد 92% إن ده قطة"، والرقم ده احتمال.
+
+### 4.1 الأساسيات
+
+**الحدس:** الاحتمال رقم من 0 (مستحيل) لـ 1 (مؤكد).
+
+**P(A) = عدد الحالات اللي فيها A ÷ إجمالي الحالات الممكنة**
+
+**مثال محلول:** ارمي زار عادل. `P(زوجي) = 3/6 = 0.5`، لأن 2 و 4 و 6 زوجية.
+
+تلات قواعد لازم تعرفها:
+
+- **المكمّل:** `P(مش A) = 1 − P(A)`. لو `P(مطر) = 0.3` يبقى `P(مافيش مطر) = 0.7`.
+- **و (AND) للأحداث المستقلة:** `P(A و B) = P(A) × P(B)`. وش ووش في عملتين: `0.5 × 0.5 = 0.25`.
+- **أو (OR):** `P(A أو B) = P(A) + P(B) − P(A و B)`. اطرح التداخل عشان ماتعدّش نفس الحالة مرتين.
+
+### 4.2 الاحتمال الشرطي
+
+**الحدس:** احتمال A بعد ما إنت أصلاً عارف إن B حصلت. الرمز `|` بيتقري "بشرط" أو "given"، والرمز `∩` معناه "و" يعني الحدثين حصلوا مع بعض.
 
 ```latex
-P(A) = \frac{\text{number of ways A can happen}}{\text{total number of outcomes}}
+P(A \mid B) = \frac{P(A \cap B)}{P(B)}
 ```
 
-Worked example: roll a fair die. P(even) = 3/6 = 0.5, because 2, 4 and 6 are even.
+**مثال محلول:** في فصل فيه 100 طالب، 40 بيلعبوا كورة، و 10 من دول بيلعبوا شطرنج كمان.
 
-Three rules to know:
+- `P(شطرنج | كورة) = 10 / 40 = 0.25`
 
-- **Complement:** P(not A) = 1 − P(A). If P(rain) = 0.3, then P(no rain) = 0.7.
-- **AND, independent events:** P(A and B) = P(A) × P(B). Two coin flips both heads: 0.5 × 0.5 = 0.25.
-- **OR:** P(A or B) = P(A) + P(B) − P(A and B). Subtract the overlap so you don't count it twice.
+إنك تعرف إن الطالب بيلعب كورة بيقلّص "عالمك" للأربعين دول بس.
 
-> **بالعربي:** الاحتمال رقم من 0 (مستحيل) لـ 1 (مؤكد)، وبيتحسب: عدد الحالات اللي تعجبك ÷ كل الحالات الممكنة. والقواعد التلاتة:
->
-> - **المكمّل:** P(مش A) = 1 − P(A). لو احتمال المطر 0.3، يبقى احتمال مافيش مطر 0.7.
-> - **و (AND) للأحداث المستقلة:** اضرب. وش ووش في عملتين = 0.5 × 0.5 = 0.25.
-> - **أو (OR):** اجمع الاحتمالين واطرح التداخل، عشان ماتعدّش نفس الحالة مرتين.
+### 4.3 نظرية بايز
 
-### 4.2 Conditional probability
-
-**Intuition:** the probability of A once you already know B happened. The "|" is read as "given".
-
-```latex
-P(A \mid B) = \frac{P(A \text{ and } B)}{P(B)}
-```
-
-Worked example: in a class of 100 students, 40 play football, and 10 of those also play chess.
-
-- P(chess | football) = 10 / 40 = 0.25
-
-Knowing someone plays football shrinks your "world" to those 40 students.
-
-> **بالعربي:** الاحتمال الشرطي (conditional probability) يعني: "لو عرفت إن حاجة حصلت، إيه احتمال حاجة تانية؟" بدل ما تبصّ على كل الطلاب، بتبصّ بس على اللي بيلعبوا كورة وتسأل: "منهم كام بيلعب شطرنج؟" — عالمك اتقلّص.
-
-### 4.3 Bayes' theorem
-
-**Intuition:** Bayes lets you flip a conditional probability around and update your belief when new evidence arrives.
+**الحدس:** بايز بيخلّيك تقلب الاحتمال الشرطي وتحدّث اعتقادك لما يجيلك دليل جديد.
 
 ```latex
 P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}
 ```
 
-Worked example — a spam filter:
+**مثال محلول — فلتر سبام:**
 
-- 20% of emails are spam: P(spam) = 0.2
-- 60% of spam emails contain the word "free": P(free | spam) = 0.6
-- 5% of normal emails contain "free": P(free | not spam) = 0.05
+- 20% من الإيميلات سبام: `P(سبام) = 0.2`
+- 60% من السبام فيه كلمة "free": `P(free | سبام) = 0.6`
+- 5% من الإيميلات العادية فيها "free": `P(free | مش سبام) = 0.05`
 
-Step 1, how often does "free" appear at all?
+الخطوة 1، كلمة "free" بتظهر أد إيه إجمالاً؟
 
-- P(free) = 0.6 × 0.2 + 0.05 × 0.8 = 0.12 + 0.04 = 0.16
+- `P(free) = 0.6 × 0.2 + 0.05 × 0.8 = 0.12 + 0.04 = 0.16`
 
-Step 2, apply Bayes:
+الخطوة 2، طبّق بايز:
 
-- P(spam | free) = (0.6 × 0.2) / 0.16 = 0.12 / 0.16 = **0.75**
+- `P(سبام | free) = (0.6 × 0.2) / 0.16 = 0.12 / 0.16 =` **0.75**
 
-Seeing "free" raises the spam chance from 20% to 75%.
+شوفت "free" فرفع احتمال السبام من 20% لـ 75%.
 
-> **بالعربي:** نظرية بايز بتقلب السؤال. بدل ما تسأل "لو الإيميل سبام، إيه احتمال يكون فيه كلمة free؟" بتسأل "لو فيه كلمة free، إيه احتمال يكون سبام؟" بتبدأ باعتقاد أولي (20% سبام) وبتحدّثه لما تشوف دليل جديد (كلمة free). الناتج: اعتقادك اتغير من 20% لـ 75%. ده بالظبط اللي بيعمله مصنّف Naive Bayes.
+**ليه ML محتاجة ده:** ده بالظبط شغل مصنّف Naive Bayes. والتفكير البايزي كمان أساس الموديلات الاحتمالية وتقدير عدم اليقين.
 
-**Why ML cares:** this is exactly how the Naive Bayes classifier works. Bayesian thinking also underlies probabilistic models and uncertainty estimates.
+### 4.4 المتغيرات العشوائية والقيمة المتوقعة
 
-### 4.4 Random variables
+**الحدس:** المتغير العشوائي رقم قيمته بتعتمد على الحظ، زي نتيجة الزار أو حرارة بكره.
 
-**Intuition:** a random variable is a number whose value depends on chance, like the result of a die roll or tomorrow's temperature.
+- **منفصل (discrete):** قيم معدودة — الزار، عدد الكليكات.
+- **متصل (continuous):** أي قيمة في مدى — الطول، السعر، الوقت.
 
-- **Discrete:** countable values (die rolls, number of clicks).
-- **Continuous:** any value in a range (height, price, time).
-
-**Expected value** is the long-run average:
+**القيمة المتوقعة** هي المتوسط على المدى الطويل:
 
 ```latex
 E[X] = \sum x_i \cdot P(x_i)
 ```
 
-Worked example, a fair die: E\[X\] = (1 + 2 + 3 + 4 + 5 + 6) × 1/6 = 21/6 = **3.5**.
+**مثال محلول**، زار عادل: `E[X] = (1 + 2 + 3 + 4 + 5 + 6) × 1/6 = 21/6 =` **3.5**. ومفيش وش فيه 3.5 — دي متوسط لو كرّرت كتير.
 
-> **بالعربي:** المتغير العشوائي (random variable) رقم قيمته بتعتمد على الحظ، زي نتيجة الزار أو حرارة بكره.
->
-> - **منفصل (discrete):** قيم معدودة — الزار، عدد الكليكات.
-> - **متصل (continuous):** أي قيمة في مدى — الطول، السعر، الوقت.
-> - **القيمة المتوقعة (expected value):** اضرب كل قيمة في احتمالها واجمع. الزار بيطلع 3.5، رغم إن مفيش وش فيه 3.5 — لأنها متوسط على المدى الطويل.
+### 4.5 التوزيعات اللي هتقابلها
 
-### 4.5 Distributions you'll meet
+التوزيع (distribution) بيوصف كل قيمة احتمالها أد إيه.
 
-A distribution describes how likely each value is.
-
-| Distribution | What it models | ML example |
+| التوزيع | بيمثّل إيه | مثال من ML |
 | --- | --- | --- |
-| Bernoulli | one yes/no trial (probability p) | is this email spam? |
-| Binomial | number of successes in n yes/no trials | clicks out of 100 ads shown |
-| Uniform | every value equally likely | random weight initialization |
-| Normal (Gaussian) | the bell curve: most values near the mean | heights, measurement noise, errors |
-| Poisson | count of events in a fixed time | website visits per hour |
-| Categorical | one of several classes | the softmax output of a classifier |
+| Bernoulli | تجربة واحدة نعم/لأ باحتمال p | الإيميل ده سبام ولا لأ؟ |
+| Binomial | عدد النجاحات في n تجربة | كام كليك من 100 إعلان |
+| Uniform | كل القيم بنفس الاحتمال | تهيئة الأوزان العشوائية |
+| Normal (الجرس) | أغلب القيم حوالين المتوسط | الأطوال، الضوضاء، الأخطاء |
+| Poisson | عدد الأحداث في وقت محدد | زيارات الموقع في الساعة |
+| Categorical | واحد من كذا تصنيف | مخرجات الـ softmax |
 
-**The normal distribution** is the star. It is described by just two numbers: the mean μ (the center) and the standard deviation σ (the spread).
+**التوزيع الطبيعي** هو النجم. وبيتوصف برقمين بس: المتوسط `μ` (المركز) والانحراف المعياري `σ` (التفرقع).
 
-The 68–95–99.7 rule:
+قاعدة 68–95–99.7:
 
-- About 68% of values fall within 1σ of the mean.
-- About 95% fall within 2σ.
-- About 99.7% fall within 3σ.
+- حوالي **68%** من القيم جوه `1σ` من المتوسط.
+- حوالي **95%** جوه `2σ`.
+- حوالي **99.7%** جوه `3σ`.
 
-Worked example: adult heights with μ = 170 cm and σ = 10 cm. About 95% of people are between 150 cm and 190 cm.
+**مثال محلول:** أطوال البالغين بـ `μ = 170 سم` و `σ = 10 سم`. يبقى حوالي 95% من الناس ما بين 150 و 190 سم.
 
-**Why ML cares:** many models assume errors are normally distributed. Feature standardization (making features mean 0, standard deviation 1) is built on the same idea.
+### 4.6 الـ softmax: من الدرجات للاحتمالات
 
-> **بالعربي:** التوزيع (distribution) بيوصف كل قيمة احتمالها أد إيه:
->
-> - **Bernoulli:** تجربة واحدة نعم/لأ — الإيميل ده سبام ولا لأ.
-> - **Binomial:** عدد النجاحات في n تجربة — كام كليك من 100 إعلان.
-> - **Uniform:** كل القيم بنفس الاحتمال — تهيئة الأوزان العشوائية.
-> - **Normal (الجرس):** أغلب القيم حوالين المتوسط — الأطوال، الضوضاء، الأخطاء.
-> - **Poisson:** عدد الأحداث في وقت محدد — زيارات الموقع في الساعة.
-> - **Categorical:** واحد من كذا تصنيف — مخرجات الـ softmax.
->
-> والتوزيع الطبيعي بيتوصف برقمين بس: المتوسط μ (المركز) والانحراف المعياري σ (التفرقع). وقاعدة 68–95–99.7 بتقول: 68% من القيم جوه σ واحد من المتوسط، 95% جوه 2σ، و 99.7% جوه 3σ.
+**الحدس:** المصنّف بيطلّع أرقام خام (logits) زي `[2.0, 1.0, 0.1]` — دي مش احتمالات، ممكن تكون سالبة ومجموعها مش 1. الـ softmax بيحوّلها لاحتمالات: بيرفع e لأس كل رقم (عشان يبقى موجب) وبيقسم على المجموع (عشان المجموع يبقى 1).
 
-### Practice — Chapter 4
+```latex
+\text{softmax}(z_i) = \frac{e^{z_i}}{\sum_{j} e^{z_j}}
+```
 
-1. A bag has 3 red and 7 blue balls. What is P(red)? What is P(not red)?
-2. You flip a fair coin 3 times. What is P(all heads)?
-3. Out of 200 customers, 80 bought a phone and 20 of those also bought a case. Find P(case | phone).
-4. A disease affects 1% of people. A test catches 90% of sick people but also flags 10% of healthy people. If you test positive, what is the chance you are sick?
-5. A game pays $10 with probability 0.2 and $0 otherwise. What is the expected payout?
-6. Exam scores are normal with μ = 70 and σ = 5. What range holds about 68% of scores?
+**مثال محلول:** `z = [2.0, 1.0, 0.1]`.
 
-## Chapter 5: Statistics
+- `e² ≈ 7.39`، `e¹ ≈ 2.72`، `e⁰·¹ ≈ 1.11`
+- المجموع `≈ 11.22`
+- الاحتمالات `≈ [0.66, 0.24, 0.10]` — ومجموعها 1 ✓
 
-Statistics turns raw data into understanding. Before you train any model, you describe the data; after you train it, you check whether the results are real or just luck.
+خد بالك إن الترتيب ماتغيرش: أكبر رقم فضل أكبر احتمال. الـ softmax بيحافظ على الترتيب وبيبالغ في الفروق شوية.
 
-We'll use one small dataset for the whole chapter: daily coffee sales of **\[4, 8, 6, 5, 7\]** cups.
+**ليه ML محتاجة ده:** هي آخر طبقة في أي مصنّف متعدد التصنيفات تقريبًا. وللتصنيف الثنائي (تصنيفين بس) بنستخدم السيجمويد — وهو في الحقيقة حالة خاصة من الـ softmax.
 
-> **بالعربي:** الإحصاء بيحوّل البيانات الخام لفهم. قبل ما تدرّب أي موديل بتوصف البيانات الأول، وبعد ما تدرّبه بتتأكد إن النتيجة حقيقية ولا مجرد حظ.
+### 4.7 الإنتروبي و cross-entropy (دالة الخسارة في التصنيف)
 
-### 5.1 Mean, median, mode
+**الحدس:** **الإنتروبي (entropy)** بيقيس عدم اليقين. عملة عادلة (50/50) فيها أقصى عدم يقين. عملة بتطلّع وش 99% من المرات شبه مؤكدة، فإنتروبيها قليل جدًا.
 
-**Intuition:** three ways to answer "what's a typical value?"
+```latex
+H(p) = -\sum_i p_i \log(p_i)
+```
 
-- **Mean (average):** add them up, divide by the count. (4 + 8 + 6 + 5 + 7) / 5 = 30 / 5 = **6**.
-- **Median:** sort the values and take the middle one. Sorted: \[4, 5, 6, 7, 8\], median = **6**.
-- **Mode:** the most frequent value. Here every value appears once, so there is no mode.
+و **cross-entropy** بيقيس: التوقُّع بتاعي بعيد أد إيه عن الحقيقة؟
+
+```latex
+L = -\sum_i y_i \log(\hat{y}_i)
+```
+
+لأن `yᵢ` بتساوي 1 للتصنيف الصح وصفر للباقي، الصيغة بتتبسّط لـ `−log(احتمال التصنيف الصح)`.
+
+**مثال محلول:** التصنيف الصح هو الأول، والموديل قال `[0.66, 0.24, 0.10]`.
+
+- الخسارة = `−log(0.66) ≈ 0.42`
+
+ولو الموديل كان واثق وصح وقال `0.99`: الخسارة = `−log(0.99) ≈ 0.01` (كويس جدًا).
+ولو كان واثق وغلط وقال `0.01`: الخسارة = `−log(0.01) ≈ 4.6` (عقاب كبير).
+
+وده بالظبط اللي احنا عايزينه: الموديل اللي بيبقى **واثق وغلط** بياخد عقاب أكبر بكتير من اللي بيبقى متردد.
+
+- **KL divergence** حاجة قريبة: بتقيس توزيعين بعيدين عن بعض أد إيه، وبتظهر كتير في الموديلات التوليدية وضغط الموديلات.
+
+> **خد بالك:** `log(0)` بتساوي سالب ما لا نهاية. عشان كده المكتبات بتضيف رقم صغير جدًا (`1e-9`) جوه اللوغاريتم. ولو شوفت `NaN` في خسارة التصنيف، دي غالبًا السبب.
+
+### 4.8 الأرجحية العظمى (maximum likelihood)
+
+**الحدس:** إنت عندك بيانات، وعايز تختار قيم الأوزان اللي تخلّي البيانات دي **أكتر حاجة منطقية إنها تحصل**. السؤال بيتقلب: مش "إيه احتمال البيانات؟" لكن "أنهي أوزان تخلّي البيانات اللي أنا شايفها دي أقل حاجة مفاجئة؟"
+
+وبما إن ضرب احتمالات كتير بيدّي رقم صغير جدًا، بناخد لوغاريتم (الفصل الأول!) ونحوّل الضرب لجمع. وبما إننا بنصغّر مش بنكبّر، بنحط إشارة سالبة. النتيجة اسمها **negative log-likelihood**.
+
+**والنتيجة المهمة:**
+
+- لو افترضت إن الأخطاء موزّعة توزيع طبيعي → الأرجحية العظمى بتطلّعلك **MSE** بالظبط.
+- لو افترضت إن المخرج تصنيف (Bernoulli أو Categorical) → بتطلّعلك **cross-entropy** بالظبط.
+
+يعني دوال الخسارة مش مخترعة بالمزاج. هي نتيجة طبيعية للاحتمالات.
+
+### تمارين — الفصل الرابع
+
+1. كيس فيه 3 كور حمرا و 7 زرقا. احسب `P(أحمر)` و `P(مش أحمر)`.
+2. بترمي عملة عادلة 3 مرات. احسب `P(كلهم وش)`.
+3. من 200 عميل، 80 اشتروا موبايل و 20 من دول اشتروا جراب كمان. هات `P(جراب | موبايل)`.
+4. مرض بيصيب 1% من الناس. التحليل بيكشف 90% من المرضى، بس كمان بيدّي نتيجة إيجابية لـ 10% من الأصحّاء. لو تحليلك طلع إيجابي، إيه احتمال إنك مريض فعلاً؟
+5. لعبة بتدفع 10 دولار باحتمال 0.2 و 0 غير كده. إيه القيمة المتوقعة؟
+6. درجات امتحان توزيعها طبيعي بـ `μ = 70` و `σ = 5`. أنهي مدى فيه حوالي 68% من الدرجات؟
+7. احسب الـ softmax لـ `z = [1, 1]`. النتيجة منطقية ليه؟
+8. موديل قال إن احتمال التصنيف الصح 0.5. احسب خسارة الـ cross-entropy.
+
+## الفصل الخامس: الإحصاء
+
+الإحصاء بيحوّل البيانات الخام لفهم. قبل ما تدرّب أي موديل بتوصف البيانات، وبعد ما تدرّبه بتتأكد إن النتيجة حقيقية ولا مجرد حظ.
+
+هنستخدم داتاسِت صغير واحد في الفصل كله: مبيعات القهوة اليومية `[4, 8, 6, 5, 7]` كوباية.
+
+### 5.1 المتوسط والوسيط والمنوال
+
+**الحدس:** تلات طرق تجاوب على "إيه القيمة الطبيعية هنا؟"
+
+- **المتوسط (mean):** اجمع واقسم على العدد. `(4 + 8 + 6 + 5 + 7) / 5 = 30 / 5 =` **6**.
+- **الوسيط (median):** رتّب وخُد اللي في النص. مرتّبة: `[4, 5, 6, 7, 8]`، الوسيط = **6**.
+- **المنوال (mode):** الأكتر تكرارًا. هنا كل قيمة ظهرت مرة، فمفيش منوال.
 
 ```latex
 \mu = \frac{1}{n} \sum_{i=1}^{n} x_i
 ```
 
-**Mean vs median:** one extreme value (an outlier) drags the mean but barely moves the median. Salaries \[3, 4, 5, 100\] have mean 28 but median 4.5. Use the median when data has outliers.
+**المتوسط ولا الوسيط؟** قيمة شاذة واحدة (outlier) بتجرجر المتوسط ومابتحرّكش الوسيط تقريبًا. رواتب `[3, 4, 5, 100]` متوسطها 28 ووسيطها 4.5. استخدم الوسيط لما البيانات فيها قيم شاذة.
 
-> **بالعربي:** تلات طرق تجاوب على "إيه القيمة الطبيعية هنا؟"
->
-> - **المتوسط (mean):** اجمع كله واقسم على العدد.
-> - **الوسيط (median):** رتّب الأرقام وخُد اللي في النص.
-> - **المنوال (mode):** الرقم اللي بيتكرر أكتر (وساعات مايكونش موجود).
->
-> والفرق المهم: رقم شاذ واحد (outlier) بيجرجر المتوسط بعيد ومابيحرّكش الوسيط تقريبًا. رواتب \[3, 4, 5, 100\] متوسطها 28 ووسيطها 4.5 — الوسيط هو اللي بيوصف الواقع.
+### 5.2 التباين والانحراف المعياري
 
-### 5.2 Variance and standard deviation
-
-**Intuition:** how spread out the data is. Are the values huddled near the mean or scattered far away?
+**الحدس:** البيانات متفرقعة أد إيه؟ القيم ملمومة حوالين المتوسط ولا مرمية بعيد؟
 
 ```latex
 \sigma^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \mu)^2 \qquad \sigma = \sqrt{\sigma^2}
 ```
 
-Worked example with \[4, 8, 6, 5, 7\] and mean 6:
+**مثال محلول** على `[4, 8, 6, 5, 7]` والمتوسط 6:
 
-| Value | Value − mean | Squared |
+| القيمة | القيمة − المتوسط | المربع |
 | --- | --- | --- |
 | 4 | −2 | 4 |
 | 8 | 2 | 4 |
@@ -882,168 +850,199 @@ Worked example with \[4, 8, 6, 5, 7\] and mean 6:
 | 5 | −1 | 1 |
 | 7 | 1 | 1 |
 
-- Variance = (4 + 4 + 0 + 1 + 1) / 5 = 10 / 5 = **2**
-- Standard deviation = √2 ≈ **1.41** cups
+- التباين = `(4 + 4 + 0 + 1 + 1) / 5 = 10 / 5 =` **2**
+- الانحراف المعياري = `√2 ≈` **1.41** كوباية
 
-Why square? So negative and positive gaps don't cancel out. Standard deviation takes the square root to get back to the original units.
+ليه بنربّع؟ عشان الفروق السالبة والموجبة ماتلغيش بعض. والانحراف المعياري بياخد الجذر عشان يرجّعنا للوحدة الأصلية.
 
-Note: for a *sample*, divide by n − 1 instead of n. NumPy's `np.var` divides by n by default; use `ddof=1` for the sample version.
+ملحوظة: لو دي **عيّنة** مش مجتمع كامل، اقسم على `n − 1` بدل `n`. في NumPy الـ `np.var` بيقسم على n افتراضيًا؛ استخدم `ddof=1` لنسخة العيّنة.
 
-**Why ML cares:** standardizing features uses these directly: z = (x − μ) / σ. It puts every feature on the same scale so no feature dominates just because its numbers are bigger.
+**ليه ML محتاجة ده:** توحيد المقاييس (standardization) بيستخدمهم على طول: `z = (x − μ) / σ`. بيحط كل الفيتشرز على نفس المقياس فمايبقاش فيه فيتشر مسيطر لمجرد إن أرقامه كبيرة.
 
-> **بالعربي:** التباين (variance) بيقيس الأرقام متفرقة عن المتوسط أد إيه. لو كلها قريبة من المتوسط، التباين صغير. لو متنطّطة بعيد، التباين كبير. الانحراف المعياري (standard deviation) هو جذر التباين — بيرجّع الوحدة الأصلية. الـ standardization (z-score) بتحوّل أي فيتشر لمتوسط 0 وانحراف 1، عشان مايبقاش فيتشر مسيطر على الموديل لمجرد إن أرقامه كبيرة.
+### 5.3 التغاير والارتباط
 
-### 5.3 Covariance and correlation
+**الحدس:** المتغيرين بيتحركوا مع بعض ولا لأ؟
 
-**Intuition:** do two variables move together?
-
-- **Covariance:** positive if they rise together, negative if one rises while the other falls. Its size is hard to read because it depends on units.
-- **Correlation (r):** covariance rescaled to always lie between −1 and 1.
+- **التغاير (covariance):** موجب لو بيطلعوا مع بعض، سالب لو واحد يطلع والتاني ينزل. حجمه صعب تقراه لأنه بيعتمد على الوحدات.
+- **الارتباط (correlation أو r):** نفس الفكرة بس مقيّسة دايمًا ما بين −1 و 1.
 
 ```latex
 r = \frac{\text{cov}(X, Y)}{\sigma_X \, \sigma_Y}
 ```
 
-How to read r:
+إزاي تقرا r:
 
-| r | Meaning | Example |
+| r | المعنى | مثال |
 | --- | --- | --- |
-| close to 1 | strong positive link | hours studied and exam score |
-| close to 0 | no linear link | shoe size and exam score |
-| close to −1 | strong negative link | car age and resale price |
+| قريب من 1 | علاقة طرديّة قوية | ساعات المذاكرة ودرجة الامتحان |
+| قريب من 0 | مفيش علاقة خطية | مقاس الجزمة ودرجة الامتحان |
+| قريب من −1 | علاقة عكسيّة قوية | عمر العربية وسعر بيعها |
 
-**Golden rule:** correlation is not causation. Ice cream sales and drownings rise together, but hot weather causes both.
+**القاعدة الذهبية:** الارتباط مش معناه السببية. مبيعات الآيس كريم وحالات الغرق بيطلعوا مع بعض، بس السبب الحقيقي في الاتنين هو الجو الحرّ.
 
-**Why ML cares:** correlation helps you pick useful features and spot redundant ones. Two features with r ≈ 0.99 carry almost the same information.
+**ليه ML محتاجة ده:** الارتباط بيساعدك تختار الفيتشرز المفيدة وتكتشف المكرّرة. فيتشرين بينهم `r ≈ 0.99` بيحملوا نفس المعلومة تقريبًا.
 
-> **بالعربي:** السؤال هنا: الحاجتين بيتحركوا مع بعض ولا لأ؟
->
-> - **التغاير (covariance):** موجب لو الاتنين بيطلعوا مع بعض، سالب لو واحد يطلع والتاني ينزل. بس حجمه صعب تقراه لأنه بيعتمد على الوحدات.
-> - **الارتباط (correlation أو r):** نفس الفكرة بس مقيّسة ما بين −1 و 1، فتقدر تقراها على طول: قريب من 1 علاقة طرديّة قوية، قريب من 0 مفيش علاقة خطية، قريب من −1 علاقة عكسيّة قوية.
-> - **القاعدة الذهبية:** الارتباط مش معناه السببية. مبيعات الآيس كريم وحالات الغرق بيطلعوا مع بعض، بس السبب الحقيقي في الاتنين هو الجو الحرّ.
->
-> وفي ML: فيتشرين بينهم r ≈ 0.99 بيحملوا نفس المعلومة تقريبًا، فواحد منهم زيادة.
+### 5.4 العيّنات والمجتمعات
 
-### 5.4 Samples and populations
+**الحدس:** إنت نادرًا بتقدر تقيس كل الناس (**المجتمع / population**)، فبتقيس شوية منهم (**عيّنة / sample**) وتعمّم.
 
-**Intuition:** you can rarely measure everyone (the **population**), so you measure some of them (a **sample**) and generalize.
+- العيّنة الكويسة **عشوائية** و**ممثّلة**. لو سألت أصحابك بس هتطلّع نتيجة متحيّزة.
+- العيّنة الأكبر بتدّي تقدير أدق.
+- **نظرية النهاية المركزية:** متوسطات العيّنات العشوائية بتتوزّع توزيع طبيعي، حتى لو البيانات الأصلية مش طبيعية. عشان كده منحنى الجرس بيطلعلك في كل حتة.
 
-- A good sample is **random** and **representative**. Survey only your friends and you'll get biased answers.
-- Bigger samples give more reliable estimates.
-- **Central limit theorem:** averages of many random samples follow a normal distribution, even when the original data doesn't. This is why the bell curve shows up everywhere.
+**ليه ML محتاجة ده:** بيانات التدريب عيّنة من الدنيا الحقيقية، وبيانات الاختبار عيّنة تانية. لو مش ممثّلين لليوزرز الحقيقيين، الموديل هيخيّب أملك في الـ production.
 
-**Why ML cares:** your training data is a sample of the real world. Your test set is another sample. If they don't represent real users, your model will disappoint in production.
+### 5.5 فترات الثقة
 
-> **بالعربي:**
->
-> - **المجتمع (population)** هو كل الناس، و**العيّنة (sample)** هي اللي قدرت تقيسهم فعلًا.
-> - العيّنة الكويسة **عشوائية** و**ممثّلة**. لو سألت أصحابك بس، النتيجة هتبقى متحيّزة.
-> - العيّنة الأكبر بتدّيك تقدير أدق.
-> - **نظرية النهاية المركزية (central limit theorem):** متوسطات العيّنات العشوائية بتتوزّع توزيع طبيعي، حتى لو البيانات الأصلية مش طبيعية — عشان كده منحنى الجرس بيطلعلك في كل حاجة.
->
-> والمهم في ML: بيانات التدريب عيّنة من الدنيا الحقيقية. لو مش ممثّلة لليوزرز الحقيقيين، الموديل هيخيّب أملك في الـ production.
+**الحدس:** التقدير من عيّنة مش رقم مظبوط، هو رقم **± هامش**. بدل ما تقول "المتوسط 6"، بتقول "المتوسط 6 ± 1.2".
 
-### 5.5 Hypothesis testing
+```latex
+\text{CI} = \bar{x} \pm z \cdot \frac{\sigma}{\sqrt{n}}
+```
 
-**Intuition:** a courtroom for data. You assume "nothing special is happening" (innocent) until the evidence is strong enough to say otherwise.
+الـ `z` بيساوي 1.96 لفترة ثقة 95%.
 
-The steps:
+**مثال محلول:** متوسط عيّنة 6 كوبايات، `σ = 1.41`، و `n = 25`.
 
-1. **Null hypothesis (H₀):** no effect. Example: "the new website design doesn't change sales."
-2. **Alternative hypothesis (H₁):** there is an effect.
-3. Collect data and compute a test statistic.
-4. Get the **p-value**: the chance of seeing results at least this extreme *if H₀ were true*.
-5. If p < 0.05 (the usual threshold), reject H₀. The result is "statistically significant".
+- الهامش = `1.96 × 1.41 / √25 = 1.96 × 0.282 ≈ 0.55`
+- الفترة = `6 ± 0.55` يعني من **5.45 لـ 6.55**
 
-Worked example: an A/B test gives p = 0.01 for the new design. If the design truly had no effect, results this strong would appear only 1% of the time. So you reject H₀ and conclude the design likely helps.
+خد بالك إن `√n` في المقام: عشان تصغّر الهامش للنص، محتاج عيّنة **أربع أضعاف** الحجم.
 
-Two kinds of mistakes:
+**ليه ML محتاجة ده:** لما تقول "دقة الموديل 91%"، ده رقم من عيّنة اختبار. الفترة بتقولك الرقم ده موثوق أد إيه — و 91% ± 4% حكاية تانية خالص عن 91% ± 0.3%.
 
-- **Type I error (false positive):** you claim an effect that isn't real.
-- **Type II error (false negative):** you miss an effect that is real.
+### 5.6 اختبار الفرضيات
 
-**Why ML cares:** you'll use this to check whether model A is truly better than model B, and in A/B tests when a model goes live. False positives and false negatives also return as precision and recall.
+**الحدس:** محكمة للبيانات. بتفترض إن "مفيش حاجة خاصة بتحصل" (بريء) لحد ما الدليل يبقى قوي كفاية.
 
-> **بالعربي:** اختبار الفرضيات زي المحكمة: المتهم بريء لحد ما يثبت العكس. الـ H₀ (الفرضية الصفرية) بتقول "مفيش فرق" أو "مفيش تأثير". بتجمع بيانات وتحسب الـ p-value: لو صغير (أقل من 0.05)، يبقى الدليل قوي كفاية إنك ترفض H₀. النوعين من الغلط: Type I (قلت فيه فرق وهو مفيش — false positive) و Type II (قلت مفيش فرق وهو فيه — false negative). نفس الفكرة بتظهر في precision و recall.
+الخطوات:
 
-### 5.6 Statistics in Python
+1. **الفرضية الصفرية (H₀):** مفيش تأثير. مثال: "تصميم الموقع الجديد مابيغيّرش المبيعات."
+2. **الفرضية البديلة (H₁):** فيه تأثير.
+3. اجمع بيانات واحسب إحصاء الاختبار.
+4. هات الـ **p-value**: احتمال إنك تشوف نتيجة بالقوة دي *لو H₀ كانت صح*.
+5. لو `p < 0.05` (العتبة المعتادة)، ارفض H₀. النتيجة بقت "دالة إحصائيًا".
+
+**مثال محلول:** اختبار A/B طلّع `p = 0.01` للتصميم الجديد. يعني لو التصميم فعلاً مالهوش تأثير، نتيجة بالقوة دي كانت هتظهر 1% من المرات بس. فبترفض H₀ وتستنتج إن التصميم غالبًا بيساعد.
+
+نوعين من الغلط:
+
+- **Type I (إيجابية كاذبة):** قلت فيه تأثير وهو مفيش.
+- **Type II (سلبية كاذبة):** قلت مفيش تأثير وهو فيه.
+
+**ليه ML محتاجة ده:** هتستخدمه تتأكد إن موديل A فعلاً أحسن من موديل B، وفي اختبارات A/B لما الموديل ينزل production. ونفس فكرة الإيجابية والسلبية الكاذبة هترجعلك في precision و recall في الفصل السابع.
+
+### 5.7 تقسيم البيانات: تدريب واختبار
+
+**الحدس:** لو صحّحت الامتحان لنفسك بنفس أسئلة المذاكرة، هتجيب 100%. وده مش دليل إنك فاهم. الموديل زي كده بالظبط: لازم تختبره على بيانات **ماشفهاش** قبل كده.
+
+| المجموعة | النسبة الشائعة | بتستخدم في إيه |
+| --- | --- | --- |
+| تدريب (train) | 60–80% | الموديل بيتعلّم منها الأوزان |
+| تحقُّق (validation) | 10–20% | ضبط الإعدادات (learning rate، عدد الطبقات) |
+| اختبار (test) | 10–20% | الحكم النهائي — تُستخدم مرة واحدة بس |
+
+- **التحقُّق المتقاطع (cross-validation):** قسّم البيانات لـ 5 أجزاء، درّب 5 مرات وكل مرة جزء مختلف يبقى للاختبار، وخُد متوسط النتايج. أدق بكتير على البيانات الصغيرة.
+- **التسريب (data leakage):** أوحش غلطة ممكن تعملها — إن معلومة من بيانات الاختبار تتسرّب للتدريب. مثال شائع: إنك تعمل standardization للداتا **كلها** قبل التقسيم. احسب `μ` و `σ` من بيانات التدريب بس.
+
+> **خد بالك:** لو نتيجتك على الاختبار أحسن من المتوقع بشكل غريب، شك في التسريب قبل ما تفرح.
+
+### 5.8 الانحياز والتباين والتنظيم
+
+**الحدس:** في نوعين من الفشل:
+
+- **Underfitting (انحياز عالي / high bias):** الموديل بسيط أوي ومش قادر يمسك النمط. غلطان على التدريب وعلى الاختبار. زي حد بيحاول يرسم خط مستقيم على بيانات منحنية.
+- **Overfitting (تباين عالي / high variance):** الموديل حفظ البيانات بالضوضاء اللي فيها. ممتاز على التدريب ووحش على الاختبار. زي حد حافظ الإجابات مش فاهم الفكرة.
+
+| الحالة | خطأ التدريب | خطأ الاختبار | الحل |
+| --- | --- | --- | --- |
+| Underfitting | عالي | عالي | موديل أكبر، فيتشرز أكتر، تدريب أطول |
+| Overfitting | منخفض | عالي | بيانات أكتر، تنظيم، موديل أبسط |
+| مظبوط | منخفض | منخفض | سيبه كده |
+
+**التنظيم (regularization)** بيحارب الـ overfitting بإنه يعاقب الأوزان الكبيرة: بنضيف حد للخسارة.
+
+```latex
+L_{\text{total}} = L + \lambda \sum_i w_i^2 \quad (\text{L2}) \qquad L_{\text{total}} = L + \lambda \sum_i |w_i| \quad (\text{L1})
+```
+
+- **L2 (Ridge):** بيصغّر كل الأوزان بالتساوي، ونادرًا بيوصّلها لصفر. هو الافتراضي في أغلب الحالات.
+- **L1 (Lasso):** بيوصّل أوزان بالكامل لصفر، فعمليًا بيختارلك الفيتشرز المهمة ويرمي الباقي.
+- `λ` بتتحكم في قوة العقاب: كبيرة أوي → underfitting، صغيرة أوي → مفيش فايدة.
+
+لاحظ إنهم نفس الـ L1 و L2 من قسم 2.3 — نفس فكرة قياس "حجم" المتجه، بس متطبّقة على الأوزان.
+
+### 5.9 الإحصاء في بايثون
 
 ```python
 import numpy as np
 x = np.array([4, 8, 6, 5, 7])
 np.mean(x), np.median(x)   # 6.0, 6.0
 np.var(x), np.std(x)       # 2.0, 1.414
-np.corrcoef(x, y)          # correlation with another array y
+np.var(x, ddof=1)          # 2.5  ← نسخة العيّنة
+np.corrcoef(x, y)          # الارتباط مع مصفوفة y تانية
 ```
 
-> **بالعربي:** كل حسابات الشابتر بسطر واحد لكل واحدة في NumPy. خلي بالك بس من `np.var`: بيقسم على n بشكل افتراضي، فلو إنت بتحسب لعيّنة (sample) استخدم `ddof=1` عشان يقسم على n − 1.
+### تمارين — الفصل الخامس
 
-### Practice — Chapter 5
+1. هات المتوسط والوسيط لـ `[2, 3, 3, 5, 12]`. مين بيوصف القيمة الطبيعية أحسن، وليه؟
+2. هات التباين والانحراف المعياري لـ `[1, 3, 5]`.
+3. فيتشر متوسطه 50 وانحرافه 10. وحّد مقياس القيمة 65.
+4. فيتشرين بينهم `r = −0.9`. اوصف العلاقة بالكلام العادي.
+5. اختبار بين موديلين طلّع `p = 0.30`. إيه استنتاجك؟
+6. فلتر سبام علّم إيميل مهم كسبام. ده Type I ولا Type II، لو H₀ هي "الإيميل ده مش سبام"؟
+7. موديل دقته 95% على التدريب و 62% على الاختبار. إيه المشكلة وإيه حلّين ليها؟
+8. ليه بنحسب `μ` و `σ` من بيانات التدريب بس مش من الداتا كلها؟
 
-1. Find the mean and median of \[2, 3, 3, 5, 12\]. Which better describes a typical value, and why?
-2. Find the variance and standard deviation of \[1, 3, 5\].
-3. A feature has mean 50 and standard deviation 10. Standardize the value 65.
-4. Two features have r = −0.9. Describe their relationship in plain words.
-5. A test comparing two models gives p = 0.30. What do you conclude?
-6. A spam filter marks an important email as spam. Is that a Type I or Type II error, if H₀ is "this email is not spam"?
+## الفصل السادس: نجمّع كله — انحدار خطي من الصفر
 
-## Chapter 6: Putting it together — linear regression from scratch
+في الفصل ده هندرّب موديل حقيقي بإيدينا، وهنستخدم كل اللي فات. الإحصاء بيقيس الخطأ، التفاضل بيقولنا نمشي فين، والجبر الخطي بيعمل ده لكل الأمثلة مرة واحدة.
 
-This chapter trains a real model by hand, using every chapter you've read. Statistics measures the error, calculus finds which way to fix it, and linear algebra does it for many examples at once.
+### 6.1 المسألة
 
-> **بالعربي:** هنا هندرّب موديل حقيقي بإيدينا، وهنستخدم كل اللي قريناه: الإحصاء بيقيس الخطأ، التفاضل بيقولنا نمشي فين، والجبر الخطي بيعمل ده لكل الأمثلة مرة واحدة.
+ساعات المذاكرة (x) ودرجة الامتحان بالعشرات (y):
 
-### 6.1 The problem
-
-Hours studied (x) and exam score in tens of points (y):
-
-| Student | Hours (x) | Score (y) |
+| الطالب | الساعات (x) | الدرجة (y) |
 | --- | --- | --- |
-| A | 1 | 2 |
-| B | 2 | 4 |
-| C | 3 | 6 |
+| أ | 1 | 2 |
+| ب | 2 | 4 |
+| ج | 3 | 6 |
 
-We want a model **ŷ = w·x** that predicts the score from the hours. By eye the answer is w = 2, but the model must find it by itself.
+عايزين موديل `ŷ = w·x` يتوقّع الدرجة من الساعات. بالعين الإجابة `w = 2`، بس الفكرة إن الموديل لازم يوصلها بنفسه.
 
-> **بالعربي:** المسألة: عندنا ساعات مذاكرة (x) ودرجات (y)، وعايزين موديل ŷ = w·x يتوقّع الدرجة من الساعات. بالعين إنت شايف إن w = 2، بس الفكرة كلها إن الموديل لازم يوصلها بنفسه من غير ما حد يقوله.
+### 6.2 الخطوة 1 — قيس الخطأ (إحصاء)
 
-### 6.2 Step 1 — measure the error (statistics)
-
-We use the **mean squared error (MSE)**: the average of the squared gaps between prediction and truth. It is the variance formula from Chapter 5, applied to errors.
+هنستخدم **متوسط مربع الخطأ (MSE)**: متوسط مربعات الفروق بين التوقُّع والحقيقة. وهي نفس صيغة التباين من الفصل الخامس، بس متطبّقة على الأخطاء.
 
 ```latex
 L(w) = \frac{1}{n} \sum_{i=1}^{n} (w x_i - y_i)^2
 ```
 
-At w = 0 every prediction is 0, so L = (2² + 4² + 6²) / 3 = 56 / 3 ≈ **18.67**. That's bad.
+عند `w = 0` كل التوقُّعات أصفار، يبقى `L = (2² + 4² + 6²) / 3 = 56 / 3 ≈` **18.67**. وحش.
 
-> **بالعربي:** الـ MSE (متوسط مربع الخطأ) بيقيس الموديل غلطان أد إيه: خُد الفرق بين التوقّع والحقيقة، ربّعه (عشان السالب والموجب مايلغوش بعض)، وخُد المتوسط. ودي نفس صيغة التباين من شابتر 5 بس مطبّقة على الأخطاء. عند w = 0 الخطأ ≈ 18.67 — وحش جدًا، وطبيعي لأن الموديل لسه مابيعرفش حاجة.
+### 6.3 الخطوة 2 — هات ميل الخطأ (تفاضل)
 
-### 6.3 Step 2 — find the slope of the error (calculus)
-
-Using the power rule and the chain rule from Chapter 3:
+بقاعدة القوة وقاعدة السلسلة من الفصل التالت:
 
 ```latex
 \frac{dL}{dw} = \frac{2}{n} \sum_{i=1}^{n} (w x_i - y_i) \cdot x_i
 ```
 
-At w = 0: (2/3) × \[(0 − 2)·1 + (0 − 4)·2 + (0 − 6)·3\] = (2/3) × (−28) ≈ **−18.67**.
+عند `w = 0`: `(2/3) × [(0 − 2)·1 + (0 − 4)·2 + (0 − 6)·3] = (2/3) × (−28) ≈` **−18.67**.
 
-The slope is negative, so the error goes down if we increase w.
+الميل سالب، يعني الخطأ هينزل لو كبّرنا w.
 
-> **بالعربي:** بنشتق الخطأ بالنسبة لـ w عشان نعرف نمشي فين. طلعت المشتقة ≈ −18.67، والسالب هنا معناه: "لو كبّرت w، الخطأ هينزل". يعني التفاضل حرفيًا بيشاورلك على الطريق الصح.
+### 6.4 الخطوة 3 — خُد خطوة (نزول تدرجي)
 
-### 6.4 Step 3 — take a step (gradient descent)
-
-Update with learning rate α = 0.05:
+حدّث بمعدل تعلُّم `α = 0.05`:
 
 ```latex
 w_{\text{new}} = w - 0.05 \cdot \frac{dL}{dw}
 ```
 
-Repeating the update:
+بتكرار التحديث:
 
-| Step | w | Loss L(w) |
+| الخطوة | w | الخسارة `L(w)` |
 | --- | --- | --- |
 | 0 | 0.000 | 18.67 |
 | 1 | 0.933 | 5.31 |
@@ -1051,138 +1050,267 @@ Repeating the update:
 | 3 | 1.697 | 0.43 |
 | 4 | 1.838 | 0.12 |
 
-Each step closes about half the remaining gap to w = 2, and the loss drops toward 0. That is learning.
+كل خطوة بتقطع نص المسافة الباقية لـ `w = 2`، والخسارة بتنزل ناحية الصفر. ده التعلُّم نفسه.
 
-> **بالعربي:** بنحدّث w بخطوة صغيرة في الاتجاه العكسي للمشتقة (α = 0.05). كل خطوة بتقرّب نص المسافة الباقية لـ w = 2، والخطأ بينزل من 18.67 لـ 0.12 في 4 خطوات بس. ده التعلّم نفسه، مفيش أي سحر.
+### 6.5 الخطوة 4 — اعملها لكل الأمثلة مرة واحدة (جبر خطي)
 
-### 6.5 Step 4 — do it for all examples at once (linear algebra)
-
-Instead of looping over students, stack them into vectors and use dot products:
+بدل ما تلفّ على الطلبة واحد واحد، رصّهم في مصفوفة واستخدم الضرب النقطي:
 
 ```latex
 \hat{\mathbf{y}} = X\mathbf{w} \qquad \nabla L = \frac{2}{n} X^T (X\mathbf{w} - \mathbf{y})
 ```
 
-The transpose (Chapter 2) lines up the shapes. With many features and a million rows, this is still one line of code.
+المنقول (الفصل التاني) بيخلّي الأشكال تتطابق. ومع مليون صف و 500 فيتشر، ده لسه سطر واحد من الكود.
 
-> **بالعربي:** بدل ما تلفّ على كل طالب لوحده، رصّهم في مصفوفة واحدة واضرب. الـ transpose (من شابتر 2) بيخلّي الأشكال تتطابق. والجميل إن السطرين دول مابيتغيروش لو عندك مليون صف و 500 فيتشر — نفس الكود بالظبط، وده سبب وجود الـ GPU.
-
-### 6.6 The whole thing in Python
+### 6.6 الكود كامل في بايثون
 
 ```python
 import numpy as np
 
-X = np.array([[1], [2], [3]], dtype=float)   # hours
-y = np.array([2, 4, 6], dtype=float)         # scores
-w = np.zeros(1)                              # start at w = 0
+X = np.array([[1], [2], [3]], dtype=float)   # الساعات
+y = np.array([2, 4, 6], dtype=float)         # الدرجات
+w = np.zeros(1)                              # ابدأ من w = 0
 alpha = 0.05
 
 for step in range(50):
-    y_hat = X @ w                             # linear algebra: predictions
-    loss = np.mean((y_hat - y) ** 2)          # statistics: MSE
-    grad = (2 / len(y)) * X.T @ (y_hat - y)   # calculus: gradient
-    w = w - alpha * grad                      # gradient descent step
+    y_hat = X @ w                             # جبر خطي: التوقُّعات
+    loss = np.mean((y_hat - y) ** 2)          # إحصاء: MSE
+    grad = (2 / len(y)) * X.T @ (y_hat - y)   # تفاضل: التدرج
+    w = w - alpha * grad                      # خطوة نزول تدرجي
 
-print(w)   # about [2.0]
+print(w)   # حوالي [2.0]
 ```
 
-Every deep learning model, from image classifiers to large language models, follows this same loop: predict, measure the error, compute the gradient, step. Only the size changes.
+أي موديل تعلُّم عميق، من مصنّفات الصور لنماذج اللغة الكبيرة، بيمشي بنفس اللفّة دي: توقّع، قيس الخطأ، احسب التدرج، خُد خطوة. اللي بيتغير هو الحجم بس.
 
-> **بالعربي:** كل حاجة في الشابتر ده اتجمّعت هنا. الإحصاء (MSE) بيقيسلك الخطأ، التفاضل (gradient) بيقولك تمشي فين عشان الخطأ يقل، والجبر الخطي (matrix multiplication) بيخلّيك تعمل ده لكل الأمثلة مرة واحدة بدل ما تلفّ عليهم واحد واحد. اللوب ده — predict, measure, gradient, step — هو اللي بيحصل في أي موديل من أبسط linear regression لحد GPT.
+### 6.7 جرّب بنفسك
 
-### 6.7 Try it yourself
+1. غيّر `alpha` لـ 0.2. إيه اللي بيحصل لـ w؟ وبعدين جرّب 0.01.
+2. ضيف إزاحة `b` بحيث الموديل يبقى `ŷ = w·x + b`، واستخدم `y = [3, 5, 7]`. كل من w و b محتاج مشتقته الجزئية.
+3. اطبع الخسارة كل 10 خطوات وتأكد إنها بتنزل باستمرار.
+4. ضيف حد تنظيم L2 (`λ = 0.1`) للخسارة وشوف الأوزان بتتغير إزاي.
 
-1. Change alpha to 0.2. What happens to w? Then try 0.01.
-2. Add a bias b so the model is ŷ = w·x + b, and use the data y = \[3, 5, 7\]. Both w and b need their own partial derivative.
-3. Print the loss every 10 steps and confirm it keeps falling.
+## الفصل السابع: تقييم الموديل
 
-> **بالعربي:** جرّب بإيدك: كبّر الـ alpha لـ 0.2 وشوف w بتتقفّز إزاي، وصغّرها لـ 0.01 وشوف بتبطّأ إزاي. بعدين ضيف الـ bias وخلي الموديل ŷ = w·x + b — هتحتاج مشتقة جزئية لكل من w و b، ودي شابتر 3 بالظبط.
+درّبت موديل وطلّعلك دقة 95%. السؤال الحقيقي: الرقم ده معناه إيه، وهل هو أصلاً المقياس الصح؟
 
-## Answer key
+### 7.1 مصفوفة الالتباس (confusion matrix)
 
-**Chapter 1**
+**الحدس:** كل توقُّع في التصنيف الثنائي بيقع في واحدة من أربع خانات.
 
-1. f(4) = 3 × 4 − 2 = 10
-2. 2⁴ × 2² = 2⁶ = 64
-3. log₂(32) = 5, because 2⁵ = 32
-4. 1² + 2² + 3² = 1 + 4 + 9 = 14
-5. σ(0) = 1 / (1 + e⁰) = 1 / 2 = 0.5
-
-**Chapter 2**
-
-1. \[3, 3, 3\]
-2. √(36 + 64) = √100 = 10
-3. 1×3 + 0×5 + 2×4 = 11
-4. Yes. The dot product is 1×(−2) + 2×1 = 0.
-5. A × B is 4 × 2. B × A is not possible: B is 3 × 2 and A is 4 × 3, and the inner numbers (2 and 4) don't match.
-6. \[\[3, 1\], \[6, 4\]\]
-7. 4×1 − 2×3 = −2. It's not zero, so the inverse exists.
-
-**Chapter 3**
-
-1. f'(x) = 15x² + 2
-2. f'(x) = 4eˣ + 1/x
-3. ∂f/∂x = 6x + y and ∂f/∂y = x + 2y
-4. At (1, 1): ∇f = \[7, 3\]
-5. dy/dx = 3(2x − 5)² × 2 = 6(2x − 5)²
-6. L'(w) = 2(w − 10). Step 1: w = 0 − 0.1 × (−20) = 2. Step 2: w = 2 − 0.1 × (−16) = **3.6**.
-
-**Chapter 4**
-
-1. P(red) = 3/10 = 0.3 and P(not red) = 0.7
-2. 0.5 × 0.5 × 0.5 = 0.125
-3. P(case | phone) = 20/80 = 0.25
-4. P(positive) = 0.9 × 0.01 + 0.1 × 0.99 = 0.108. P(sick | positive) = 0.009 / 0.108 ≈ **8.3%**. Surprisingly low, because healthy people far outnumber sick ones.
-5. E = 10 × 0.2 + 0 × 0.8 = $2
-6. 65 to 75 (μ ± 1σ)
-
-**Chapter 5**
-
-1. Mean = 25/5 = 5, median = 3. The median is better: the outlier 12 pulls the mean up.
-2. Mean = 3. Squared gaps: 4, 0, 4. Variance = 8/3 ≈ 2.67, standard deviation ≈ 1.63.
-3. z = (65 − 50) / 10 = 1.5
-4. Strong negative relationship: when one goes up, the other usually goes down.
-5. p = 0.30 is above 0.05, so you can't reject H₀. There's no solid evidence that one model is better.
-6. Type I error (false positive): you rejected H₀ ("not spam") when it was true.
-
-## Cheat sheet
-
-| Topic | Key formula | Plain words |
+|  | الموديل قال: إيجابي | الموديل قال: سلبي |
 | --- | --- | --- |
-| Dot product | a · b = Σ aᵢbᵢ | multiply matching entries, add up |
-| Vector length | ‖x‖ = √(Σ xᵢ²) | Pythagoras in many dimensions |
-| Matrix shapes | (m × n)(n × p) → (m × p) | inner numbers must match |
-| Linear model | ŷ = Xw + b | weights · features + bias |
-| Power rule | (xⁿ)' = n·xⁿ⁻¹ | bring the power down, reduce it by 1 |
-| Chain rule | dy/dx = dy/du · du/dx | multiply the slopes of stacked functions |
-| Gradient descent | w ← w − α·∇L | step downhill, size α |
-| Conditional probability | P(A\|B) = P(A and B) / P(B) | probability within a smaller world |
-| Bayes | P(A\|B) = P(B\|A)·P(A) / P(B) | update a belief with evidence |
-| Expected value | E\[X\] = Σ xᵢP(xᵢ) | long-run average |
-| Variance | σ² = (1/n)Σ(xᵢ − μ)² | average squared distance from the mean |
-| Standardize | z = (x − μ) / σ | how many σ away from the mean |
-| MSE loss | (1/n)Σ(ŷᵢ − yᵢ)² | average squared prediction error |
+| **الحقيقة: إيجابي** | TP (إيجابية صحيحة) | FN (سلبية كاذبة) |
+| **الحقيقة: سلبي** | FP (إيجابية كاذبة) | TN (سلبية صحيحة) |
 
-> **بالعربي:** الجدول ده هو الكتاب كله في صفحة واحدة. اطبعه وعلّقه قصادك، وكل ما تنسى صيغة بصّ هنا بدل ما ترجع للشابتر من الأول.
+لاحظ إن `FP` هو نفسه Type I error و `FN` هو Type II error من الفصل الخامس. نفس الفكرة بأسماء تانية.
 
-## 8-week study plan
+### 7.2 الدقة (accuracy) وفخ البيانات غير المتوازنة
 
-About 45 minutes a day, 5 days a week.
+```latex
+\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+```
 
-| Week | Focus | Goal by the end of the week |
+**مثال محلول — وده مهم جدًا:** عندك 1000 إيميل، 10 منهم بس سبام. اعمل موديل غبي بيقول "مش سبام" على طول:
+
+- الدقة = `990 / 1000 =` **99%**
+- وعدد السبام اللي مسكه = **صفر**
+
+الموديل ده عديم الفايدة رغم إن دقته 99%. عشان كده الدقة لوحدها مقياس خطر لما التصنيفات مش متوازنة.
+
+> **خد بالك:** أول سؤال تسأله قبل ما تبصّ على أي مقياس: التصنيفات متوازنة ولا لأ؟
+
+### 7.3 الـ precision والـ recall والـ F1
+
+```latex
+\text{Precision} = \frac{TP}{TP + FP} \qquad \text{Recall} = \frac{TP}{TP + FN}
+```
+
+- **Precision (الدقة الإيجابية):** من كل اللي الموديل قال عليهم إيجابي، كام واحد كان صح فعلاً؟ بتهمّك لما **الإنذار الكاذب مكلّف**.
+- **Recall (الاسترجاع / الحساسية):** من كل الحالات الإيجابية الحقيقية، الموديل مسك كام؟ بتهمّك لما **الحالة اللي تفوتك مكلّفة**.
+
+**مثال محلول:** فلتر سبام: `TP = 8`، `FP = 2`، `FN = 4`.
+
+- Precision = `8 / (8 + 2) = 0.80` — 80% من اللي اتصنّف سبام كان سبام فعلاً.
+- Recall = `8 / (8 + 4) = 0.67` — مسك 67% من السبام الحقيقي.
+
+**المقايضة:** لو خلّيت الموديل أكتر تشدّدًا، الـ precision بيطلع والـ recall بينزل، والعكس. ومفيش مقياس واحد يصلح لكل حاجة:
+
+| الحالة | الأهم | ليه |
 | --- | --- | --- |
-| 1 | Chapter 1: warm-up | read notation, use logs and Σ comfortably |
-| 2 | Chapter 2: vectors and dot products (2.1–2.2) | compute dot products and lengths by hand and in NumPy |
-| 3 | Chapter 2: matrices (2.3–2.8) | multiply matrices and predict result shapes |
-| 4 | Chapter 3: derivatives and rules (3.1–3.3) | differentiate polynomials and partial derivatives |
-| 5 | Chapter 3: gradient, chain rule, gradient descent (3.4–3.6) | run gradient descent by hand for 3 steps |
-| 6 | Chapter 4: probability | solve a Bayes problem from scratch |
-| 7 | Chapter 5: statistics | describe a dataset and interpret a p-value |
-| 8 | Chapter 6 + review | code linear regression from memory |
+| تشخيص سرطان | Recall | إنك تفوّت مريض كارثة |
+| فلتر سبام | Precision | إنك تحذف إيميل مهم كارثة |
+| توصية فيديوهات | Precision | المستخدم بيشوف أول نتايج بس |
 
-**Want more after this book?** Good free follow-ups are 3Blue1Brown's "Essence of Linear Algebra" and "Essence of Calculus" video series, Khan Academy's statistics course, and the book *Mathematics for Machine Learning* by Deisenroth, Faisal and Ong (free PDF from the authors).
+و **F1** بيجمع الاتنين في رقم واحد (متوسط توافقي، بيعاقب لو واحد فيهم ضعيف):
 
-> **بالعربي:** الخطة 45 دقيقة في اليوم، 5 أيام في الأسبوع، 8 أسابيع. والمهم الاستمرار مش الطول: نص ساعة كل يوم أحسن بكتير من 5 ساعات مرة في الأسبوع. ومعيار النجاح في كل أسبوع مش إنك "قريت" — إنك تقدر تحل بإيدك وتشرح الفكرة لحد تاني.
+```latex
+F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
+```
+
+في مثالنا: `F1 = 2 × (0.8 × 0.67) / (0.8 + 0.67) ≈` **0.73**.
+
+### 7.4 منحنى ROC والـ AUC
+
+**الحدس:** المصنّف بيطلّع احتمال، وإنت اللي بتختار العتبة (threshold). العتبة 0.5 مش مقدّسة — ممكن تخلّيها 0.3 لو عايز recall أعلى.
+
+منحنى **ROC** بيرسم معدل الإيجابية الصحيحة (recall) مقابل معدل الإيجابية الكاذبة، عند **كل** العتبات الممكنة. والـ **AUC** هي المساحة تحت المنحنى ده:
+
+- `AUC = 0.5` → الموديل بيخمّن زي العملة.
+- `AUC = 0.9` → كويس جدًا.
+- `AUC = 1.0` → مثالي (وغالبًا فيه تسريب بيانات، فراجع شغلك).
+
+وتفسيرها الحلو: الـ AUC هي احتمال إن الموديل يدّي حالة إيجابية عشوائية درجة أعلى من حالة سلبية عشوائية.
+
+### 7.5 مقاييس الانحدار
+
+لما المخرج رقم مش تصنيف:
+
+| المقياس | الصيغة | خصائصه |
+| --- | --- | --- |
+| MAE | `(1/n)Σ\|ŷᵢ − yᵢ\|` | بنفس وحدة البيانات، ومابيتأثرش كتير بالقيم الشاذة |
+| MSE | `(1/n)Σ(ŷᵢ − yᵢ)²` | بيعاقب الأخطاء الكبيرة بشدة، سهل اشتقاقه |
+| RMSE | `√MSE` | زي MSE بس راجع لوحدة البيانات |
+| R² | `1 − (SS_res / SS_tot)` | نسبة التغيّر اللي الموديل فسّرها: 1 مثالي، 0 زي ما تتوقع بالمتوسط |
+
+**مثال محلول:** الحقيقة `[10, 20, 30]`، التوقُّع `[12, 18, 33]`.
+
+- الأخطاء: `2, −2, 3`
+- MAE = `(2 + 2 + 3) / 3 ≈` **2.33**
+- MSE = `(4 + 4 + 9) / 3 ≈` **5.67**، و RMSE `≈` **2.38**
+
+### 7.6 إزاي تختار المقياس
+
+1. **تصنيف متوازن؟** الدقة كفاية كبداية.
+2. **تصنيف غير متوازن؟** روح على precision و recall و F1، وانسى الدقة.
+3. **عايز تقارن موديلات من غير ما تثبّت عتبة؟** استخدم AUC.
+4. **انحدار فيه قيم شاذة؟** MAE أأمن من RMSE.
+5. **دايمًا:** اربط المقياس بتكلفة الغلط في الواقع. السؤال مش "أنهي مقياس أشيك؟" السؤال "غلطة مين أغلى، FP ولا FN؟"
+
+### تمارين — الفصل السابع
+
+1. موديل عنده `TP = 40`، `FP = 10`، `FN = 20`، `TN = 930`. احسب الدقة والـ precision والـ recall والـ F1.
+2. في المسألة اللي فوق، التصنيفات متوازنة؟ وأنهي مقياس بيوصف الموديل بصدق أكتر؟
+3. موديل كشف احتيال بنكي: تفضّل recall عالي ولا precision عالي؟ ليه؟
+4. موديل AUC بتاعه 0.5. ده معناه إيه؟
+5. لو نزّلت عتبة التصنيف من 0.5 لـ 0.3، الـ recall هيزيد ولا يقل؟ والـ precision؟
+6. الحقيقة `[5, 10]` والتوقُّع `[7, 9]`. احسب MAE و MSE و RMSE.
+
+## مفتاح الإجابات
+
+**الفصل الأول**
+
+1. `f(4) = 3 × 4 − 2 = 10`
+2. `2⁴ × 2² = 2⁶ = 64`
+3. `log₂(32) = 5` لأن `2⁵ = 32`
+4. `1² + 2² + 3² = 1 + 4 + 9 = 14`
+5. `σ(0) = 1 / (1 + e⁰) = 1 / 2 = 0.5`
+6. لأن ضرب احتمالات صغيرة كتير بيدّي رقم أصغر من اللي الكمبيوتر يقدر يمثّله (underflow). اللوغاريتم بيحوّل الضرب لجمع فالأرقام تفضل في مدى آمن.
+
+**الفصل الثاني**
+
+1. `[3, 3, 3]`
+2. `√(36 + 64) = √100 = 10`
+3. `1×3 + 0×5 + 2×4 = 11`
+4. أيوة. الضرب النقطي `1×(−2) + 2×1 = 0`، والصفر معناه زاوية قائمة.
+5. الضرب النقطي = 0، يبقى التشابه الجيبي = 0: المتجهين متعامدين ومفيش بينهم أي تشابه في الاتجاه.
+6. `A × B` شكلها 4 × 2. و `B × A` مستحيلة: B هي 3 × 2 و A هي 4 × 3، والرقمين الجوّانيين (2 و 4) مش متطابقين.
+7. `[[3, 1], [6, 4]]`
+8. `4×1 − 2×3 = −2`. مش صفر، يبقى ليها معكوس.
+
+**الفصل الثالث**
+
+1. `f'(x) = 15x² + 2`
+2. `f'(x) = 4eˣ + 1/x`
+3. `∂f/∂x = 6x + y` و `∂f/∂y = x + 2y`
+4. عند `(1, 1)`: `∇f = [7, 3]`
+5. `dy/dx = 3(2x − 5)² × 2 = 6(2x − 5)²`
+6. `L'(w) = 2(w − 10)`. خطوة 1: `w = 0 − 0.1 × (−20) = 2`. خطوة 2: `w = 2 − 0.1 × (−16) =` **3.6**.
+7. Mini-batch. الـ batch هيحسب على مليون صف في كل خطوة (بطيء جدًا)، والـ stochastic هيهتزّ كتير؛ الدفعة الصغيرة بتجمع سرعة الأول واستقرار التاني، وكمان بتستغل الـ GPU كويس.
+
+**الفصل الرابع**
+
+1. `P(أحمر) = 3/10 = 0.3` و `P(مش أحمر) = 0.7`
+2. `0.5 × 0.5 × 0.5 = 0.125`
+3. `P(جراب | موبايل) = 20/80 = 0.25`
+4. `P(إيجابي) = 0.9 × 0.01 + 0.1 × 0.99 = 0.108`، يبقى `P(مريض | إيجابي) = 0.009 / 0.108 ≈` **8.3%**. رقم صغير بشكل مفاجئ، لأن الأصحّاء أكتر من المرضى بكتير جدًا.
+5. `E = 10 × 0.2 + 0 × 0.8 = 2` دولار
+6. من 65 لـ 75 (`μ ± 1σ`)
+7. `softmax([1, 1]) = [0.5, 0.5]`. منطقي لأن الدرجتين متساويتين، فمفيش سبب يخلّي واحد أرجح من التاني.
+8. `−log(0.5) ≈ 0.69`. ودي خسارة "الموديل متردد تمامًا" في التصنيف الثنائي — أي رقم أعلى من كده معناه إن الموديل بيأذي نفسه.
+
+**الفصل الخامس**
+
+1. المتوسط `25/5 = 5`، الوسيط 3. الوسيط أحسن: القيمة الشاذة 12 بتشدّ المتوسط لفوق.
+2. المتوسط 3. مربعات الفروق: 4، 0، 4. التباين `8/3 ≈ 2.67`، والانحراف `≈ 1.63`.
+3. `z = (65 − 50) / 10 = 1.5`
+4. علاقة عكسيّة قوية: لما واحد يطلع، التاني غالبًا بينزل.
+5. `p = 0.30` أكبر من 0.05، فمقدرش ترفض H₀. مفيش دليل قوي إن موديل أحسن من التاني.
+6. Type I (إيجابية كاذبة): رفضت H₀ ("مش سبام") وهي كانت صح.
+7. Overfitting واضح (فرق 33 نقطة بين التدريب والاختبار). الحلول: بيانات تدريب أكتر، تنظيم L2، موديل أبسط، أو early stopping.
+8. لأن حساب `μ` و `σ` من الداتا كلها بيسرّب معلومات عن بيانات الاختبار جوه التدريب (data leakage)، فنتيجتك هتطلع متفائلة أكتر من الحقيقة.
+
+**الفصل السابع**
+
+1. الدقة `= (40 + 930) / 1000 = 0.97`؛ precision `= 40/50 = 0.80`؛ recall `= 40/60 ≈ 0.67`؛ `F1 ≈ 0.73`.
+2. مش متوازنة خالص (60 إيجابي من 1000). الـ F1 (ومعاه precision و recall) بيوصفوا الموديل بصدق أكتر بكتير من الـ 97%.
+3. recall أعلى: إنك تفوّت عملية احتيال حقيقية أغلى بكتير من إنك توقف عملية سليمة وتتصل بالعميل يأكّدها.
+4. الموديل بيخمّن عشوائي تمامًا، مفيش عنده أي قدرة على التمييز بين التصنيفين.
+5. الـ recall هيزيد (هتمسك حالات إيجابية أكتر) والـ precision غالبًا هينزل (هتزيد الإنذارات الكاذبة).
+6. الأخطاء `2` و `−1`. MAE `= 1.5`، MSE `= (4 + 1)/2 = 2.5`، RMSE `= √2.5 ≈ 1.58`.
+
+## ورقة الغش
+
+| الموضوع | الصيغة | بالكلام العادي |
+| --- | --- | --- |
+| الضرب النقطي | `a · b = Σ aᵢbᵢ` | اضرب المتقابلين واجمع |
+| طول المتجه | `‖x‖ = √(Σ xᵢ²)` | فيثاغورس في أبعاد كتير |
+| التشابه الجيبي | `a·b / (‖a‖‖b‖)` | الاتجاه بس، من غير الحجم |
+| أشكال المصفوفات | `(m × n)(n × p) → (m × p)` | الرقمين الجوّانيين لازم يتطابقوا |
+| الموديل الخطي | `ŷ = Xw + b` | أوزان · بيانات + إزاحة |
+| قاعدة القوة | `(xⁿ)' = n·xⁿ⁻¹` | نزّل الأس واطرح منه واحد |
+| قاعدة السلسلة | `dy/dx = dy/du · du/dx` | اضرب ميول الدوال المرصوصة |
+| النزول التدرجي | `w ← w − α·∇L` | خطوة لتحت، حجمها α |
+| السيجمويد | `σ(x) = 1 / (1 + e⁻ˣ)` | أي رقم → ما بين 0 و 1 |
+| Softmax | `eᶻⁱ / Σ eᶻʲ` | درجات → احتمالات مجموعها 1 |
+| Cross-entropy | `−Σ yᵢ log(ŷᵢ)` | عاقب الثقة الغلط |
+| الاحتمال الشرطي | `P(A\|B) = P(A و B) / P(B)` | احتمال جوه عالم أصغر |
+| بايز | `P(A\|B) = P(B\|A)·P(A) / P(B)` | حدّث اعتقادك بالدليل |
+| القيمة المتوقعة | `E[X] = Σ xᵢP(xᵢ)` | المتوسط على المدى الطويل |
+| التباين | `σ² = (1/n)Σ(xᵢ − μ)²` | متوسط مربع البعد عن المتوسط |
+| توحيد المقياس | `z = (x − μ) / σ` | بعدك عن المتوسط بكام σ |
+| خسارة MSE | `(1/n)Σ(ŷᵢ − yᵢ)²` | متوسط مربع خطأ التوقُّع |
+| تنظيم L2 | `L + λΣwᵢ²` | عاقب الأوزان الكبيرة |
+| Precision | `TP / (TP + FP)` | من اللي قلت عليهم إيجابي، كام صح؟ |
+| Recall | `TP / (TP + FN)` | من الإيجابي الحقيقي، مسكت كام؟ |
+| F1 | `2·P·R / (P + R)` | رقم واحد بيجمع الاتنين |
+
+## خطة مذاكرة — 10 أسابيع
+
+حوالي 45 دقيقة في اليوم، 5 أيام في الأسبوع.
+
+| الأسبوع | التركيز | هدفك آخر الأسبوع |
+| --- | --- | --- |
+| 1 | الفصل 1: التسخين | تقرا الرموز وتستخدم اللوغاريتمات و Σ وإنت مرتاح |
+| 2 | الفصل 2: المتجهات والضرب النقطي (2.1–2.3) | تحسب ضرب نقطي وأطوال وتشابه جيبي بإيدك وبـ NumPy |
+| 3 | الفصل 2: المصفوفات (2.4–2.9) | تضرب مصفوفات وتتوقّع شكل الناتج قبل ما تحسبه |
+| 4 | الفصل 3: المشتقات والقواعد (3.1–3.3) | تشتق كثيرات الحدود والمشتقات الجزئية |
+| 5 | الفصل 3: التدرج والسلسلة والنزول (3.4–3.7) | تشغّل نزول تدرجي بإيدك 3 خطوات وتشرح الفرق بين SGD والـ batch |
+| 6 | الفصل 4: الاحتمالات (4.1–4.5) | تحل مسألة بايز من الصفر |
+| 7 | الفصل 4: softmax و cross-entropy (4.6–4.8) | تحوّل درجات لاحتمالات وتحسب خسارة التصنيف |
+| 8 | الفصل 5: الإحصاء (5.1–5.6) | توصف داتاسِت وتفسّر p-value وفترة ثقة |
+| 9 | الفصل 5: التقسيم والانحياز والتنظيم (5.7–5.9) | تشخّص overfitting وتعرف تعالجه |
+| 10 | الفصل 6 + الفصل 7 + مراجعة | تكتب انحدار خطي من الذاكرة وتختار المقياس الصح لأي مسألة |
+
+> **خد بالك:** معيار النجاح في كل أسبوع مش إنك "قريت" — معياره إنك تقدر تحل بإيدك وتشرح الفكرة لحد تاني بكلامك.
+
+## وبعد كده تروح فين؟
+
+- **3Blue1Brown** — سلسلتي "Essence of Linear Algebra" و "Essence of Calculus" على يوتيوب. أحسن شرح بصري موجود، ومجاني.
+- **Khan Academy** — كورس الإحصاء والاحتمالات، بالتدريج ومع تمارين.
+- **Mathematics for Machine Learning** — كتاب Deisenroth و Faisal و Ong. أعمق من الكتاب ده بكتير، و PDF مجاني من المؤلفين.
+- **StatQuest** (قناة يوتيوب) — بيشرح مقاييس التقييم والـ bias–variance ببساطة شديدة.
+- وأهم حاجة: **اكتب كود**. خُد أي داتاسِت صغير من Kaggle، درّب انحدار خطي ولوجستي بإيدك بـ NumPy قبل ما تستخدم scikit-learn.
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -1190,7 +1318,6 @@ About 45 minutes a day, 5 days a week.
 (function () {
   'use strict';
 
-  /* ---------- theme ---------- */
   var root = document.documentElement;
   try {
     var saved = localStorage.getItem('mlmath-theme');
@@ -1205,8 +1332,11 @@ About 45 minutes a day, 5 days a week.
     try { localStorage.setItem('mlmath-theme', next); } catch (e) { /* ignore */ }
   });
 
-  /* ---------- render markdown ---------- */
   var source = document.getElementById('book-source').textContent;
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
 
   function renderMath(tex) {
     try {
@@ -1214,8 +1344,7 @@ About 45 minutes a day, 5 days a week.
         katex.renderToString(tex, { displayMode: true, throwOnError: true, strict: false }) +
         '</div>';
     } catch (err) {
-      var esc = tex.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      return '<div class="math-block failed">' + esc + '</div>';
+      return '<div class="math-block failed">' + escapeHtml(tex) + '</div>';
     }
   }
 
@@ -1226,15 +1355,7 @@ About 45 minutes a day, 5 days a week.
         var lang = (infostring || '').trim().toLowerCase();
         var text = typeof code === 'string' ? code : code.text;
         if (lang === 'latex' || lang === 'math' || lang === 'tex') return renderMath(text);
-        var esc = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        return '<pre><code class="language-' + lang + '">' + esc + '</code></pre>';
-      },
-      table: function (header, body) {
-        // marked v12 passes a token when the renderer is overridden via use(); guard both shapes.
-        var html = typeof header === 'string'
-          ? '<table><thead>' + header + '</thead><tbody>' + body + '</tbody></table>'
-          : null;
-        return html === null ? false : '<div class="table-wrap">' + html + '</div>';
+        return '<pre><code class="language-' + lang + '" dir="ltr">' + escapeHtml(text) + '</code></pre>';
       }
     }
   });
@@ -1242,25 +1363,29 @@ About 45 minutes a day, 5 days a week.
   var article = document.getElementById('book');
   article.innerHTML = marked.parse(source);
 
-  /* the <h1> lives in the page header instead */
   var firstH1 = article.querySelector('h1');
   if (firstH1) firstH1.remove();
 
-  /* tables that the renderer hook did not wrap */
   article.querySelectorAll('table').forEach(function (t) {
-    if (t.parentElement && t.parentElement.classList.contains('table-wrap')) return;
     var wrap = document.createElement('div');
     wrap.className = 'table-wrap';
     t.parentNode.insertBefore(wrap, t);
     wrap.appendChild(t);
   });
 
-  /* Arabic notes read right-to-left */
+  /* callout flavours, by the bold label the note opens with */
   article.querySelectorAll('blockquote').forEach(function (q) {
-    if (/[؀-ۿ]/.test(q.textContent)) q.classList.add('ar');
+    var label = q.querySelector('strong');
+    var t = label ? label.textContent : '';
+    if (/خد بالك/.test(t)) q.classList.add('warn');
+    else if (/في الكود/.test(t)) q.classList.add('info');
   });
 
-  /* ---------- headings, ids, table of contents ---------- */
+  /* "ليه ML محتاجة ده" paragraphs read as cards */
+  article.querySelectorAll('p > strong:first-child').forEach(function (s) {
+    if (/^ليه ML/.test(s.textContent)) s.parentElement.classList.add('why');
+  });
+
   var used = Object.create(null);
   function slug(text) {
     var base = text.toLowerCase()
@@ -1277,16 +1402,15 @@ About 45 minutes a day, 5 days a week.
     var li = document.createElement('li');
     var a = document.createElement('a');
     a.href = '#' + h.id;
-    a.textContent = h.textContent.replace(/\s+—\s+/g, ' — ');
+    a.textContent = h.textContent;
     a.className = 'lvl-' + (h.tagName === 'H2' ? '2' : '3');
     li.appendChild(a);
     toc.appendChild(li);
   });
 
   var links = {};
-  toc.querySelectorAll('a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  toc.querySelectorAll('a').forEach(function (a) { links[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
 
-  /* ---------- active section + reading progress ---------- */
   var bar = document.getElementById('progress');
   var current = null;
 
@@ -1318,7 +1442,6 @@ About 45 minutes a day, 5 days a week.
   window.addEventListener('resize', onScroll);
   onScroll();
 
-  /* ---------- mobile contents drawer ---------- */
   var sidebar = document.getElementById('sidebar');
   document.getElementById('menu-btn').addEventListener('click', function (e) {
     e.stopPropagation();
