@@ -25,11 +25,26 @@
 
 وكمان مفتاح إجابات لكل التمارين، وورقة غش بكل الصيغ، وخطة مذاكرة 10 أسابيع.
 
+## تطبيق يشتغل من غير إنترنت (PWA)
+
+الكتاب مثبّت كتطبيق. افتح الرابط واضغط **⤓ تثبيت التطبيق** في أعلى الصفحة، أو من
+قايمة المتصفح: «تثبيت» في Chrome و Edge، و«إضافة إلى الشاشة الرئيسية» من زر
+المشاركة في Safari على iPhone و iPad.
+
+بعد أول فتحة الكتاب كله بيتخزّن على جهازك — النص والمعادلات والخطوط العربية
+والنسخة الإنجليزية كمان — فيشتغل كامل وأنت أوفلاين، في المترو أو الطيارة.
+لما تنزل نسخة جديدة بيظهر زر **↻ نسخة جديدة** وأنت تختار إمتى تحدّث.
+
+مفيش أي حاجة بتتحمّل من سيرفر تاني: KaTeX و marked والخطوط كلها متخزّنة جوه
+المستودع في `vendor/`.
+
 ## الملفات
 
 - `index.html` — الكتاب كامل في صفحة واحدة (المعادلات بـ KaTeX، تصميم RTL، وضع ليلي، وجاهز للطباعة)
 - `book-ar.md` — المصدر بصيغة Markdown
 - `english.html` + `book.md` — النسخة الإنجليزية الأقصر (6 فصول)
+- `manifest.webmanifest` + `sw.js` + `icons/` — ملفات التطبيق والتخزين للعمل أوفلاين
+- `vendor/` — KaTeX و marked والخطوط، متخزّنة محليًا
 
 ---
 
@@ -37,6 +52,11 @@
 
 A shorter English edition (6 chapters, with Arabic explainer notes) is published
 at **https://astromar96.github.io/ml-math-book/english.html** — source in `book.md`.
+
+Both editions are one installable PWA: hit **⤓ Install** in the top bar (or "Add
+to Home Screen" on iOS) and the whole book — text, formulas, fonts and the other
+language edition — is cached on device and works with no network at all. Nothing
+is loaded from a CDN; KaTeX, marked and the web fonts are vendored in `vendor/`.
 
 The Arabic edition is the fuller one: it adds cosine similarity and distance
 metrics, gradient-descent variants, softmax, entropy and cross-entropy, maximum

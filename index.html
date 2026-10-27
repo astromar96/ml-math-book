@@ -6,16 +6,22 @@
 <title>أساسيات الرياضيات لتعلُّم الآلة</title>
 <meta name="description" content="كتاب عربي مبسّط في الجبر الخطي والتفاضل والاحتمالات والإحصاء اللي محتاجها فعلاً في تعلُّم الآلة — الحدس الأول، بعدين الصيغة، بعدين مثال محلول.">
 <meta name="color-scheme" content="light dark">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#fbf9f5">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="رياضيات ML">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta property="og:title" content="أساسيات الرياضيات لتعلُّم الآلة — ببساطة">
 <meta property="og:description" content="الجبر الخطي والتفاضل والاحتمالات والإحصاء لتعلُّم الآلة، بالعربي ومن الصفر.">
 <meta property="og:type" content="book">
 <meta property="og:locale" content="ar_EG">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>∑</text></svg>">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
 <link rel="alternate" hreflang="en" href="english.html">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Cairo:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="vendor/fonts-ar.css">
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
 <style>
 :root {
   --bg: #fbf9f5;
@@ -183,6 +189,9 @@ footer.colophon { margin-top: 5rem; padding-top: 1.5rem; border-top: 1px solid v
   h2 { page-break-before: always; }
   .math-block, pre, .table-wrap { box-shadow: none; }
 }
+
+.btn[hidden] { display: none; }
+#update-btn { border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
@@ -190,6 +199,8 @@ footer.colophon { margin-top: 5rem; padding-top: 1.5rem; border-top: 1px solid v
 <div class="controls">
   <button class="btn" id="menu-btn" aria-label="المحتويات">☰ المحتويات</button>
   <button class="btn" id="theme-btn" aria-label="تغيير المظهر">◐ المظهر</button>
+  <button class="btn" id="install-btn" aria-label="تثبيت الكتاب كتطبيق" hidden>⤓ تثبيت التطبيق</button>
+  <button class="btn" id="update-btn" aria-label="تحديث لآخر نسخة" hidden>↻ نسخة جديدة</button>
   <a class="btn" href="english.html" hreflang="en">English</a>
 </div>
 
@@ -1312,8 +1323,8 @@ F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \te
 - **StatQuest** (قناة يوتيوب) — بيشرح مقاييس التقييم والـ bias–variance ببساطة شديدة.
 - وأهم حاجة: **اكتب كود**. خُد أي داتاسِت صغير من Kaggle، درّب انحدار خطي ولوجستي بإيدك بـ NumPy قبل ما تستخدم scikit-learn.
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="vendor/marked.min.js"></script>
+<script src="vendor/katex/katex.min.js"></script>
 <script>
 (function () {
   'use strict';
@@ -1450,6 +1461,85 @@ F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \te
   toc.addEventListener('click', function () { sidebar.classList.remove('open'); });
   document.addEventListener('click', function (e) {
     if (sidebar.classList.contains('open') && !sidebar.contains(e.target)) sidebar.classList.remove('open');
+  });
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  /* Keep the standalone window chrome in step with the chosen theme. */
+  function syncThemeColor() {
+    var attr = root.getAttribute('data-theme');
+    var dark = attr === 'dark' || (!attr && prefersDark.matches);
+    themeMeta.setAttribute('content', dark ? '#16171a' : '#fbf9f5');
+  }
+  syncThemeColor();
+  new MutationObserver(syncThemeColor).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  if (prefersDark.addEventListener) prefersDark.addEventListener('change', syncThemeColor);
+
+  /* Install button: Chromium fires beforeinstallprompt, Safari installs from
+     the share sheet, so the button only ever appears when it can do something. */
+  var installBtn = document.getElementById('install-btn');
+  var deferredPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', function (event) {
+    event.preventDefault();
+    deferredPrompt = event;
+    installBtn.hidden = false;
+  });
+
+  installBtn.addEventListener('click', function () {
+    if (!deferredPrompt) return;
+    installBtn.hidden = true;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function () { deferredPrompt = null; });
+  });
+
+  window.addEventListener('appinstalled', function () {
+    deferredPrompt = null;
+    installBtn.hidden = true;
+  });
+
+  if (!('serviceWorker' in navigator)) return;
+
+  var updateBtn = document.getElementById('update-btn');
+  var reloading = false;
+
+  navigator.serviceWorker.addEventListener('controllerchange', function () {
+    if (reloading) return;
+    reloading = true;
+    window.location.reload();
+  });
+
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').then(function (reg) {
+      function watch(worker) {
+        if (!worker) return;
+        worker.addEventListener('statechange', function () {
+          /* A worker that installs while one is already in charge is an update. */
+          if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+            updateBtn.hidden = false;
+          }
+        });
+      }
+
+      if (reg.waiting && navigator.serviceWorker.controller) updateBtn.hidden = false;
+      watch(reg.installing);
+      reg.addEventListener('updatefound', function () { watch(reg.installing); });
+
+      updateBtn.addEventListener('click', function () {
+        updateBtn.hidden = true;
+        var worker = reg.waiting || reg.installing;
+        if (worker) worker.postMessage('SKIP_WAITING');
+      });
+    }).catch(function (err) {
+      console.warn('service worker registration failed', err);
+    });
   });
 })();
 </script>

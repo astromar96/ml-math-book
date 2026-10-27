@@ -6,15 +6,21 @@
 <title>Math Foundations for Machine Learning</title>
 <meta name="description" content="A plain-language book on the linear algebra, calculus, probability and statistics you actually need for machine learning — intuition first, then the formula, then a worked example.">
 <meta name="color-scheme" content="light dark">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#fbf9f5">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ML Math">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta property="og:title" content="Math Foundations for Machine Learning — Made Easy">
 <meta property="og:description" content="Linear algebra, calculus, probability and statistics for machine learning. Intuition first, then the formula, then a worked example.">
 <meta property="og:type" content="book">
 <link rel="alternate" hreflang="ar" href="index.html">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>∑</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Naskh+Arabic:wght@400;600&display=swap">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+<link rel="stylesheet" href="vendor/fonts-en.css">
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
 <style>
 :root {
   --bg: #fbf9f5;
@@ -204,6 +210,9 @@ footer.colophon {
   h2 { page-break-before: always; }
   .math-block, pre, .table-wrap { box-shadow: none; }
 }
+
+.btn[hidden] { display: none; }
+#update-btn { border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
@@ -211,6 +220,8 @@ footer.colophon {
 <div class="controls">
   <button class="btn" id="menu-btn" aria-label="Table of contents">☰ Contents</button>
   <button class="btn" id="theme-btn" aria-label="Switch theme">◐ Theme</button>
+  <button class="btn" id="install-btn" aria-label="Install the book as an app" hidden>⤓ Install</button>
+  <button class="btn" id="update-btn" aria-label="Update to the newest version" hidden>↻ Update</button>
   <a class="btn" href="index.html" hreflang="ar" dir="rtl">العربية</a>
 </div>
 
@@ -1186,8 +1197,8 @@ About 45 minutes a day, 5 days a week.
 
 > **بالعربي:** الخطة 45 دقيقة في اليوم، 5 أيام في الأسبوع، 8 أسابيع. والمهم الاستمرار مش الطول: نص ساعة كل يوم أحسن بكتير من 5 ساعات مرة في الأسبوع. ومعيار النجاح في كل أسبوع مش إنك "قريت" — إنك تقدر تحل بإيدك وتشرح الفكرة لحد تاني.
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="vendor/marked.min.js"></script>
+<script src="vendor/katex/katex.min.js"></script>
 <script>
 (function () {
   'use strict';
@@ -1329,6 +1340,85 @@ About 45 minutes a day, 5 days a week.
   toc.addEventListener('click', function () { sidebar.classList.remove('open'); });
   document.addEventListener('click', function (e) {
     if (sidebar.classList.contains('open') && !sidebar.contains(e.target)) sidebar.classList.remove('open');
+  });
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  /* Keep the standalone window chrome in step with the chosen theme. */
+  function syncThemeColor() {
+    var attr = root.getAttribute('data-theme');
+    var dark = attr === 'dark' || (!attr && prefersDark.matches);
+    themeMeta.setAttribute('content', dark ? '#16171a' : '#fbf9f5');
+  }
+  syncThemeColor();
+  new MutationObserver(syncThemeColor).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  if (prefersDark.addEventListener) prefersDark.addEventListener('change', syncThemeColor);
+
+  /* Install button: Chromium fires beforeinstallprompt, Safari installs from
+     the share sheet, so the button only ever appears when it can do something. */
+  var installBtn = document.getElementById('install-btn');
+  var deferredPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', function (event) {
+    event.preventDefault();
+    deferredPrompt = event;
+    installBtn.hidden = false;
+  });
+
+  installBtn.addEventListener('click', function () {
+    if (!deferredPrompt) return;
+    installBtn.hidden = true;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function () { deferredPrompt = null; });
+  });
+
+  window.addEventListener('appinstalled', function () {
+    deferredPrompt = null;
+    installBtn.hidden = true;
+  });
+
+  if (!('serviceWorker' in navigator)) return;
+
+  var updateBtn = document.getElementById('update-btn');
+  var reloading = false;
+
+  navigator.serviceWorker.addEventListener('controllerchange', function () {
+    if (reloading) return;
+    reloading = true;
+    window.location.reload();
+  });
+
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').then(function (reg) {
+      function watch(worker) {
+        if (!worker) return;
+        worker.addEventListener('statechange', function () {
+          /* A worker that installs while one is already in charge is an update. */
+          if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+            updateBtn.hidden = false;
+          }
+        });
+      }
+
+      if (reg.waiting && navigator.serviceWorker.controller) updateBtn.hidden = false;
+      watch(reg.installing);
+      reg.addEventListener('updatefound', function () { watch(reg.installing); });
+
+      updateBtn.addEventListener('click', function () {
+        updateBtn.hidden = true;
+        var worker = reg.waiting || reg.installing;
+        if (worker) worker.postMessage('SKIP_WAITING');
+      });
+    }).catch(function (err) {
+      console.warn('service worker registration failed', err);
+    });
   });
 })();
 </script>
