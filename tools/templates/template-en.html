@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Math Foundations for Machine Learning</title>
+<meta name="description" content="A plain-language book on the linear algebra, calculus, probability and statistics you actually need for machine learning — intuition first, then the formula, then a worked example.">
+<meta name="color-scheme" content="light dark">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#fbf9f5">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ML Math">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta property="og:title" content="Math Foundations for Machine Learning — Made Easy">
+<meta property="og:description" content="Linear algebra, calculus, probability and statistics for machine learning. Intuition first, then the formula, then a worked example.">
+<meta property="og:type" content="book">
+<link rel="alternate" hreflang="ar" href="index.html">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+<link rel="stylesheet" href="vendor/fonts-en.css">
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<style>
+:root {
+  --bg: #fbf9f5;
+  --bg-sunk: #f2eee6;
+  --panel: #ffffff;
+  --text: #1c1a17;
+  --muted: #6b6459;
+  --rule: #e2dbcd;
+  --accent: #a8431a;
+  --accent-soft: #f6e7dd;
+  --mono-bg: #f4f1ea;
+  --shadow: 0 1px 2px rgba(28, 26, 23, .06), 0 8px 24px -16px rgba(28, 26, 23, .25);
+  --serif: "Source Serif 4", Iowan Old Style, Georgia, serif;
+  --ui: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --arabic: "Noto Naskh Arabic", "Geeza Pro", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #16171a;
+    --bg-sunk: #1d1f23;
+    --panel: #1d1f23;
+    --text: #e9e6e1;
+    --muted: #9b958c;
+    --rule: #2e3137;
+    --accent: #e9a06a;
+    --accent-soft: #2a2420;
+    --mono-bg: #22252a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #16171a;
+  --bg-sunk: #1d1f23;
+  --panel: #1d1f23;
+  --text: #e9e6e1;
+  --muted: #9b958c;
+  --rule: #2e3137;
+  --accent: #e9a06a;
+  --accent-soft: #2a2420;
+  --mono-bg: #22252a;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+#progress {
+  position: fixed; inset: 0 auto auto 0; height: 2px; width: 0;
+  background: var(--accent); z-index: 60; transition: width .1s linear;
+}
+.shell { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 0; }
+/* ---------- sidebar ---------- */
+#sidebar {
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  padding: 2.25rem 1.25rem 3rem 2rem;
+  border-right: 1px solid var(--rule);
+  background: var(--bg-sunk);
+  font-family: var(--ui); font-size: .8125rem; line-height: 1.5;
+}
+#sidebar .brand {
+  font-family: var(--serif); font-weight: 700; font-size: 1.0625rem; line-height: 1.3;
+  margin: 0 0 .35rem;
+}
+#sidebar .brand-sub { color: var(--muted); font-size: .75rem; margin: 0 0 1.5rem; }
+#toc { list-style: none; margin: 0; padding: 0; }
+#toc li { margin: 0; }
+#toc a {
+  display: block; padding: .3rem .5rem .3rem .65rem; margin-left: -.65rem;
+  color: var(--muted); text-decoration: none; border-left: 2px solid transparent;
+  border-radius: 0 4px 4px 0;
+}
+#toc a:hover { color: var(--text); background: var(--accent-soft); }
+#toc a.lvl-2 { font-weight: 600; color: var(--text); margin-top: .9rem; }
+#toc a.lvl-3 { padding-left: 1.5rem; font-size: .78125rem; }
+#toc a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-soft); }
+/* ---------- main ---------- */
+main { padding: 0 2rem 8rem; }
+.page { max-width: 44rem; margin: 0 auto; }
+header.title { padding: 5rem 0 2.5rem; border-bottom: 1px solid var(--rule); margin-bottom: 2.5rem; }
+header.title .eyebrow {
+  font-family: var(--ui); font-size: .6875rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600; margin: 0 0 1rem;
+}
+header.title h1 {
+  font-size: clamp(2.1rem, 5.2vw, 3.1rem); line-height: 1.1; letter-spacing: -.02em;
+  margin: 0 0 1rem; font-weight: 700;
+}
+header.title p.lede { font-size: 1.1875rem; color: var(--muted); margin: 0 0 1.5rem; max-width: 34rem; }
+header.title .byline { font-family: var(--ui); font-size: .8125rem; color: var(--muted); }
+h2 {
+  font-size: 1.75rem; line-height: 1.2; letter-spacing: -.015em; font-weight: 700;
+  margin: 4rem 0 1.25rem; padding-top: 2rem; border-top: 1px solid var(--rule);
+  scroll-margin-top: 1.5rem;
+}
+h3 {
+  font-size: 1.1875rem; font-weight: 600; letter-spacing: -.005em;
+  margin: 2.5rem 0 .75rem; scroll-margin-top: 1.5rem;
+}
+p { margin: 0 0 1.15rem; }
+a { color: var(--accent); text-underline-offset: 2px; }
+strong { font-weight: 600; }
+ul, ol { margin: 0 0 1.25rem; padding-left: 1.4rem; }
+li { margin: .35rem 0; }
+li > ul, li > ol { margin-bottom: .35rem; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+/* ---------- tables ---------- */
+.table-wrap { overflow-x: auto; margin: 0 0 1.5rem; border: 1px solid var(--rule); border-radius: 10px; background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-family: var(--ui); font-size: .875rem; }
+th, td { text-align: left; padding: .6rem .85rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+thead th { font-weight: 600; font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); background: var(--bg-sunk); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: var(--accent-soft); }
+/* ---------- code & math ---------- */
+code {
+  font-family: var(--mono); font-size: .875em; background: var(--mono-bg);
+  padding: .12em .35em; border-radius: 4px;
+}
+pre {
+  margin: 0 0 1.5rem; padding: 1rem 1.15rem; overflow-x: auto;
+  background: var(--mono-bg); border: 1px solid var(--rule); border-radius: 10px;
+}
+pre code { background: none; padding: 0; font-size: .8125rem; line-height: 1.65; }
+.math-block {
+  margin: 0 0 1.5rem; padding: 1.15rem 1rem; overflow-x: auto; overflow-y: hidden;
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 10px;
+  box-shadow: var(--shadow); text-align: center;
+}
+.math-block .katex { font-size: 1.1em; }
+.math-block.failed { font-family: var(--mono); font-size: .8125rem; text-align: left; white-space: pre-wrap; color: var(--muted); }
+/* ---------- quotes / Arabic notes ---------- */
+blockquote {
+  margin: 1.75rem 0; padding: 1.1rem 1.25rem;
+  background: var(--accent-soft); border-radius: 10px;
+  border-left: 3px solid var(--accent);
+}
+blockquote p { margin: 0; }
+blockquote.ar {
+  direction: rtl; text-align: right; font-family: var(--arabic);
+  font-size: 1.0625rem; line-height: 2;
+  border-left: 0; border-right: 3px solid var(--accent);
+}
+blockquote.ar strong { font-family: var(--arabic); }
+blockquote > p:not(:last-child) { margin-bottom: .6rem; }
+blockquote ul, blockquote ol { margin: .5rem 0 0; }
+blockquote li { margin: .3rem 0; }
+blockquote li:last-child { margin-bottom: 0; }
+blockquote.ar ul, blockquote.ar ol { padding-left: 0; padding-right: 1.35rem; }
+/* ---------- controls ---------- */
+.controls { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: flex; gap: .5rem; }
+.btn {
+  font-family: var(--ui); font-size: .75rem; font-weight: 500;
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .45rem .7rem; border: 1px solid var(--rule); border-radius: 8px;
+  background: var(--panel); color: var(--text); cursor: pointer; box-shadow: var(--shadow);
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+#menu-btn { display: none; }
+footer.colophon {
+  margin-top: 5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule);
+  font-family: var(--ui); font-size: .8125rem; color: var(--muted);
+}
+/* ---------- responsive ---------- */
+@media (max-width: 960px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  #sidebar {
+    position: fixed; inset: 0 auto 0 0; width: min(85vw, 320px); z-index: 70;
+    transform: translateX(-102%); transition: transform .22s ease; box-shadow: var(--shadow);
+  }
+  #sidebar.open { transform: none; }
+  #menu-btn { display: inline-flex; }
+  main { padding: 0 1rem 6rem; }
+  header.title { padding-top: 4rem; }
+}
+@media print {
+  .controls, #sidebar, #progress { display: none !important; }
+  .shell { display: block; }
+  body { background: #fff; color: #000; font-size: 10.5pt; }
+  h2 { page-break-before: always; }
+  .math-block, pre, .table-wrap { box-shadow: none; }
+}
+
+.btn[hidden] { display: none; }
+#update-btn { border-color: var(--accent); color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="controls">
+  <button class="btn" id="menu-btn" aria-label="Table of contents">☰ Contents</button>
+  <button class="btn" id="theme-btn" aria-label="Switch theme">◐ Theme</button>
+  <button class="btn" id="install-btn" aria-label="Install the book as an app" hidden>⤓ Install</button>
+  <button class="btn" id="update-btn" aria-label="Update to the newest version" hidden>↻ Update</button>
+  <a class="btn" href="index.html" hreflang="ar" dir="rtl">العربية</a>
+</div>
+
+<div class="shell">
+  <nav id="sidebar" aria-label="Table of contents">
+    <p class="brand">Math Foundations<br>for Machine Learning</p>
+    <p class="brand-sub">Made Easy</p>
+    <ul id="toc"></ul>
+  </nav>
+
+  <main>
+    <div class="page">
+      <header class="title">
+        <p class="eyebrow">A short, practical book</p>
+        <h1>Math Foundations for Machine Learning</h1>
+        <p class="lede">The linear algebra, calculus, probability and statistics you actually need — intuition first, then the formula, then a worked example you can do by hand.</p>
+        <p class="byline">Oct 27, 2026 · Omar · with Arabic (Egyptian) notes throughout</p>
+      </header>
+      <article id="book"></article>
+      <footer class="colophon">
+        Source: <a href="book.md">book.md</a> · Arabic edition (longer, 7 chapters): <a href="index.html" hreflang="ar">النسخة العربية</a> · Rendered with marked + KaTeX.
+      </footer>
+    </div>
+  </main>
+</div>
+
+<script id="book-source" type="text/markdown">__BOOK_MARKDOWN__</script>
+<script src="vendor/marked.min.js"></script>
+<script src="vendor/katex/katex.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- theme ---------- */
+  var root = document.documentElement;
+  try {
+    var saved = localStorage.getItem('mlmath-theme');
+    if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+  } catch (e) { /* storage blocked: fall back to the OS preference */ }
+
+  document.getElementById('theme-btn').addEventListener('click', function () {
+    var dark = root.getAttribute('data-theme') === 'dark' ||
+      (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var next = dark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('mlmath-theme', next); } catch (e) { /* ignore */ }
+  });
+
+  /* ---------- render markdown ---------- */
+  var source = document.getElementById('book-source').textContent;
+
+  function renderMath(tex) {
+    try {
+      return '<div class="math-block">' +
+        katex.renderToString(tex, { displayMode: true, throwOnError: true, strict: false }) +
+        '</div>';
+    } catch (err) {
+      var esc = tex.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return '<div class="math-block failed">' + esc + '</div>';
+    }
+  }
+
+  marked.use({
+    gfm: true,
+    renderer: {
+      code: function (code, infostring) {
+        var lang = (infostring || '').trim().toLowerCase();
+        var text = typeof code === 'string' ? code : code.text;
+        if (lang === 'latex' || lang === 'math' || lang === 'tex') return renderMath(text);
+        var esc = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return '<pre><code class="language-' + lang + '">' + esc + '</code></pre>';
+      },
+      table: function (header, body) {
+        // marked v12 passes a token when the renderer is overridden via use(); guard both shapes.
+        var html = typeof header === 'string'
+          ? '<table><thead>' + header + '</thead><tbody>' + body + '</tbody></table>'
+          : null;
+        return html === null ? false : '<div class="table-wrap">' + html + '</div>';
+      }
+    }
+  });
+
+  var article = document.getElementById('book');
+  article.innerHTML = marked.parse(source);
+
+  /* the <h1> lives in the page header instead */
+  var firstH1 = article.querySelector('h1');
+  if (firstH1) firstH1.remove();
+
+  /* tables that the renderer hook did not wrap */
+  article.querySelectorAll('table').forEach(function (t) {
+    if (t.parentElement && t.parentElement.classList.contains('table-wrap')) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'table-wrap';
+    t.parentNode.insertBefore(wrap, t);
+    wrap.appendChild(t);
+  });
+
+  /* Arabic notes read right-to-left */
+  article.querySelectorAll('blockquote').forEach(function (q) {
+    if (/[؀-ۿ]/.test(q.textContent)) q.classList.add('ar');
+  });
+
+  /* ---------- headings, ids, table of contents ---------- */
+  var used = Object.create(null);
+  function slug(text) {
+    var base = text.toLowerCase()
+      .replace(/[^\w؀-ۿ\s-]/g, '')
+      .trim().replace(/\s+/g, '-') || 'section';
+    used[base] = (used[base] || 0) + 1;
+    return used[base] > 1 ? base + '-' + used[base] : base;
+  }
+
+  var toc = document.getElementById('toc');
+  var headings = Array.prototype.slice.call(article.querySelectorAll('h2, h3'));
+  headings.forEach(function (h) {
+    h.id = h.id || slug(h.textContent);
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent.replace(/\s+—\s+/g, ' — ');
+    a.className = 'lvl-' + (h.tagName === 'H2' ? '2' : '3');
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+
+  var links = {};
+  toc.querySelectorAll('a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+
+  /* ---------- active section + reading progress ---------- */
+  var bar = document.getElementById('progress');
+  var current = null;
+
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+
+    var best = null;
+    for (var i = 0; i < headings.length; i++) {
+      if (headings[i].getBoundingClientRect().top <= 120) best = headings[i];
+      else break;
+    }
+    var id = best ? best.id : (headings[0] && headings[0].id);
+    if (id && id !== current) {
+      if (current && links[current]) links[current].classList.remove('active');
+      if (links[id]) {
+        links[id].classList.add('active');
+        var a = links[id];
+        var box = a.getBoundingClientRect();
+        var nav = document.getElementById('sidebar').getBoundingClientRect();
+        if (box.top < nav.top || box.bottom > nav.bottom) a.scrollIntoView({ block: 'nearest' });
+      }
+      current = id;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- mobile contents drawer ---------- */
+  var sidebar = document.getElementById('sidebar');
+  document.getElementById('menu-btn').addEventListener('click', function (e) {
+    e.stopPropagation();
+    sidebar.classList.toggle('open');
+  });
+  toc.addEventListener('click', function () { sidebar.classList.remove('open'); });
+  document.addEventListener('click', function (e) {
+    if (sidebar.classList.contains('open') && !sidebar.contains(e.target)) sidebar.classList.remove('open');
+  });
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  /* Keep the standalone window chrome in step with the chosen theme. */
+  function syncThemeColor() {
+    var attr = root.getAttribute('data-theme');
+    var dark = attr === 'dark' || (!attr && prefersDark.matches);
+    themeMeta.setAttribute('content', dark ? '#16171a' : '#fbf9f5');
+  }
+  syncThemeColor();
+  new MutationObserver(syncThemeColor).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  if (prefersDark.addEventListener) prefersDark.addEventListener('change', syncThemeColor);
+
+  /* Install button: Chromium fires beforeinstallprompt, Safari installs from
+     the share sheet, so the button only ever appears when it can do something. */
+  var installBtn = document.getElementById('install-btn');
+  var deferredPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', function (event) {
+    event.preventDefault();
+    deferredPrompt = event;
+    installBtn.hidden = false;
+  });
+
+  installBtn.addEventListener('click', function () {
+    if (!deferredPrompt) return;
+    installBtn.hidden = true;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function () { deferredPrompt = null; });
+  });
+
+  window.addEventListener('appinstalled', function () {
+    deferredPrompt = null;
+    installBtn.hidden = true;
+  });
+
+  if (!('serviceWorker' in navigator)) return;
+
+  var updateBtn = document.getElementById('update-btn');
+  var reloading = false;
+
+  navigator.serviceWorker.addEventListener('controllerchange', function () {
+    if (reloading) return;
+    reloading = true;
+    window.location.reload();
+  });
+
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').then(function (reg) {
+      function watch(worker) {
+        if (!worker) return;
+        worker.addEventListener('statechange', function () {
+          /* A worker that installs while one is already in charge is an update. */
+          if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+            updateBtn.hidden = false;
+          }
+        });
+      }
+
+      if (reg.waiting && navigator.serviceWorker.controller) updateBtn.hidden = false;
+      watch(reg.installing);
+      reg.addEventListener('updatefound', function () { watch(reg.installing); });
+
+      updateBtn.addEventListener('click', function () {
+        updateBtn.hidden = true;
+        var worker = reg.waiting || reg.installing;
+        if (worker) worker.postMessage('SKIP_WAITING');
+      });
+    }).catch(function (err) {
+      console.warn('service worker registration failed', err);
+    });
+  });
+})();
+</script>
+</body>
+</html>
