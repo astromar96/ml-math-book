@@ -165,6 +165,11 @@ blockquote.ar {
   border-left: 0; border-right: 3px solid var(--accent);
 }
 blockquote.ar strong { font-family: var(--arabic); }
+blockquote > p:not(:last-child) { margin-bottom: .6rem; }
+blockquote ul, blockquote ol { margin: .5rem 0 0; }
+blockquote li { margin: .3rem 0; }
+blockquote li:last-child { margin-bottom: 0; }
+blockquote.ar ul, blockquote.ar ol { padding-left: 0; padding-right: 1.35rem; }
 /* ---------- controls ---------- */
 .controls { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: flex; gap: .5rem; }
 .btn {
@@ -254,9 +259,13 @@ You need only three areas of math for machine learning: linear algebra, calculus
 - Stuck for more than 20 minutes? Move on and come back tomorrow.
 - Don't aim for perfect. Aim for "I can explain this to a friend."
 
+> **بالعربي:** إنت محتاج تلات مجالات بس: الجبر الخطي، التفاضل، والاحتمالات والإحصاء. وكل موضوع في الكتاب ماشي بنفس الترتيب: الفكرة بالكلام العادي ← الصيغة ← مثال بأرقام ← ليه ML محتاجها ← تمارين وحلولها في آخر الكتاب. ونصايح سريعة: ذاكر 30–60 دقيقة في اليوم، حل بالقلم والورقة قبل ما تبصّ على الحل، اتأكد من إجابتك بـ NumPy، ولو زنقت أكتر من 20 دقيقة سيبها وارجعلها بكره. الهدف مش الكمال — الهدف إنك تقدر تشرح الفكرة لصاحبك.
+
 ## Chapter 1: Math warm-up
 
 This chapter refreshes the five small tools every later chapter uses: notation, functions, exponents, logarithms, and summation.
+
+> **بالعربي:** الشابتر ده بيسخّن معاك على الخمس أدوات الصغيرة اللي كل الشابترات اللي بعده مبنية عليها: الرموز، الدوال، الأسس، اللوغاريتمات، والمجموع (Σ). لو فاكرهم من المدرسة خده كمراجعة سريعة.
 
 ### 1.1 Reading math notation
 
@@ -274,6 +283,13 @@ Math symbols are just shorthand. Learn them once and papers stop looking scary.
 | ŷ | "y-hat", a prediction | ŷ = 4.2 |
 | P(A) | probability of A | P(rain) = 0.3 |
 
+> **بالعربي:** الرموز دي مش أكتر من اختصارات، اتعلمها مرة واحدة وأي paper بعد كده هتقراه عادي:
+>
+> - **x, y** رقم عادي (scalar).
+> - **x** بالبولد يعني ليستة أرقام (vector)، و **X** بالكابيتال يعني جدول أرقام (matrix).
+> - **Σ** معناها "اجمع كله"، و **∂** مشتقة جزئية (غيّر متغير واحد بس)، و **∇** الـ gradient (المشتقات الجزئية كلها مع بعض).
+> - **∈** يعني "ينتمي لـ"، و **ŷ** معناها توقّع الموديل، و **P(A)** احتمال حصول A.
+
 ### 1.2 Functions
 
 **Intuition:** a function is a machine. You put a number in, you get a number out.
@@ -286,6 +302,8 @@ Put in x = 3 and you get f(3) = 2 × 3 + 1 = 7.
 
 **Why ML cares:** a trained model *is* a function. It takes features (house size, rooms) and returns a prediction (price).
 
+> **بالعربي:** الدالة (function) زي الماكينة: تدخّلها رقم، تطلّعلك رقم. f(x) = 2x + 1 معناها "اضرب في 2 وزوّد 1"، فلو دخّلت 3 يطلعلك 7. وأي موديل مدرَّب هو في الآخر دالة: بتدخّله بيانات البيت (المساحة، عدد الأوض) ويطلّعلك السعر.
+
 ### 1.3 Exponents
 
 **Intuition:** an exponent says how many times to multiply a number by itself.
@@ -294,6 +312,14 @@ Put in x = 3 and you get f(3) = 2 × 3 + 1 = 7.
 - x⁰ = 1 for any non-zero x
 - x⁻¹ = 1/x
 - xᵃ × xᵇ = xᵃ⁺ᵇ
+
+> **بالعربي:** الأس بيقولك تضرب الرقم في نفسه كام مرة:
+>
+> - 2³ = 2 × 2 × 2 = 8.
+> - أي رقم (مش صفر) أس صفر = 1.
+> - الأس السالب معناه مقلوب: x⁻¹ = 1/x.
+> - ولو بتضرب نفس الأساس، اجمع الأسس: xᵃ × xᵇ = xᵃ⁺ᵇ.
+
 
 The special number **e ≈ 2.718** shows up everywhere in ML. The sigmoid function, used in logistic regression, is built from it:
 
@@ -319,6 +345,13 @@ Useful rules:
 - log(1) = 0
 - log of a number between 0 and 1 is negative
 
+> **بالعربي:** اللوغاريتم هو عكس الأس، بيسأل: "محتاج أرفع الأساس لأنهي قوة؟" يعني log₂(8) = 3 لأن 2³ = 8، و ln معناها لوغاريتم للأساس e. والقواعد المفيدة:
+>
+> - log(a × b) = log(a) + log(b) — بيحوّل الضرب لجمع.
+> - log(1) = 0 دايمًا.
+> - لوغاريتم أي رقم ما بين 0 و 1 بيطلع سالب.
+
+
 **Why ML cares:** multiplying many small probabilities gives tiny numbers computers struggle with. Taking logs turns them into sums. This is why the classification loss is called *log loss* (cross-entropy).
 
 > **بالعربي:** لما بنضرب احتمالات صغيرة في بعض، النتيجة بتبقى رقم صغير جدًا الكمبيوتر مش بيعرف يتعامل معاه. اللوغاريتم بيحوّل الضرب لجمع، والأرقام الصغيرة لأرقام سالبة عادية. ده السبب إن اسم دالة الخطأ في التصنيف "log loss".
@@ -335,6 +368,8 @@ If **x** = \[3, 1, 4, 2\], the sum is 3 + 1 + 4 + 2 = 10.
 
 In Python: `sum(x)` or `np.sum(x)`.
 
+> **بالعربي:** الـ Σ مش حاجة مخيفة — هي for-loop مكتوبة بالرياضة. Σ من i=1 لـ 4 معناها "لفّ على العناصر من الأول للرابع واجمعهم". ولو **x** = \[3, 1, 4, 2\] يبقى المجموع 10. في بايثون سطر واحد: `sum(x)`.
+
 ### Practice — Chapter 1
 
 1. If f(x) = 3x − 2, what is f(4)?
@@ -346,6 +381,8 @@ In Python: `sum(x)` or `np.sum(x)`.
 ## Chapter 2: Linear algebra
 
 Linear algebra is the language of data: every dataset is a matrix, every data point is a vector, and almost every model is matrix multiplication.
+
+> **بالعربي:** الجبر الخطي هو لغة البيانات: أي داتاسِت هو مصفوفة، وأي نقطة بيانات هي vector، وأغلب الموديلات في الآخر مجرد ضرب مصفوفات. لو فهمت الشابتر ده، فهمت نص الـ ML.
 
 ### 2.1 Vectors
 
@@ -368,6 +405,13 @@ Geometrically, a vector is an arrow from the origin. \[3, 4\] points 3 steps rig
 ```
 
 Example: the length of \[3, 4\] is √(9 + 16) = √25 = 5.
+
+> **بالعربي:**
+>
+> - **الـ vector** ليستة أرقام بتوصف حاجة واحدة: البيت = \[120, 3, 2\] يعني 120 متر، 3 أوض، 2 حمام. وهندسيًا هو سهم بيبدأ من نقطة الأصل.
+> - **الجمع:** بتجمع كل خانة مع الخانة اللي قصادها بالظبط، مش كله في كله.
+> - **الضرب في رقم (scaling):** بتضرب كل خانة في الرقم — السهم يطول أو يقصر وهو ثابت في نفس الاتجاه.
+> - **الطول (norm):** فيثاغورس بس في أبعاد أكتر: ربّع كل خانة، اجمع، خُد الجذر. طول \[3, 4\] = 5.
 
 ### 2.2 The dot product
 
@@ -400,6 +444,8 @@ What the sign tells you:
 | House 3 | 200 | 5 | 2 |
 
 This is a 3 × 3 matrix: 3 rows × 3 columns. The shape is always written rows × columns.
+
+> **بالعربي:** الـ matrix جدول أرقام. وفي ML، كل **صف** مثال واحد (بيت، عميل، صورة) وكل **عمود** خصيصة واحدة (feature). والشكل (shape) بيتكتب دايمًا صفوف × أعمدة، والترتيب ده هو اللي بيحدّد الضرب هيمشي ولا لأ.
 
 ### 2.4 Matrix multiplication
 
@@ -438,6 +484,8 @@ A 2 × 3 matrix becomes 3 × 2. In Python: `A.T`.
 
 **Why ML cares:** you transpose constantly to make shapes line up for multiplication.
 
+> **بالعربي:** الـ transpose يعني تقلب المصفوفة: الصفوف تبقى أعمدة والأعمدة تبقى صفوف، فـ 2 × 3 تبقى 3 × 2. هتعمله كل شوية عشان تخلّي الأشكال (shapes) تتطابق قبل الضرب. في بايثون سطر واحد: `A.T`.
+
 ### 2.6 Identity and inverse
 
 **Identity matrix (I):** 1s on the diagonal, 0s elsewhere. It is the matrix version of the number 1: A × I = A.
@@ -453,6 +501,14 @@ For a 2 × 2 matrix:
 The number ad − bc is the **determinant**. If it is 0, there is no inverse.
 
 **Why ML cares:** linear regression has an exact solution (the normal equation) that uses an inverse. In practice, libraries avoid computing inverses directly because it is slow and unstable.
+
+> **بالعربي:**
+>
+> - **مصفوفة الوحدة (I):** واحدات على القطر وأصفار في الباقي. هي زي الرقم 1 بالظبط: A × I = A.
+> - **المعكوس (A⁻¹):** نسخة القسمة في عالم المصفوفات: A × A⁻¹ = I. ومش كل مصفوفة ليها معكوس، زي ما إنت مش بتقدر تقسم على صفر.
+> - **المحدِّد (determinant) = ad − bc:** لو طلع صفر يبقى مفيش معكوس خالص.
+>
+> ملاحظة عملية: المكتبات بتتجنّب حساب المعكوس على المباشر لأنه بطيء وغير مستقر، وبتستخدم طرق تانية بتوصل لنفس النتيجة.
 
 ### 2.7 Eigenvectors and eigenvalues (intuition only)
 
@@ -481,6 +537,8 @@ Example: for A = \[\[2, 0\], \[0, 3\]\], the vector \[1, 0\] becomes \[2, 0\]. S
 
 That single line is linear regression, and the first step of every neural network layer.
 
+> **بالعربي:** السطر ŷ = Xw + b هو الجبر الخطي كله في جملة واحدة: X البيانات (أمثلة × فيتشرز)، و w الأوزان اللي الموديل بيتعلّمها، و b الإزاحة (bias)، و ŷ التوقّعات لكل الأمثلة مرة واحدة. السطر ده بعينه هو الـ linear regression، وهو كمان أول خطوة في أي طبقة من أي شبكة عصبية.
+
 ### Practice — Chapter 2
 
 1. Compute \[2, −1, 3\] + \[1, 4, 0\].
@@ -494,6 +552,8 @@ That single line is linear regression, and the first step of every neural networ
 ## Chapter 3: Calculus
 
 In ML, calculus does one job: it tells the model which way to adjust its weights so the error goes down. That's all you need from it.
+
+> **بالعربي:** التفاضل في ML بيعمل حاجة واحدة بس: بيقول للموديل يظبّط أوزانه في أنهي اتجاه عشان الخطأ يقل. ومش محتاج منه أكتر من كده خالص.
 
 ### 3.1 The derivative
 
@@ -510,6 +570,14 @@ f'(x) = \frac{df}{dx} \approx \frac{f(x + h) - f(x)}{h} \text{ for a tiny } h
 ```
 
 Worked example: for f(x) = x², try x = 3 and h = 0.001. Then (3.001² − 3²) / 0.001 = (9.006001 − 9) / 0.001 ≈ **6**. The exact answer is 2 × 3 = 6.
+
+> **بالعربي:** المشتقة (derivative) هي الميل: "الحاجة بتتغير بأي سرعة؟" لو بتسوق وموقعك بيتغير 60 كم كل ساعة، يبقى مشتقة الموقع 60 كم/س. وعلى الرسم:
+>
+> - **موجبة** → المنحنى طالع مع زيادة x.
+> - **سالبة** → المنحنى نازل.
+> - **صفر** → نقطة مستوية: قمة أو قاع أو سطح مستوي.
+>
+> وده بالظبط اللي الموديل محتاجه: يعرف الخطأ طالع ولا نازل عشان يعرف يمشي في أنهي اتجاه.
 
 ### 3.2 The rules you actually need
 
@@ -533,6 +601,15 @@ Worked example: f(x) = 3x⁴ − 2x² + 7x − 5.
 - −5 → 0
 
 So f'(x) = 12x³ − 4x + 7.
+
+> **بالعربي:** مش هتحسب الميل بإيدك، هتستعمل القواعد دي وخلاص:
+>
+> - **الثابت** مشتقته صفر — الرقم الثابت مابيتغيرش.
+> - **قاعدة القوة (power rule):** نزّل الأس قدّام واطرح منه واحد: (x³)' = 3x².
+> - **رقم × دالة:** الرقم بيقعد زي ما هو: (4x²)' = 8x.
+> - **جمع دوال:** اشتق كل واحدة لوحدها واجمع.
+> - **eˣ** مشتقته نفسه (الحالة الوحيدة اللي بتعمل كده)، و **ln(x)** مشتقته 1/x.
+> - **قاعدة الضرب (product rule):** f'g + fg'.
 
 ### 3.3 Partial derivatives
 
@@ -558,6 +635,8 @@ Worked example: f(x, y) = x²y + 3y.
 From the example above, at the point (1, 2): ∇f = \[2·1·2, 1² + 3\] = \[4, 4\].
 
 To go **downhill** (reduce error), walk in the opposite direction: −∇f.
+
+> **بالعربي:** الـ gradient (∇f) هو المشتقات الجزئية كلها محطوطة في vector واحد، وهو بيشاور على اتجاه **الطلوع** الأسرع. وإحنا عايزين ننزل (نقلّل الخطأ)، فبنمشي في الاتجاه المعاكس تمامًا: −∇f. الجملة دي هي كل حكاية "تدريب الموديل".
 
 ### 3.5 The chain rule
 
@@ -621,6 +700,8 @@ Picking the learning rate:
 
 Probability is the math of uncertainty. ML models rarely say "this is a cat"; they say "I'm 92% sure this is a cat", and that's a probability.
 
+> **بالعربي:** الاحتمالات هي رياضة عدم اليقين. الموديل نادرًا بيقول "ده قطة" — هو بيقول "أنا متأكد 92% إن ده قطة"، والرقم ده احتمال.
+
 ### 4.1 The basics
 
 **Intuition:** probability is a number from 0 (impossible) to 1 (certain).
@@ -636,6 +717,12 @@ Three rules to know:
 - **Complement:** P(not A) = 1 − P(A). If P(rain) = 0.3, then P(no rain) = 0.7.
 - **AND, independent events:** P(A and B) = P(A) × P(B). Two coin flips both heads: 0.5 × 0.5 = 0.25.
 - **OR:** P(A or B) = P(A) + P(B) − P(A and B). Subtract the overlap so you don't count it twice.
+
+> **بالعربي:** الاحتمال رقم من 0 (مستحيل) لـ 1 (مؤكد)، وبيتحسب: عدد الحالات اللي تعجبك ÷ كل الحالات الممكنة. والقواعد التلاتة:
+>
+> - **المكمّل:** P(مش A) = 1 − P(A). لو احتمال المطر 0.3، يبقى احتمال مافيش مطر 0.7.
+> - **و (AND) للأحداث المستقلة:** اضرب. وش ووش في عملتين = 0.5 × 0.5 = 0.25.
+> - **أو (OR):** اجمع الاحتمالين واطرح التداخل، عشان ماتعدّش نفس الحالة مرتين.
 
 ### 4.2 Conditional probability
 
@@ -696,6 +783,12 @@ E[X] = \sum x_i \cdot P(x_i)
 
 Worked example, a fair die: E\[X\] = (1 + 2 + 3 + 4 + 5 + 6) × 1/6 = 21/6 = **3.5**.
 
+> **بالعربي:** المتغير العشوائي (random variable) رقم قيمته بتعتمد على الحظ، زي نتيجة الزار أو حرارة بكره.
+>
+> - **منفصل (discrete):** قيم معدودة — الزار، عدد الكليكات.
+> - **متصل (continuous):** أي قيمة في مدى — الطول، السعر، الوقت.
+> - **القيمة المتوقعة (expected value):** اضرب كل قيمة في احتمالها واجمع. الزار بيطلع 3.5، رغم إن مفيش وش فيه 3.5 — لأنها متوسط على المدى الطويل.
+
 ### 4.5 Distributions you'll meet
 
 A distribution describes how likely each value is.
@@ -721,6 +814,17 @@ Worked example: adult heights with μ = 170 cm and σ = 10 cm. About 95% of peop
 
 **Why ML cares:** many models assume errors are normally distributed. Feature standardization (making features mean 0, standard deviation 1) is built on the same idea.
 
+> **بالعربي:** التوزيع (distribution) بيوصف كل قيمة احتمالها أد إيه:
+>
+> - **Bernoulli:** تجربة واحدة نعم/لأ — الإيميل ده سبام ولا لأ.
+> - **Binomial:** عدد النجاحات في n تجربة — كام كليك من 100 إعلان.
+> - **Uniform:** كل القيم بنفس الاحتمال — تهيئة الأوزان العشوائية.
+> - **Normal (الجرس):** أغلب القيم حوالين المتوسط — الأطوال، الضوضاء، الأخطاء.
+> - **Poisson:** عدد الأحداث في وقت محدد — زيارات الموقع في الساعة.
+> - **Categorical:** واحد من كذا تصنيف — مخرجات الـ softmax.
+>
+> والتوزيع الطبيعي بيتوصف برقمين بس: المتوسط μ (المركز) والانحراف المعياري σ (التفرقع). وقاعدة 68–95–99.7 بتقول: 68% من القيم جوه σ واحد من المتوسط، 95% جوه 2σ، و 99.7% جوه 3σ.
+
 ### Practice — Chapter 4
 
 1. A bag has 3 red and 7 blue balls. What is P(red)? What is P(not red)?
@@ -736,6 +840,8 @@ Statistics turns raw data into understanding. Before you train any model, you de
 
 We'll use one small dataset for the whole chapter: daily coffee sales of **\[4, 8, 6, 5, 7\]** cups.
 
+> **بالعربي:** الإحصاء بيحوّل البيانات الخام لفهم. قبل ما تدرّب أي موديل بتوصف البيانات الأول، وبعد ما تدرّبه بتتأكد إن النتيجة حقيقية ولا مجرد حظ.
+
 ### 5.1 Mean, median, mode
 
 **Intuition:** three ways to answer "what's a typical value?"
@@ -749,6 +855,14 @@ We'll use one small dataset for the whole chapter: daily coffee sales of **\[4, 
 ```
 
 **Mean vs median:** one extreme value (an outlier) drags the mean but barely moves the median. Salaries \[3, 4, 5, 100\] have mean 28 but median 4.5. Use the median when data has outliers.
+
+> **بالعربي:** تلات طرق تجاوب على "إيه القيمة الطبيعية هنا؟"
+>
+> - **المتوسط (mean):** اجمع كله واقسم على العدد.
+> - **الوسيط (median):** رتّب الأرقام وخُد اللي في النص.
+> - **المنوال (mode):** الرقم اللي بيتكرر أكتر (وساعات مايكونش موجود).
+>
+> والفرق المهم: رقم شاذ واحد (outlier) بيجرجر المتوسط بعيد ومابيحرّكش الوسيط تقريبًا. رواتب \[3, 4, 5, 100\] متوسطها 28 ووسيطها 4.5 — الوسيط هو اللي بيوصف الواقع.
 
 ### 5.2 Variance and standard deviation
 
@@ -802,6 +916,14 @@ How to read r:
 
 **Why ML cares:** correlation helps you pick useful features and spot redundant ones. Two features with r ≈ 0.99 carry almost the same information.
 
+> **بالعربي:** السؤال هنا: الحاجتين بيتحركوا مع بعض ولا لأ؟
+>
+> - **التغاير (covariance):** موجب لو الاتنين بيطلعوا مع بعض، سالب لو واحد يطلع والتاني ينزل. بس حجمه صعب تقراه لأنه بيعتمد على الوحدات.
+> - **الارتباط (correlation أو r):** نفس الفكرة بس مقيّسة ما بين −1 و 1، فتقدر تقراها على طول: قريب من 1 علاقة طرديّة قوية، قريب من 0 مفيش علاقة خطية، قريب من −1 علاقة عكسيّة قوية.
+> - **القاعدة الذهبية:** الارتباط مش معناه السببية. مبيعات الآيس كريم وحالات الغرق بيطلعوا مع بعض، بس السبب الحقيقي في الاتنين هو الجو الحرّ.
+>
+> وفي ML: فيتشرين بينهم r ≈ 0.99 بيحملوا نفس المعلومة تقريبًا، فواحد منهم زيادة.
+
 ### 5.4 Samples and populations
 
 **Intuition:** you can rarely measure everyone (the **population**), so you measure some of them (a **sample**) and generalize.
@@ -811,6 +933,15 @@ How to read r:
 - **Central limit theorem:** averages of many random samples follow a normal distribution, even when the original data doesn't. This is why the bell curve shows up everywhere.
 
 **Why ML cares:** your training data is a sample of the real world. Your test set is another sample. If they don't represent real users, your model will disappoint in production.
+
+> **بالعربي:**
+>
+> - **المجتمع (population)** هو كل الناس، و**العيّنة (sample)** هي اللي قدرت تقيسهم فعلًا.
+> - العيّنة الكويسة **عشوائية** و**ممثّلة**. لو سألت أصحابك بس، النتيجة هتبقى متحيّزة.
+> - العيّنة الأكبر بتدّيك تقدير أدق.
+> - **نظرية النهاية المركزية (central limit theorem):** متوسطات العيّنات العشوائية بتتوزّع توزيع طبيعي، حتى لو البيانات الأصلية مش طبيعية — عشان كده منحنى الجرس بيطلعلك في كل حاجة.
+>
+> والمهم في ML: بيانات التدريب عيّنة من الدنيا الحقيقية. لو مش ممثّلة لليوزرز الحقيقيين، الموديل هيخيّب أملك في الـ production.
 
 ### 5.5 Hypothesis testing
 
@@ -845,6 +976,8 @@ np.var(x), np.std(x)       # 2.0, 1.414
 np.corrcoef(x, y)          # correlation with another array y
 ```
 
+> **بالعربي:** كل حسابات الشابتر بسطر واحد لكل واحدة في NumPy. خلي بالك بس من `np.var`: بيقسم على n بشكل افتراضي، فلو إنت بتحسب لعيّنة (sample) استخدم `ddof=1` عشان يقسم على n − 1.
+
 ### Practice — Chapter 5
 
 1. Find the mean and median of \[2, 3, 3, 5, 12\]. Which better describes a typical value, and why?
@@ -858,6 +991,8 @@ np.corrcoef(x, y)          # correlation with another array y
 
 This chapter trains a real model by hand, using every chapter you've read. Statistics measures the error, calculus finds which way to fix it, and linear algebra does it for many examples at once.
 
+> **بالعربي:** هنا هندرّب موديل حقيقي بإيدينا، وهنستخدم كل اللي قريناه: الإحصاء بيقيس الخطأ، التفاضل بيقولنا نمشي فين، والجبر الخطي بيعمل ده لكل الأمثلة مرة واحدة.
+
 ### 6.1 The problem
 
 Hours studied (x) and exam score in tens of points (y):
@@ -870,6 +1005,8 @@ Hours studied (x) and exam score in tens of points (y):
 
 We want a model **ŷ = w·x** that predicts the score from the hours. By eye the answer is w = 2, but the model must find it by itself.
 
+> **بالعربي:** المسألة: عندنا ساعات مذاكرة (x) ودرجات (y)، وعايزين موديل ŷ = w·x يتوقّع الدرجة من الساعات. بالعين إنت شايف إن w = 2، بس الفكرة كلها إن الموديل لازم يوصلها بنفسه من غير ما حد يقوله.
+
 ### 6.2 Step 1 — measure the error (statistics)
 
 We use the **mean squared error (MSE)**: the average of the squared gaps between prediction and truth. It is the variance formula from Chapter 5, applied to errors.
@@ -879,6 +1016,8 @@ L(w) = \frac{1}{n} \sum_{i=1}^{n} (w x_i - y_i)^2
 ```
 
 At w = 0 every prediction is 0, so L = (2² + 4² + 6²) / 3 = 56 / 3 ≈ **18.67**. That's bad.
+
+> **بالعربي:** الـ MSE (متوسط مربع الخطأ) بيقيس الموديل غلطان أد إيه: خُد الفرق بين التوقّع والحقيقة، ربّعه (عشان السالب والموجب مايلغوش بعض)، وخُد المتوسط. ودي نفس صيغة التباين من شابتر 5 بس مطبّقة على الأخطاء. عند w = 0 الخطأ ≈ 18.67 — وحش جدًا، وطبيعي لأن الموديل لسه مابيعرفش حاجة.
 
 ### 6.3 Step 2 — find the slope of the error (calculus)
 
@@ -891,6 +1030,8 @@ Using the power rule and the chain rule from Chapter 3:
 At w = 0: (2/3) × \[(0 − 2)·1 + (0 − 4)·2 + (0 − 6)·3\] = (2/3) × (−28) ≈ **−18.67**.
 
 The slope is negative, so the error goes down if we increase w.
+
+> **بالعربي:** بنشتق الخطأ بالنسبة لـ w عشان نعرف نمشي فين. طلعت المشتقة ≈ −18.67، والسالب هنا معناه: "لو كبّرت w، الخطأ هينزل". يعني التفاضل حرفيًا بيشاورلك على الطريق الصح.
 
 ### 6.4 Step 3 — take a step (gradient descent)
 
@@ -912,6 +1053,8 @@ Repeating the update:
 
 Each step closes about half the remaining gap to w = 2, and the loss drops toward 0. That is learning.
 
+> **بالعربي:** بنحدّث w بخطوة صغيرة في الاتجاه العكسي للمشتقة (α = 0.05). كل خطوة بتقرّب نص المسافة الباقية لـ w = 2، والخطأ بينزل من 18.67 لـ 0.12 في 4 خطوات بس. ده التعلّم نفسه، مفيش أي سحر.
+
 ### 6.5 Step 4 — do it for all examples at once (linear algebra)
 
 Instead of looping over students, stack them into vectors and use dot products:
@@ -921,6 +1064,8 @@ Instead of looping over students, stack them into vectors and use dot products:
 ```
 
 The transpose (Chapter 2) lines up the shapes. With many features and a million rows, this is still one line of code.
+
+> **بالعربي:** بدل ما تلفّ على كل طالب لوحده، رصّهم في مصفوفة واحدة واضرب. الـ transpose (من شابتر 2) بيخلّي الأشكال تتطابق. والجميل إن السطرين دول مابيتغيروش لو عندك مليون صف و 500 فيتشر — نفس الكود بالظبط، وده سبب وجود الـ GPU.
 
 ### 6.6 The whole thing in Python
 
@@ -950,6 +1095,8 @@ Every deep learning model, from image classifiers to large language models, foll
 1. Change alpha to 0.2. What happens to w? Then try 0.01.
 2. Add a bias b so the model is ŷ = w·x + b, and use the data y = \[3, 5, 7\]. Both w and b need their own partial derivative.
 3. Print the loss every 10 steps and confirm it keeps falling.
+
+> **بالعربي:** جرّب بإيدك: كبّر الـ alpha لـ 0.2 وشوف w بتتقفّز إزاي، وصغّرها لـ 0.01 وشوف بتبطّأ إزاي. بعدين ضيف الـ bias وخلي الموديل ŷ = w·x + b — هتحتاج مشتقة جزئية لكل من w و b، ودي شابتر 3 بالظبط.
 
 ## Answer key
 
@@ -1016,6 +1163,8 @@ Every deep learning model, from image classifiers to large language models, foll
 | Standardize | z = (x − μ) / σ | how many σ away from the mean |
 | MSE loss | (1/n)Σ(ŷᵢ − yᵢ)² | average squared prediction error |
 
+> **بالعربي:** الجدول ده هو الكتاب كله في صفحة واحدة. اطبعه وعلّقه قصادك، وكل ما تنسى صيغة بصّ هنا بدل ما ترجع للشابتر من الأول.
+
 ## 8-week study plan
 
 About 45 minutes a day, 5 days a week.
@@ -1032,6 +1181,8 @@ About 45 minutes a day, 5 days a week.
 | 8 | Chapter 6 + review | code linear regression from memory |
 
 **Want more after this book?** Good free follow-ups are 3Blue1Brown's "Essence of Linear Algebra" and "Essence of Calculus" video series, Khan Academy's statistics course, and the book *Mathematics for Machine Learning* by Deisenroth, Faisal and Ong (free PDF from the authors).
+
+> **بالعربي:** الخطة 45 دقيقة في اليوم، 5 أيام في الأسبوع، 8 أسابيع. والمهم الاستمرار مش الطول: نص ساعة كل يوم أحسن بكتير من 5 ساعات مرة في الأسبوع. ومعيار النجاح في كل أسبوع مش إنك "قريت" — إنك تقدر تحل بإيدك وتشرح الفكرة لحد تاني.
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
